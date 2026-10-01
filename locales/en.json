@@ -13,7 +13,15 @@
     "bientotTitre": "Coming soon",
     "bientotTexte": "This action is coming in a later step.",
     "ecranAVenir": "This screen is coming in a later step.",
-    "dureeHeures": "{{h}}h {{m}}m"
+    "dureeHeures": "{{h}}h {{m}}m",
+    "retour": "Back",
+    "oui": "Yes",
+    "non": "No",
+    "date": {
+      "jour": "Day",
+      "mois": "Month",
+      "annee": "Year"
+    }
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
@@ -88,6 +96,321 @@
     },
     "record": {
       "titre": "Latest record"
+    }
+  },
+  "auth": {
+    "connexion": {
+      "titre": "Log in",
+      "sousTitre": "Good to see you again. Your coach is waiting.",
+      "bouton": "Log in",
+      "pasDeCompte": "No account yet?",
+      "creerCompte": "Create an account"
+    },
+    "creerCompte": {
+      "titre": "Create an account",
+      "sousTitre": "A few seconds, then we build your program.",
+      "bouton": "Create my account",
+      "dejaCompte": "Already have an account?",
+      "seConnecter": "Log in",
+      "confirmerEmailTitre": "Check your email",
+      "confirmerEmailTexte": "We sent a confirmation link to {{email}}. Tap it, then log in."
+    },
+    "champs": {
+      "email": "Email",
+      "motDePasse": "Password",
+      "motDePasseAide": "At least 8 characters",
+      "afficher": "Show password",
+      "masquer": "Hide password"
+    },
+    "erreurs": {
+      "emailInvalide": "Invalid email address.",
+      "motDePasseCourt": "Password must be at least 8 characters.",
+      "identifiants": "Wrong email or password.",
+      "dejaInscrit": "An account already exists with this email. Log in instead.",
+      "emailNonConfirme": "Please confirm your email with the link we sent first.",
+      "motDePasseFaible": "Password too weak: choose a longer or more varied one.",
+      "tropDeTentatives": "Too many attempts. Try again in a few minutes.",
+      "reseau": "No internet connection. Check your network.",
+      "inconnue": "Something went wrong. Please try again."
+    },
+    "deconnexion": "Log out"
+  },
+  "inscription": {
+    "suivant": "Next",
+    "terminer": "Create my program",
+    "progression": "Question {{numero}} of {{total}}",
+    "compteur": "{{numero}}/{{total}}",
+    "langue": "Language",
+    "langues": {
+      "fr": "French",
+      "en": "English"
+    },
+    "accueil": {
+      "titre": "Your coach starts here",
+      "sousTitre": "A few questions to build your first program.",
+      "rapide": "Quick · 4 min",
+      "rapideTexte": "The essentials to get started. Your coach will ask the rest over the coming days.",
+      "complet": "Full · 15 min",
+      "completTexte": "Body profile, other sports, competition, training place and coaching style.",
+      "commencer": "Start"
+    },
+    "consentements": {
+      "titre": "Your data, your choices",
+      "sousTitre": "We ask for your consent before any health question.",
+      "cgu": "I accept the terms of use",
+      "cguTexte": "Required to use Athlenis.",
+      "sante": "I allow the coach to use my health data",
+      "santeTexte": "Pain and injuries, to adapt your sessions. Without this consent, we won't ask about them.",
+      "retrait": "You can withdraw these consents at any time from your profile."
+    },
+    "etapes": {
+      "identite": {
+        "titre": "Let's get to know you",
+        "sousTitre": "Your first name and date of birth."
+      },
+      "profilPhysique": {
+        "titre": "Your body profile",
+        "sousTitre": "To calculate your loads and needs."
+      },
+      "sport": {
+        "titre": "Your main sport",
+        "sousTitre": "Your program is built around it."
+      },
+      "objectif": {
+        "titre": "Your goal",
+        "sousTitre": "What you want to develop first."
+      },
+      "niveau": {
+        "titre": "Your level",
+        "sousTitre": "In your main sport."
+      },
+      "sportsSecondaires": {
+        "titre": "Your other sports",
+        "sousTitre": "Optional: your coach takes them into account in your load."
+      },
+      "disponibilites": {
+        "titre": "Your availability",
+        "sousTitre": "When can you train?"
+      },
+      "lieu": {
+        "titre": "Where do you train?",
+        "sousTitre": "Your main training place."
+      },
+      "competition": {
+        "titre": "A competition coming up?",
+        "sousTitre": "Your program will be built around it."
+      },
+      "douleurs": {
+        "titre": "Injuries and pain",
+        "sousTitre": "The ones you have right now."
+      },
+      "coaching": {
+        "titre": "Your coaching style",
+        "sousTitre": "How do you want your coach to talk to you?"
+      }
+    },
+    "identite": {
+      "prenom": "First name",
+      "naissance": "Date of birth"
+    },
+    "physique": {
+      "sexe": "Sex",
+      "sexes": {
+        "homme": "Male",
+        "femme": "Female"
+      },
+      "taille": "Height (cm)",
+      "poids": "Weight (kg)"
+    },
+    "niveau": {
+      "debutant": {
+        "titre": "Beginner",
+        "description": "Less than a year of regular training."
+      },
+      "amateur": {
+        "titre": "Amateur",
+        "description": "Regular training, not aiming at competition."
+      },
+      "confirme": {
+        "titre": "Advanced",
+        "description": "Structured training, regional or national competitions."
+      },
+      "pro": {
+        "titre": "Pro",
+        "description": "Elite level, selections, daily training."
+      }
+    },
+    "dispos": {
+      "jours": "Days",
+      "joursAide": "Pick every day you can train.",
+      "creneau": "Time of day",
+      "duree": "Maximum session length",
+      "minutes": "{{minutes}} min",
+      "joursCourts": {
+        "1": "M",
+        "2": "T",
+        "3": "W",
+        "4": "T",
+        "5": "F",
+        "6": "S",
+        "7": "S"
+      },
+      "joursLongs": {
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday",
+        "7": "Sunday"
+      },
+      "creneaux": {
+        "matin": "Morning",
+        "midi": "Midday",
+        "soir": "Evening"
+      }
+    },
+    "lieu": {
+      "salle": "Gym",
+      "domicile": "Home",
+      "exterieur": "Outdoors",
+      "piste": "Running track",
+      "piscine": "Swimming pool",
+      "terrain": "Field"
+    },
+    "competition": {
+      "question": "Do you have a competition or a dated goal?",
+      "nom": "Event name",
+      "date": "Date",
+      "type": "Type",
+      "types": {
+        "competition": "Competition",
+        "combat": "Fight",
+        "match": "Match",
+        "course": "Race",
+        "objectif_perso": "Personal goal"
+      }
+    },
+    "douleurs": {
+      "aucune": "No pain or injury right now",
+      "nature": "Type",
+      "natures": {
+        "douleur": "Pain",
+        "blessure": "Injury"
+      },
+      "zone": "Area",
+      "cote": "Side",
+      "cotes": {
+        "gauche": "Left",
+        "droit": "Right",
+        "bilateral": "Both sides",
+        "non_applicable": "Not applicable"
+      },
+      "gravite": "Intensity",
+      "gravites": {
+        "legere": "Mild",
+        "moderee": "Moderate",
+        "severe": "Severe"
+      },
+      "ajouter": "Add",
+      "retirer": "Remove: {{douleur}}"
+    },
+    "zones": {
+      "cervicale": "Neck",
+      "epaule": "Shoulder",
+      "coude": "Elbow",
+      "poignet_main": "Wrist and hand",
+      "thoracique": "Upper back",
+      "lombaire": "Lower back",
+      "hanche": "Hip",
+      "pubis_adducteurs": "Groin and adductors",
+      "ischio_jambiers": "Hamstrings",
+      "genou": "Knee",
+      "mollet": "Calf",
+      "tendon_achille": "Achilles tendon",
+      "cheville": "Ankle",
+      "pied": "Foot"
+    },
+    "coaching": {
+      "longueur": "Answer length",
+      "tons": {
+        "strict": {
+          "titre": "Demanding",
+          "description": "Direct, no-nonsense, pushes you further."
+        },
+        "equilibre": {
+          "titre": "Balanced",
+          "description": "Clear and motivating, firm when needed."
+        },
+        "bienveillant": {
+          "titre": "Supportive",
+          "description": "Encouraging, attentive to how you feel."
+        }
+      },
+      "longueurs": {
+        "bref": "Short",
+        "standard": "Standard",
+        "detaille": "Detailed"
+      }
+    },
+    "parent": {
+      "titre": "A parent needs to join you",
+      "texte": "Under 15, a parent account is required to use Athlenis. Ask a parent to create their account: they can then invite you.",
+      "corriger": "Fix my date of birth"
+    },
+    "generation": {
+      "essai": "4-week free trial of the Competition plan included.",
+      "titre": "Your coach is building your program",
+      "duree": "About one minute. Keep the app open.",
+      "etapes": {
+        "profil": "Analyzing your profile…",
+        "doctrine": "Applying training principles…",
+        "blocs": "Building your program blocks…",
+        "seances": "Preparing your first sessions…",
+        "finalisation": "Final checks…"
+      },
+      "echecTitre": "Program generation didn't complete"
+    },
+    "erreurs": {
+      "date": "This date doesn't exist.",
+      "dateFuture": "Pick a future date.",
+      "enregistrement": "Couldn't save your answers. Check your connection and try again."
+    }
+  },
+  "referentiels": {
+    "sports": {
+      "boxe_anglaise": "Boxing",
+      "course_a_pied": "Running",
+      "cyclisme": "Cycling",
+      "football": "Football (soccer)",
+      "mma": "MMA",
+      "musculation": "Strength training",
+      "natation": "Swimming",
+      "triathlon": "Triathlon"
+    },
+    "objectifs": {
+      "force_max": "Maximal strength",
+      "hypertrophie": "Muscle growth",
+      "puissance": "Power / explosiveness",
+      "endurance_musculaire": "Muscular endurance",
+      "endurance_aerobie": "Aerobic endurance",
+      "capacite_anaerobie": "Anaerobic capacity / HIIT",
+      "perte_de_gras": "Fat loss",
+      "mobilite": "Mobility / flexibility",
+      "reathletisation": "Return to sport / prevention",
+      "maintien": "Maintenance"
+    },
+    "objectifsDescription": {
+      "force_max": "Heavy loads, few reps.",
+      "hypertrophie": "Building muscle mass.",
+      "puissance": "Speed of movement, plyometrics.",
+      "endurance_musculaire": "Long sets, short rests.",
+      "endurance_aerobie": "Aerobic capacity and power, VO2max.",
+      "capacite_anaerobie": "Repeated high-intensity efforts.",
+      "perte_de_gras": "High energy output while keeping muscle.",
+      "mobilite": "Range of motion and control.",
+      "reathletisation": "Coming back from injury and prevention.",
+      "maintien": "Keep your level with less volume."
     }
   }
 }
