@@ -13,7 +13,15 @@
     "bientotTitre": "Bientôt disponible",
     "bientotTexte": "Cette action arrive dans une prochaine étape.",
     "ecranAVenir": "Cet écran arrive dans une prochaine étape.",
-    "dureeHeures": "{{h}} h {{m}}"
+    "dureeHeures": "{{h}} h {{m}}",
+    "retour": "Retour",
+    "oui": "Oui",
+    "non": "Non",
+    "date": {
+      "jour": "Jour",
+      "mois": "Mois",
+      "annee": "Année"
+    }
   },
   "accueil": {
     "bonjour": "Bonjour {{prenom}}",
@@ -128,6 +136,281 @@
     "deconnexion": "Se déconnecter"
   },
   "inscription": {
-    "titre": "Inscription"
+    "suivant": "Suivant",
+    "terminer": "Créer mon programme",
+    "progression": "Question {{numero}} sur {{total}}",
+    "compteur": "{{numero}}/{{total}}",
+    "langue": "Langue",
+    "langues": {
+      "fr": "Français",
+      "en": "Anglais"
+    },
+    "accueil": {
+      "titre": "Ton coach démarre ici",
+      "sousTitre": "Quelques questions pour construire ton premier programme.",
+      "rapide": "Rapide · 4 min",
+      "rapideTexte": "L'essentiel pour démarrer. Le coach te demandera le reste au fil des jours.",
+      "complet": "Complet · 15 min",
+      "completTexte": "Profil physique, autres sports, compétition, lieu et style de coaching.",
+      "commencer": "Commencer"
+    },
+    "consentements": {
+      "titre": "Tes données, tes choix",
+      "sousTitre": "On te demande ton accord avant toute question de santé.",
+      "cgu": "J'accepte les conditions d'utilisation",
+      "cguTexte": "Obligatoire pour utiliser Athlenis.",
+      "sante": "J'accepte que le coach utilise mes données de santé",
+      "santeTexte": "Douleurs et blessures, pour adapter tes séances. Sans cet accord, on ne te pose pas ces questions.",
+      "retrait": "Tu peux retirer ces accords à tout moment dans ton profil."
+    },
+    "etapes": {
+      "identite": {
+        "titre": "Faisons connaissance",
+        "sousTitre": "Ton prénom et ta date de naissance."
+      },
+      "profilPhysique": {
+        "titre": "Ton profil physique",
+        "sousTitre": "Pour calculer tes charges et tes besoins."
+      },
+      "sport": {
+        "titre": "Ton sport principal",
+        "sousTitre": "Le programme est construit autour de lui."
+      },
+      "objectif": {
+        "titre": "Ton objectif",
+        "sousTitre": "Ce que tu veux développer en priorité."
+      },
+      "niveau": {
+        "titre": "Ton niveau",
+        "sousTitre": "Dans ton sport principal."
+      },
+      "sportsSecondaires": {
+        "titre": "Tes autres sports",
+        "sousTitre": "Facultatif : le coach en tient compte dans la charge."
+      },
+      "disponibilites": {
+        "titre": "Tes disponibilités",
+        "sousTitre": "Quand peux-tu t'entraîner ?"
+      },
+      "lieu": {
+        "titre": "Où t'entraînes-tu ?",
+        "sousTitre": "Ton lieu principal."
+      },
+      "competition": {
+        "titre": "Une compétition en vue ?",
+        "sousTitre": "Le programme se construira autour d'elle."
+      },
+      "douleurs": {
+        "titre": "Blessures et douleurs",
+        "sousTitre": "Celles que tu as en ce moment."
+      },
+      "coaching": {
+        "titre": "Ton style de coaching",
+        "sousTitre": "Comment veux-tu que le coach te parle ?"
+      }
+    },
+    "identite": {
+      "prenom": "Prénom",
+      "naissance": "Date de naissance"
+    },
+    "physique": {
+      "sexe": "Sexe",
+      "sexes": {
+        "homme": "Homme",
+        "femme": "Femme"
+      },
+      "taille": "Taille (cm)",
+      "poids": "Poids (kg)"
+    },
+    "niveau": {
+      "debutant": {
+        "titre": "Débutant",
+        "description": "Moins d'un an de pratique régulière."
+      },
+      "amateur": {
+        "titre": "Amateur",
+        "description": "Pratique régulière, sans viser la compétition."
+      },
+      "confirme": {
+        "titre": "Confirmé",
+        "description": "Entraînement structuré, compétitions régionales ou nationales."
+      },
+      "pro": {
+        "titre": "Pro",
+        "description": "Haut niveau, sélections, entraînement quotidien."
+      }
+    },
+    "dispos": {
+      "jours": "Jours",
+      "joursAide": "Choisis tous les jours où tu peux t'entraîner.",
+      "creneau": "Moment de la journée",
+      "duree": "Durée maximale par séance",
+      "minutes": "{{minutes}} min",
+      "joursCourts": {
+        "1": "L",
+        "2": "M",
+        "3": "M",
+        "4": "J",
+        "5": "V",
+        "6": "S",
+        "7": "D"
+      },
+      "joursLongs": {
+        "1": "Lundi",
+        "2": "Mardi",
+        "3": "Mercredi",
+        "4": "Jeudi",
+        "5": "Vendredi",
+        "6": "Samedi",
+        "7": "Dimanche"
+      },
+      "creneaux": {
+        "matin": "Matin",
+        "midi": "Midi",
+        "soir": "Soir"
+      }
+    },
+    "lieu": {
+      "salle": "Salle de sport",
+      "domicile": "Domicile",
+      "exterieur": "Extérieur",
+      "piste": "Piste d'athlétisme",
+      "piscine": "Piscine",
+      "terrain": "Terrain"
+    },
+    "competition": {
+      "question": "As-tu une compétition ou un objectif daté ?",
+      "nom": "Nom de l'événement",
+      "date": "Date",
+      "type": "Type",
+      "types": {
+        "competition": "Compétition",
+        "combat": "Combat",
+        "match": "Match",
+        "course": "Course",
+        "objectif_perso": "Objectif perso"
+      }
+    },
+    "douleurs": {
+      "aucune": "Aucune douleur ni blessure en ce moment",
+      "nature": "Type",
+      "natures": {
+        "douleur": "Douleur",
+        "blessure": "Blessure"
+      },
+      "zone": "Zone",
+      "cote": "Côté",
+      "cotes": {
+        "gauche": "Gauche",
+        "droit": "Droit",
+        "bilateral": "Des deux côtés",
+        "non_applicable": "Sans objet"
+      },
+      "gravite": "Intensité",
+      "gravites": {
+        "legere": "Légère",
+        "moderee": "Modérée",
+        "severe": "Sévère"
+      },
+      "ajouter": "Ajouter",
+      "retirer": "Retirer : {{douleur}}"
+    },
+    "zones": {
+      "cervicale": "Nuque",
+      "epaule": "Épaule",
+      "coude": "Coude",
+      "poignet_main": "Poignet et main",
+      "thoracique": "Haut du dos",
+      "lombaire": "Bas du dos",
+      "hanche": "Hanche",
+      "pubis_adducteurs": "Pubis et adducteurs",
+      "ischio_jambiers": "Ischio-jambiers",
+      "genou": "Genou",
+      "mollet": "Mollet",
+      "tendon_achille": "Tendon d'Achille",
+      "cheville": "Cheville",
+      "pied": "Pied"
+    },
+    "coaching": {
+      "longueur": "Longueur des réponses",
+      "tons": {
+        "strict": {
+          "titre": "Exigeant",
+          "description": "Direct, sans détour, pousse à se dépasser."
+        },
+        "equilibre": {
+          "titre": "Équilibré",
+          "description": "Clair et motivant, ferme quand il le faut."
+        },
+        "bienveillant": {
+          "titre": "Bienveillant",
+          "description": "Encourageant, attentif à ton ressenti."
+        }
+      },
+      "longueurs": {
+        "bref": "Brèves",
+        "standard": "Standard",
+        "detaille": "Détaillées"
+      }
+    },
+    "parent": {
+      "titre": "Un parent doit t'accompagner",
+      "texte": "Avant 15 ans, un compte parent est obligatoire pour utiliser Athlenis. Demande à un parent de créer son compte : il pourra ensuite t'inviter.",
+      "corriger": "Corriger ma date de naissance"
+    },
+    "generation": {
+      "essai": "4 semaines d'essai de l'offre Compétition offertes.",
+      "titre": "Ton coach construit ton programme",
+      "duree": "Environ une minute. Garde l'app ouverte.",
+      "etapes": {
+        "profil": "Analyse de ton profil…",
+        "doctrine": "Application des principes d'entraînement…",
+        "blocs": "Construction des blocs du programme…",
+        "seances": "Préparation de tes premières séances…",
+        "finalisation": "Dernières vérifications…"
+      },
+      "echecTitre": "La génération n'a pas abouti"
+    },
+    "erreurs": {
+      "date": "Cette date n'existe pas.",
+      "dateFuture": "Choisis une date à venir.",
+      "enregistrement": "Impossible d'enregistrer tes réponses. Vérifie ta connexion puis réessaie."
+    }
+  },
+  "referentiels": {
+    "sports": {
+      "boxe_anglaise": "Boxe anglaise",
+      "course_a_pied": "Course à pied",
+      "cyclisme": "Cyclisme",
+      "football": "Football",
+      "mma": "MMA",
+      "musculation": "Musculation",
+      "natation": "Natation",
+      "triathlon": "Triathlon"
+    },
+    "objectifs": {
+      "force_max": "Force maximale",
+      "hypertrophie": "Hypertrophie",
+      "puissance": "Puissance / explosivité",
+      "endurance_musculaire": "Endurance musculaire",
+      "endurance_aerobie": "Endurance aérobie",
+      "capacite_anaerobie": "Capacité anaérobie / HIIT",
+      "perte_de_gras": "Perte de gras",
+      "mobilite": "Mobilité / souplesse",
+      "reathletisation": "Réathlétisation / prévention",
+      "maintien": "Maintien"
+    },
+    "objectifsDescription": {
+      "force_max": "Charges lourdes, peu de répétitions.",
+      "hypertrophie": "Prise de masse musculaire.",
+      "puissance": "Vitesse d'exécution, pliométrie.",
+      "endurance_musculaire": "Séries longues, repos courts.",
+      "endurance_aerobie": "Capacité et puissance aérobie, VO2max.",
+      "capacite_anaerobie": "Efforts intenses répétés.",
+      "perte_de_gras": "Dépense élevée en préservant le muscle.",
+      "mobilite": "Amplitude articulaire et contrôle.",
+      "reathletisation": "Retour de blessure et prévention.",
+      "maintien": "Garder ton niveau avec moins de volume."
+    }
   }
 }

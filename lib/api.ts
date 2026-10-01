@@ -23,7 +23,8 @@ type Methode = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 type Options = {
   corps?: unknown;
-  signal?: AbortSignal;
+  /** Délai maximal de la requête (ex. 150 s pour la génération du programme). */
+  delaiMs?: number;
 };
 
 async function jetonActuel(): Promise<string | null> {
@@ -36,17 +37,23 @@ async function jetonRafraichi(): Promise<string | null> {
   return error ? null : (data.session?.access_token ?? null);
 }
 
-function envoyer(methode: Methode, chemin: string, jeton: string | null, options: Options) {
-  return fetch(`${env.apiUrl.replace(/\/$/, '')}${chemin}`, {
-    method: methode,
-    headers: {
-      Accept: 'application/json',
-      ...(options.corps !== undefined ? { 'Content-Type': 'application/json' } : {}),
-      ...(jeton ? { Authorization: `Bearer ${jeton}` } : {}),
-    },
-    body: options.corps !== undefined ? JSON.stringify(options.corps) : undefined,
-    signal: options.signal,
-  });
+async function envoyer(methode: Methode, chemin: string, jeton: string | null, options: Options) {
+  const controleur = new AbortController();
+  const minuteur = options.delaiMs ? setTimeout(() => controleur.abort(), options.delaiMs) : undefined;
+  try {
+    return await fetch(`${env.apiUrl.replace(/\/$/, '')}${chemin}`, {
+      method: methode,
+      headers: {
+        Accept: 'application/json',
+        ...(options.corps !== undefined ? { 'Content-Type': 'application/json' } : {}),
+        ...(jeton ? { Authorization: `Bearer ${jeton}` } : {}),
+      },
+      body: options.corps !== undefined ? JSON.stringify(options.corps) : undefined,
+      signal: controleur.signal,
+    });
+  } finally {
+    clearTimeout(minuteur);
+  }
 }
 
 async function lireCorps(reponse: Response): Promise<unknown> {
@@ -82,6 +89,15 @@ async function requete<T>(methode: Methode, chemin: string, options: Options = {
     throw new ApiError(reponse.status, `${methode} ${chemin} : ${reponse.status}`, corps);
   }
   return corps as T;
+}
+
+/** Message lisible renvoyé par le serveur (`{ erreur }`), s'il y en a un. */
+export function messageServeur(erreur: unknown): string | null {
+  if (erreur instanceof ApiError && erreur.status >= 400 && erreur.status < 500) {
+    const corps = erreur.corps as { erreur?: unknown } | undefined;
+    if (corps && typeof corps.erreur === 'string') return corps.erreur;
+  }
+  return null;
 }
 
 export const api = {

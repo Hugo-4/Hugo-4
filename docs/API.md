@@ -36,7 +36,7 @@ Source : `routes/athlete.js` et `agents/programme/generateurProgramme.js` du ser
 - **Réponse** : `{ programme_id, nom, blocs: [{ nom, phase, date_debut, date_fin }], bloc_en_cours }`.
 - **Synchrone** : la réponse arrive quand le programme et le premier bloc sont prêts, en général entre 40 et 90 secondes. Délai d'attente du client : 150 secondes. Pas d'interrogation répétée à prévoir. Les aperçus des séances se génèrent ensuite en arrière-plan : la première ouverture d'une séance peut prendre quelques secondes de plus.
 - En cas d'échec réseau pendant l'attente, ne relance pas tout de suite : vérifie d'abord avec `GET /programme` si un programme actif existe déjà, pour ne pas en créer deux.
-- **Fin d'inscription** : `users.onboarding_complete` passe à `true` [côté base, automatiquement, dès que le programme est créé — ou côté app après la réponse, selon la décision prise]. L'app relit ensuite ce statut et part sur Aujourd'hui.
+- **Fin d'inscription** : `users.onboarding_complete` passe à `true` côté base, automatiquement, dès qu'un programme est créé (déclencheur `programme_cree_marque_onboarding` sur `programmes`). L'app relit ensuite ce statut et part sur Aujourd'hui.
 
 ## Après la génération
 
