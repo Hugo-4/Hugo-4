@@ -1,0 +1,93 @@
+{
+  "onglets": {
+    "aujourdhui": "Today",
+    "programme": "Program",
+    "coach": "Coach",
+    "progres": "Progress",
+    "profil": "Profile"
+  },
+  "commun": {
+    "reessayer": "Try again",
+    "erreurTitre": "Couldn't load your data",
+    "erreurTexte": "Check your connection and try again.",
+    "bientotTitre": "Coming soon",
+    "bientotTexte": "This action is coming in a later step.",
+    "ecranAVenir": "This screen is coming in a later step.",
+    "dureeHeures": "{{h}}h {{m}}m"
+  },
+  "accueil": {
+    "bonjour": "Hi {{prenom}}",
+    "a11yNotifications_zero": "Notifications, none new",
+    "a11yNotifications_one": "Notifications, {{count}} new",
+    "a11yNotifications_other": "Notifications, {{count}} new",
+    "a11yProfil": "Open my profile",
+    "videTitre": "Nothing planned yet",
+    "videTexte": "Your program will show up here as soon as it's ready.",
+    "forme": {
+      "titre": "Today's readiness",
+      "a11yScore": "Today's readiness: {{score}} out of 100",
+      "sommeil": "Sleep",
+      "hrv": "HRV",
+      "hrvValeur": "{{valeur}} ms",
+      "ecartNormale": "{{ecart}} vs baseline",
+      "ressenti": "Feeling",
+      "checkinTitre": "How are you feeling?",
+      "checkinTexte": "Do your check-in so your coach can adapt today's session.",
+      "checkinBouton": "Do my check-in"
+    },
+    "fatigue": {
+      "titre": "Fatigue",
+      "alleger": "Lighten my week",
+      "garder": "Keep my program",
+      "remplacee": "Your {{avant}} session is replaced by {{apres}} today."
+    },
+    "seance": {
+      "blocSemaine": "Block {{bloc}} · Week {{semaine}} / {{total}}",
+      "serie_one": "{{count}} week",
+      "serie_other": "{{count}} weeks",
+      "a11ySerie_one": "{{count}} successful week in a row",
+      "a11ySerie_other": "{{count}} successful weeks in a row",
+      "duree": "{{minutes}} min",
+      "rpeCible": "RPE {{rpe}}",
+      "exercices_one": "{{count}} exercise",
+      "exercices_other": "{{count}} exercises",
+      "plusExercices_one": "+ {{count}} exercise",
+      "plusExercices_other": "+ {{count}} exercises",
+      "demarrer": "Start session",
+      "modifier": "Adjust with the coach",
+      "repos": "Rest",
+      "reposTexte": "Recover well: that's part of getting better too.",
+      "prochaine": "Next session: {{titre}}, {{jour}}"
+    },
+    "semaine": {
+      "titre": "Your week",
+      "voirMois": "See the month",
+      "charge": "Weekly load",
+      "chargeFaible": "Low",
+      "chargeOptimale": "Optimal zone",
+      "chargeElevee": "High",
+      "a11yCharge": "Weekly load: {{niveau}}",
+      "a11yJour": "{{jour}}, {{type}}, {{statut}}",
+      "statut": {
+        "fait": "done",
+        "aujourdhui": "today",
+        "prevu": "planned",
+        "repos": "rest"
+      }
+    },
+    "nutrition": {
+      "titre": "Nutrition",
+      "calories": "{{valeur}} / {{objectif}} kcal",
+      "proteines": "Protein",
+      "glucides": "Carbs",
+      "eau": "Water",
+      "grammes": "{{valeur}} / {{objectif}} g",
+      "litres": "{{valeur}} / {{objectif}} L",
+      "ajouterRepas": "+ Meal",
+      "souvent": "Often eaten around this time"
+    },
+    "record": {
+      "titre": "Latest record"
+    }
+  }
+}
