@@ -1,0 +1,93 @@
+{
+  "onglets": {
+    "aujourdhui": "Aujourd'hui",
+    "programme": "Programme",
+    "coach": "Coach",
+    "progres": "Progrès",
+    "profil": "Profil"
+  },
+  "commun": {
+    "reessayer": "Réessayer",
+    "erreurTitre": "Impossible de charger les données",
+    "erreurTexte": "Vérifie ta connexion puis réessaie.",
+    "bientotTitre": "Bientôt disponible",
+    "bientotTexte": "Cette action arrive dans une prochaine étape.",
+    "ecranAVenir": "Cet écran arrive dans une prochaine étape.",
+    "dureeHeures": "{{h}} h {{m}}"
+  },
+  "accueil": {
+    "bonjour": "Bonjour {{prenom}}",
+    "a11yNotifications_zero": "Notifications, aucune nouvelle",
+    "a11yNotifications_one": "Notifications, {{count}} nouvelle",
+    "a11yNotifications_other": "Notifications, {{count}} nouvelles",
+    "a11yProfil": "Ouvrir mon profil",
+    "videTitre": "Rien de prévu pour le moment",
+    "videTexte": "Ton programme apparaîtra ici dès qu'il sera prêt.",
+    "forme": {
+      "titre": "Forme du jour",
+      "a11yScore": "Forme du jour : {{score}} sur 100",
+      "sommeil": "Sommeil",
+      "hrv": "HRV",
+      "hrvValeur": "{{valeur}} ms",
+      "ecartNormale": "{{ecart}} vs normale",
+      "ressenti": "Ressenti",
+      "checkinTitre": "Comment tu te sens ?",
+      "checkinTexte": "Fais ton check-in pour que le coach adapte ta séance du jour.",
+      "checkinBouton": "Faire mon check-in"
+    },
+    "fatigue": {
+      "titre": "Fatigue",
+      "alleger": "Alléger ma semaine",
+      "garder": "Garder mon programme",
+      "remplacee": "Ta séance {{avant}} est remplacée par {{apres}} aujourd'hui."
+    },
+    "seance": {
+      "blocSemaine": "Bloc {{bloc}} · Semaine {{semaine}} / {{total}}",
+      "serie_one": "{{count}} semaine",
+      "serie_other": "{{count}} semaines",
+      "a11ySerie_one": "{{count}} semaine réussie d'affilée",
+      "a11ySerie_other": "{{count}} semaines réussies d'affilée",
+      "duree": "{{minutes}} min",
+      "rpeCible": "RPE {{rpe}}",
+      "exercices_one": "{{count}} exercice",
+      "exercices_other": "{{count}} exercices",
+      "plusExercices_one": "+ {{count}} exercice",
+      "plusExercices_other": "+ {{count}} exercices",
+      "demarrer": "Démarrer la séance",
+      "modifier": "Modifier avec le coach",
+      "repos": "Repos",
+      "reposTexte": "Récupère bien : c'est aussi comme ça qu'on progresse.",
+      "prochaine": "Prochaine séance : {{titre}}, {{jour}}"
+    },
+    "semaine": {
+      "titre": "Ta semaine",
+      "voirMois": "Voir le mois",
+      "charge": "Charge de la semaine",
+      "chargeFaible": "Faible",
+      "chargeOptimale": "Zone optimale",
+      "chargeElevee": "Élevée",
+      "a11yCharge": "Charge de la semaine : {{niveau}}",
+      "a11yJour": "{{jour}}, {{type}}, {{statut}}",
+      "statut": {
+        "fait": "fait",
+        "aujourdhui": "aujourd'hui",
+        "prevu": "prévu",
+        "repos": "repos"
+      }
+    },
+    "nutrition": {
+      "titre": "Nutrition",
+      "calories": "{{valeur}} / {{objectif}} kcal",
+      "proteines": "Protéines",
+      "glucides": "Glucides",
+      "eau": "Eau",
+      "grammes": "{{valeur}} / {{objectif}} g",
+      "litres": "{{valeur}} / {{objectif}} L",
+      "ajouterRepas": "+ Repas",
+      "souvent": "Souvent mangé à cette heure"
+    },
+    "record": {
+      "titre": "Dernier record"
+    }
+  }
+}
