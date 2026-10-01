@@ -89,5 +89,45 @@
     "record": {
       "titre": "Latest record"
     }
+  },
+  "auth": {
+    "connexion": {
+      "titre": "Log in",
+      "sousTitre": "Good to see you again. Your coach is waiting.",
+      "bouton": "Log in",
+      "pasDeCompte": "No account yet?",
+      "creerCompte": "Create an account"
+    },
+    "creerCompte": {
+      "titre": "Create an account",
+      "sousTitre": "A few seconds, then we build your program.",
+      "bouton": "Create my account",
+      "dejaCompte": "Already have an account?",
+      "seConnecter": "Log in",
+      "confirmerEmailTitre": "Check your email",
+      "confirmerEmailTexte": "We sent a confirmation link to {{email}}. Tap it, then log in."
+    },
+    "champs": {
+      "email": "Email",
+      "motDePasse": "Password",
+      "motDePasseAide": "At least 8 characters",
+      "afficher": "Show password",
+      "masquer": "Hide password"
+    },
+    "erreurs": {
+      "emailInvalide": "Invalid email address.",
+      "motDePasseCourt": "Password must be at least 8 characters.",
+      "identifiants": "Wrong email or password.",
+      "dejaInscrit": "An account already exists with this email. Log in instead.",
+      "emailNonConfirme": "Please confirm your email with the link we sent first.",
+      "motDePasseFaible": "Password too weak: choose a longer or more varied one.",
+      "tropDeTentatives": "Too many attempts. Try again in a few minutes.",
+      "reseau": "No internet connection. Check your network.",
+      "inconnue": "Something went wrong. Please try again."
+    },
+    "deconnexion": "Log out"
+  },
+  "inscription": {
+    "titre": "Sign-up"
   }
 }

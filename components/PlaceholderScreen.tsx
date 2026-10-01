@@ -11,10 +11,12 @@ import { Screen } from './Screen';
 type Props = {
   titre: string;
   icon: ReactNode;
+  /** Actions affichées en bas de l'écran (ex. déconnexion). */
+  children?: ReactNode;
 };
 
 /** Écran provisoire pour les onglets qui seront construits dans les étapes suivantes. */
-export function PlaceholderScreen({ titre, icon }: Props) {
+export function PlaceholderScreen({ titre, icon, children }: Props) {
   const { t } = useTranslation();
   return (
     <Screen>
@@ -24,10 +26,12 @@ export function PlaceholderScreen({ titre, icon }: Props) {
         </AppText>
       </View>
       <EmptyState icon={icon} titre={t('commun.bientotTitre')} texte={t('commun.ecranAVenir')} />
+      {children ? <View style={styles.actions}>{children}</View> : null}
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   entete: { paddingHorizontal: spacing.ecran, paddingTop: spacing.l },
+  actions: { padding: spacing.ecran, gap: spacing.s },
 });

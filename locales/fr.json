@@ -89,5 +89,45 @@
     "record": {
       "titre": "Dernier record"
     }
+  },
+  "auth": {
+    "connexion": {
+      "titre": "Connexion",
+      "sousTitre": "Content de te revoir. Ton coach t'attend.",
+      "bouton": "Se connecter",
+      "pasDeCompte": "Pas encore de compte ?",
+      "creerCompte": "Créer un compte"
+    },
+    "creerCompte": {
+      "titre": "Créer un compte",
+      "sousTitre": "Quelques secondes, puis on construit ton programme.",
+      "bouton": "Créer mon compte",
+      "dejaCompte": "Déjà un compte ?",
+      "seConnecter": "Se connecter",
+      "confirmerEmailTitre": "Vérifie tes emails",
+      "confirmerEmailTexte": "Nous avons envoyé un lien de confirmation à {{email}}. Clique dessus, puis connecte-toi."
+    },
+    "champs": {
+      "email": "Email",
+      "motDePasse": "Mot de passe",
+      "motDePasseAide": "8 caractères minimum",
+      "afficher": "Afficher le mot de passe",
+      "masquer": "Masquer le mot de passe"
+    },
+    "erreurs": {
+      "emailInvalide": "Adresse email invalide.",
+      "motDePasseCourt": "Le mot de passe doit faire au moins 8 caractères.",
+      "identifiants": "Email ou mot de passe incorrect.",
+      "dejaInscrit": "Un compte existe déjà avec cet email. Connecte-toi.",
+      "emailNonConfirme": "Confirme d'abord ton email avec le lien reçu.",
+      "motDePasseFaible": "Mot de passe trop faible : choisis-en un plus long ou plus varié.",
+      "tropDeTentatives": "Trop de tentatives. Réessaie dans quelques minutes.",
+      "reseau": "Pas de connexion internet. Vérifie ton réseau.",
+      "inconnue": "Une erreur est survenue. Réessaie."
+    },
+    "deconnexion": "Se déconnecter"
+  },
+  "inscription": {
+    "titre": "Inscription"
   }
 }
