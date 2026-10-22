@@ -22,7 +22,8 @@
       "mois": "Month",
       "annee": "Year"
     },
-    "fermer": "Close"
+    "fermer": "Close",
+    "horodatage": "{{date}} at {{heure}}"
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
@@ -106,7 +107,8 @@
       "sousTitre": "Good to see you again. Your coach is waiting.",
       "bouton": "Log in",
       "pasDeCompte": "No account yet?",
-      "creerCompte": "Create an account"
+      "creerCompte": "Create an account",
+      "oublie": "Forgot password?"
     },
     "creerCompte": {
       "titre": "Create an account",
@@ -133,9 +135,27 @@
       "motDePasseFaible": "Password too weak: choose a longer or more varied one.",
       "tropDeTentatives": "Too many attempts. Try again in a few minutes.",
       "reseau": "No internet connection. Check your network.",
-      "inconnue": "Something went wrong. Please try again."
+      "inconnue": "Something went wrong. Please try again.",
+      "lien": "The link didn't work: {{detail}}"
     },
-    "deconnexion": "Log out"
+    "deconnexion": "Log out",
+    "ou": "or",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple",
+    "connexionEnCours": "Signing you in…",
+    "oublie": {
+      "titre": "Forgot password",
+      "sousTitre": "Enter your email: we'll send you a link to choose a new password.",
+      "bouton": "Send me the link",
+      "envoyeTitre": "Check your email",
+      "envoyeTexte": "If an account exists for {{email}}, a reset link has just been sent. Open it on this phone.",
+      "retour": "Back to log in"
+    },
+    "nouveau": {
+      "titre": "New password",
+      "sousTitre": "Choose your new password.",
+      "bouton": "Save password"
+    }
   },
   "inscription": {
     "suivant": "Next",
@@ -178,10 +198,6 @@
         "titre": "Your main sport",
         "sousTitre": "Your program is built around it."
       },
-      "objectif": {
-        "titre": "Your goal",
-        "sousTitre": "What you want to develop first."
-      },
       "niveau": {
         "titre": "Your level",
         "sousTitre": "In your main sport."
@@ -209,6 +225,38 @@
       "coaching": {
         "titre": "Your coaching style",
         "sousTitre": "How do you want your coach to talk to you?"
+      },
+      "pays": {
+        "titre": "Your country",
+        "sousTitre": "To apply your country's rules."
+      },
+      "pratique": {
+        "titre": "Do you already play a sport?",
+        "sousTitre": "We'll adapt the questions to you."
+      },
+      "ambition": {
+        "titre": "Your ambition",
+        "sousTitre": "What you're aiming for in this sport."
+      },
+      "objectifSport": {
+        "titre": "Your goal",
+        "sousTitre": "Pick the one that fits you best."
+      },
+      "objectifsSecondaires": {
+        "titre": "Anything else?",
+        "sousTitre": "Optional: you can pick several."
+      },
+      "besoins": {
+        "titre": "What you're looking for",
+        "sousTitre": "We'll suggest sports that match."
+      },
+      "contraintes": {
+        "titre": "Your constraints",
+        "sousTitre": "So we only suggest sports that work for you."
+      },
+      "recommandation": {
+        "titre": "Three sports for you",
+        "sousTitre": "Pick the one you like most."
       }
     },
     "identite": {
@@ -377,6 +425,134 @@
       "date": "This date doesn't exist.",
       "dateFuture": "Pick a future date.",
       "enregistrement": "Couldn't save your answers. Check your connection and try again."
+    },
+    "cadre": {
+      "loisir": "Recreational",
+      "amateur": "Amateur (club, competitions)",
+      "pro": "Pro",
+      "aide": "Recreational: for fun. Amateur: in a club or competing. Pro: it's your job or you aim for elite level."
+    },
+    "pratique": {
+      "oui": "Yes, I have a sport",
+      "ouiTexte": "Running, boxing, strength training, swimming…",
+      "non": "Not yet",
+      "nonTexte": "We'll help you find the right sport."
+    },
+    "ambition": {
+      "plaisir": "Fun and fitness",
+      "progresser": "Get better",
+      "competition": "Amateur competition",
+      "elite": "Elite"
+    },
+    "echeance": {
+      "epreuve": "Event name",
+      "date": "Event date",
+      "precision": {
+        "distance": "Distance",
+        "categorie_poids": "Weight class (kg)",
+        "poste": "Position"
+      },
+      "precisionAide": {
+        "distance": "For example: 10 km, half marathon, 70.3",
+        "categorie_poids": "For example: 66",
+        "poste": "For example: midfielder, goalkeeper"
+      }
+    },
+    "secondaires": {
+      "hypertrophie": "Build muscle",
+      "perte_de_gras": "Lose fat",
+      "mobilite": "Improve mobility",
+      "reathletisation": "Prevent injuries"
+    },
+    "besoins": {
+      "aide_one": "Pick {{count}} answer.",
+      "aide_other": "Pick up to {{count}} answers."
+    },
+    "contraintes": {
+      "impact": "Your joints",
+      "impactAide": "Pain, injuries or fragile joints? Choose a lower impact.",
+      "impacts": {
+        "1": "Low impact only",
+        "2": "Medium impact",
+        "3": "No constraint"
+      },
+      "lieux": "Where can you train?",
+      "plusieurs": "You can pick several.",
+      "lieuxPossibles": {
+        "salle": "Gym",
+        "maison": "At home",
+        "exterieur": "Outdoors",
+        "piscine": "Pool",
+        "club": "In a club"
+      },
+      "encadrement": "On your own or coached?",
+      "encadrements": {
+        "seul": "On my own",
+        "club": "Coached in a club",
+        "indifferent": "Either"
+      },
+      "temps": "Time per week",
+      "heures": "{{heures}} h"
+    },
+    "recommandation": {
+      "aucunTitre": "No sport matches",
+      "aucunTexte": "Go back and relax a constraint (places, time, impact)."
+    },
+    "niveauRepere": {
+      "boxe_anglaise": {
+        "debutant": "Never boxed or less than a year.",
+        "amateur": "Regular club training, sparring.",
+        "confirme": "A few amateur bouts.",
+        "pro": "Pro bouts or national team."
+      },
+      "mma": {
+        "debutant": "Never trained or less than a year.",
+        "amateur": "Regular training, sparring.",
+        "confirme": "A few amateur fights.",
+        "pro": "Pro fights."
+      },
+      "course_a_pied": {
+        "debutant": "10 km in over 1 h, or never run.",
+        "amateur": "10 km in 50 min to 1 h.",
+        "confirme": "10 km in 38 to 50 min.",
+        "pro": "10 km under 38 min."
+      },
+      "trail": {
+        "debutant": "Runs under 15 km.",
+        "amateur": "20 to 40 km trails.",
+        "confirme": "Ultras or regional podiums.",
+        "pro": "Elite, sponsored."
+      },
+      "cyclisme": {
+        "debutant": "Occasional rides, FTP unknown.",
+        "amateur": "FTP around 2.5 W/kg.",
+        "confirme": "FTP around 3.5 W/kg.",
+        "pro": "FTP above 4.5 W/kg."
+      },
+      "natation": {
+        "debutant": "Under 400 m without stopping.",
+        "amateur": "1,500 m without stopping.",
+        "confirme": "100 m freestyle under 1:30.",
+        "pro": "National level."
+      },
+      "triathlon": {
+        "debutant": "Never done a triathlon.",
+        "amateur": "Sprint or Olympic distance finished.",
+        "confirme": "70.3 or Ironman finished.",
+        "pro": "Elite or top age-grouper."
+      },
+      "musculation": {
+        "debutant": "Less than a year of training.",
+        "amateur": "Squat bodyweight.",
+        "confirme": "Squat 1.5 × bodyweight.",
+        "pro": "Competing (powerlifting, weightlifting)."
+      },
+      "football": {
+        "debutant": "Casual or just starting.",
+        "amateur": "Club, local league.",
+        "confirme": "Regional or national amateur level.",
+        "pro": "Academy or pro."
+      }
     }
   },
   "referentiels": {
@@ -388,7 +564,8 @@
       "mma": "MMA",
       "musculation": "Strength training",
       "natation": "Swimming",
-      "triathlon": "Triathlon"
+      "triathlon": "Triathlon",
+      "trail": "Trail"
     },
     "objectifs": {
       "force_max": "Maximal strength",
@@ -485,5 +662,58 @@
     "secondes": "{{valeur}} s",
     "metres": "{{valeur}} m",
     "rir": "RIR {{valeur}}"
+  },
+  "pays": {
+    "FR": "France",
+    "BE": "Belgium",
+    "CH": "Switzerland",
+    "LU": "Luxembourg",
+    "MC": "Monaco",
+    "CA": "Canada",
+    "MA": "Morocco",
+    "DZ": "Algeria",
+    "TN": "Tunisia",
+    "SN": "Senegal",
+    "CI": "Côte d'Ivoire",
+    "CM": "Cameroon",
+    "DE": "Germany",
+    "ES": "Spain",
+    "IT": "Italy",
+    "PT": "Portugal",
+    "GB": "United Kingdom",
+    "IE": "Ireland",
+    "NL": "Netherlands",
+    "US": "United States"
+  },
+  "profil": {
+    "modifier": "Edit",
+    "enregistrer": "Save",
+    "nonRenseigne": "Not set",
+    "identite": {
+      "titre": "Identity",
+      "pays": "Country",
+      "mineur": "Under 15, a parent account is required: check your date of birth."
+    },
+    "sports": {
+      "titre": "My sports",
+      "aucun": "No sport saved.",
+      "principal": "Main",
+      "secondaire": "Secondary",
+      "cadre": "Practice setting",
+      "introuvable": "This sport is no longer in your profile."
+    },
+    "consentements": {
+      "titre": "Consents",
+      "cgu": "Terms of use",
+      "sante": "Health data",
+      "statut": "Status",
+      "accordeLe": "Granted on {{horodatage}}",
+      "retireLe": "Withdrawn on {{horodatage}}",
+      "jamais": "Not granted",
+      "accorder": "Give my consent",
+      "retirer": "Withdraw my consent",
+      "effetRetrait": "If you withdraw your consent, the coach won't ask you health questions (pain, injuries) anymore and nothing new will be stored.",
+      "cguRetrait": "The terms of use are required to use Athlenis. To refuse them, you need to delete your account."
+    }
   }
 }

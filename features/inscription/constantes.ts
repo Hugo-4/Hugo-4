@@ -61,3 +61,41 @@ export type Ton = (typeof TONS)[number];
 
 export const LONGUEURS = ['bref', 'standard', 'detaille'] as const;
 export type Longueur = (typeof LONGUEURS)[number];
+
+/** Cadre de pratique par sport (`user_sport_profiles.cadre_pratique`, défaut en base : 'loisir'). */
+export const CADRES = ['loisir', 'amateur', 'pro'] as const;
+export type Cadre = (typeof CADRES)[number];
+
+/**
+ * Pays (code ISO 3166-1 alpha-2 dans `user_profiles.pays`) : sert à appliquer
+ * les règles françaises ou internationales côté serveur.
+ */
+export const PAYS = [
+  'FR', 'BE', 'CH', 'LU', 'MC', 'CA', 'MA', 'DZ', 'TN', 'SN',
+  'CI', 'CM', 'DE', 'ES', 'IT', 'PT', 'GB', 'IE', 'NL', 'US',
+] as const;
+export type Pays = (typeof PAYS)[number];
+
+/** Ambition dans le sport (`user_sport_profiles.ambition`) ; la base en déduit `cadre_pratique`. */
+export const AMBITIONS = ['plaisir', 'progresser', 'competition', 'elite'] as const;
+export type Ambition = (typeof AMBITIONS)[number];
+
+/** Parcours B (pas encore de sport) : 2 besoins au maximum. */
+export const MAX_BESOINS = 2;
+
+/** Impact articulaire maximal toléré (`recommander_sports.p_impact_max`) : 1 faible, 2 moyen, 3 élevé. */
+export const IMPACTS = [1, 2, 3] as const;
+export type Impact = (typeof IMPACTS)[number];
+
+/** Lieux possibles (`sport_caracteristiques.lieux`). */
+export const LIEUX_POSSIBLES = ['salle', 'maison', 'exterieur', 'piscine', 'club'] as const;
+
+/** Seul, encadré en club, ou peu importe (`p_prefere_encadre` : false / true / null). */
+export const ENCADREMENTS = ['seul', 'club', 'indifferent'] as const;
+export type Encadrement = (typeof ENCADREMENTS)[number];
+
+/** Temps disponible par semaine, en minutes (`p_minutes_semaine`). */
+export const MINUTES_SEMAINE = [60, 90, 120, 180, 240, 300] as const;
+
+/** Précision demandée par un objectif (`objectifs_sport.precision_demandee`). */
+export type Precision = 'distance' | 'categorie_poids' | 'poste';

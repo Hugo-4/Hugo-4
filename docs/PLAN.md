@@ -17,10 +17,14 @@ Une étape par session de travail. Chaque étape se termine par une app qui dém
 - **Test** : je crée un compte, je ferme l'app, je la rouvre et je suis toujours connecté.
 
 ## Étape 3 — Inscription (questionnaire)
+- Prérequis : la migration `migration_objectifs_sport.sql` est appliquée (tables `objectifs_sport`, `besoins_debutant`, `sport_caracteristiques`, `recommandation_sport`, fonction `recommander_sports`, colonnes `ambition`, `objectif_sport_id`, `echeance`, `objectifs_secondaires`).
+- Date de naissance obligatoire, puis « Tu pratiques déjà un sport ? » : parcours A (sport → ambition → objectif précis → niveau actuel → objectifs secondaires) ou parcours B (besoins → contraintes → 3 sports recommandés → objectif précis). Détail dans la fiche Inscription.
 - Choix Rapide (4 min) ou Complet (15 min), suivi du parcours correspondant (voir fiche).
+- Côté serveur : `POST /programme/generer` lit `objectif_sport_id` et passe `objectifs_sport.qualite_principale` (et la pondération `qualites`) au générateur ; les objectifs secondaires ajustent la nutrition et le volume, jamais l'objectif principal.
 - Écran des consentements (CGU, données de santé, santé féminine si concerné) avant toute question de santé ; enregistrement dans `consentements`.
 - À la fin : `POST /programme/generer`, écran d'attente animé pendant la génération.
 - **Test** : je termine le parcours Rapide et j'arrive sur Aujourd'hui avec mon vrai premier programme.
+- **Test** : en choisissant Boxe puis Compétition amateur, je vois « Préparer mes combats amateurs », jamais « Force maximale » ni « Perte de gras » ; en répondant « pas encore de sport » + « me défouler », la boxe fait partie des trois sports proposés.
 
 ## Étape 4 — Aujourd'hui branché sur le serveur
 - `GET /accueil` remplace les données fictives ; check-in du matin (énergie, sommeil, courbatures, motivation, stress, douleurs, « c'est passager ? »).

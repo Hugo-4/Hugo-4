@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { AuthForm } from '@/features/auth/components/AuthForm';
+import { BoutonsSociaux } from '@/features/auth/components/BoutonsSociaux';
 import { EmailEnvoye } from '@/features/auth/components/EmailEnvoye';
 import { cleErreurAuth } from '@/features/auth/erreurs';
 import { useCreationCompte } from '@/features/auth/useAuthActions';
@@ -27,6 +28,7 @@ export default function CreerCompteScreen() {
       lienTexte={t('auth.creerCompte.dejaCompte')}
       lienLibelle={t('auth.creerCompte.seConnecter')}
       onLien={() => router.replace('/connexion')}
+      pied={<BoutonsSociaux />}
     />
   );
 }

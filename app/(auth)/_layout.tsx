@@ -11,6 +11,8 @@ export default function AuthLayout() {
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.fond } }}>
       <Stack.Screen name="connexion" />
       <Stack.Screen name="creer-compte" />
+      <Stack.Screen name="mot-de-passe-oublie" />
+      <Stack.Screen name="auth-callback" />
     </Stack>
   );
 }

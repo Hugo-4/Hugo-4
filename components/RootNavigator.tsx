@@ -15,11 +15,12 @@ type Props = {
 
 /**
  * Redirection selon l'état du compte :
- * non connecté → connexion ; connecté sans profil terminé → Inscription ; sinon → onglets (Aujourd'hui).
+ * lien « mot de passe oublié » → nouveau mot de passe ; non connecté → connexion ;
+ * connecté sans profil terminé → Inscription ; sinon → onglets (Aujourd'hui).
  * L'écran de démarrage reste affiché tant que cet état n'est pas connu.
  */
 export function RootNavigator({ policesPretes }: Props) {
-  const { session, pret } = useSession();
+  const { session, pret, recuperation } = useSession();
   const statut = useStatutCompte(session?.user.id);
   const connecte = session !== null;
   const etatConnu = pret && (!connecte || !statut.isPending);
@@ -45,15 +46,19 @@ export function RootNavigator({ policesPretes }: Props) {
 
   return (
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.fond } }}>
-      <Stack.Protected guard={!connecte}>
+      <Stack.Protected guard={recuperation}>
+        <Stack.Screen name="nouveau-mot-de-passe" />
+      </Stack.Protected>
+      <Stack.Protected guard={!connecte && !recuperation}>
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
-      <Stack.Protected guard={connecte && !profilTermine}>
+      <Stack.Protected guard={connecte && !recuperation && !profilTermine}>
         <Stack.Screen name="inscription" />
       </Stack.Protected>
-      <Stack.Protected guard={connecte && profilTermine}>
+      <Stack.Protected guard={connecte && !recuperation && profilTermine}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="checkin" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="compte" />
       </Stack.Protected>
     </Stack>
   );

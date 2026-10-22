@@ -31,6 +31,14 @@ Source : `routes/athlete.js` et `agents/programme/generateurProgramme.js` du ser
 
 **Disponibilités** : sans créneaux enregistrés, le serveur prend par défaut lundi, mardi, jeudi et samedi le soir. Il faut donc toujours les enregistrer.
 
+## Inscription v2 : objectif précis (docs/PLAN.md, étape 3)
+
+- **Parcours A** : `user_sport_profiles` du sport principal reçoit `ambition` (`plaisir`, `progresser`, `competition`, `elite` ; la base en déduit `cadre_pratique`), `objectif_sport_id` (→ `objectifs_sport`), `echeance`, `objectifs_secondaires` (slugs de `objectifs_entrainement` où `proposable_en_secondaire`), `niveau`.
+- **Parcours B** : `rpc('recommander_sports', { p_besoins, p_impact_max, p_lieux, p_prefere_encadre, p_minutes_semaine, p_age })` → 3 sports ; le sport choisi est enregistré avec `ambition = 'plaisir'` et `niveau = 'debutant'`.
+- **Format de `user_sport_profiles.echeance`** (jsonb, défini par l'app) : `{ "date": "AAAA-MM-JJ", "epreuve": "texte", "distance": "texte", "categorie_poids_kg": 66, "poste": "texte" }` — seules les clés demandées par l'objectif sont présentes (`echeance_requise` → `date` et `epreuve` ; `precision_demandee` → `distance`, `categorie_poids_kg` ou `poste`). Quand il y a une date, un événement A est aussi créé dans `evenements_athlete`.
+- **Pont avec le générateur actuel** : tant que `POST /programme/generer` lit `objectif_id` (objectifs_entrainement) et pas encore `objectif_sport_id`, l'app renseigne aussi `objectif_id` avec la qualité principale de l'objectif choisi (`objectifs_sport.qualite_principale`). Rien de tout cela n'est affiché à l'athlète.
+- **À faire côté serveur** : lire `objectif_sport_id`, `objectifs_sport.qualites` (pondération) et `objectifs_secondaires` (nutrition et volume, jamais l'objectif principal), puis l'échéance.
+
 ## POST /programme/generer
 
 - **Corps** (tout est facultatif) : `{ "date_debut": "AAAA-MM-JJ", "nb_semaines": 4-26 }`. Sans `date_debut` : aujourd'hui. Sans `nb_semaines` : 16 semaines, ou jusqu'à la compétition A si elle existe.

@@ -40,3 +40,17 @@ export function dateLocale(iso: string): Date {
   const [annee, mois, jour] = iso.split('-').map(Number);
   return new Date(annee, mois - 1, jour);
 }
+
+/** Date courte : « 12/03/1998 » / « 3/12/1998 ». */
+export function formatDateCourte(iso: string): string {
+  return dateLocale(iso).toLocaleDateString(i18n.language, { day: 'numeric', month: 'numeric', year: 'numeric' });
+}
+
+/** Horodatage : « 22/10/2026 à 17:41 ». */
+export function formatHorodatage(iso: string): string {
+  const date = new Date(iso);
+  return i18n.t('commun.horodatage', {
+    date: date.toLocaleDateString(i18n.language, { day: 'numeric', month: 'numeric', year: 'numeric' }),
+    heure: date.toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' }),
+  });
+}
