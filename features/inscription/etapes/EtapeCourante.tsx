@@ -1,17 +1,22 @@
 import type { ComponentType } from 'react';
 
 import type { EtapeId } from '../etapes';
-import { EtapeCadre } from './EtapeCadre';
+import { EtapeAmbition } from './EtapeAmbition';
+import { EtapeBesoins } from './EtapeBesoins';
 import { EtapeCoaching } from './EtapeCoaching';
 import { EtapeCompetition } from './EtapeCompetition';
+import { EtapeContraintes } from './EtapeContraintes';
 import { EtapeDisponibilites } from './EtapeDisponibilites';
 import { EtapeDouleurs } from './EtapeDouleurs';
 import { EtapeIdentite } from './EtapeIdentite';
 import { EtapeLieu } from './EtapeLieu';
 import { EtapeNiveau } from './EtapeNiveau';
-import { EtapeObjectif } from './EtapeObjectif';
+import { EtapeObjectifSport } from './EtapeObjectifSport';
+import { EtapeObjectifsSecondaires } from './EtapeObjectifsSecondaires';
 import { EtapePays } from './EtapePays';
+import { EtapePratique } from './EtapePratique';
 import { EtapeProfilPhysique } from './EtapeProfilPhysique';
+import { EtapeRecommandation } from './EtapeRecommandation';
 import { EtapeSport } from './EtapeSport';
 import { EtapeSportsSecondaires } from './EtapeSportsSecondaires';
 
@@ -19,11 +24,16 @@ const COMPOSANTS: Record<EtapeId, ComponentType> = {
   identite: EtapeIdentite,
   pays: EtapePays,
   profilPhysique: EtapeProfilPhysique,
+  pratique: EtapePratique,
   sport: EtapeSport,
-  objectif: EtapeObjectif,
+  ambition: EtapeAmbition,
+  objectifSport: EtapeObjectifSport,
   niveau: EtapeNiveau,
+  objectifsSecondaires: EtapeObjectifsSecondaires,
+  besoins: EtapeBesoins,
+  contraintes: EtapeContraintes,
+  recommandation: EtapeRecommandation,
   sportsSecondaires: EtapeSportsSecondaires,
-  cadre: EtapeCadre,
   disponibilites: EtapeDisponibilites,
   lieu: EtapeLieu,
   competition: EtapeCompetition,

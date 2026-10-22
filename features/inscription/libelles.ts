@@ -1,6 +1,6 @@
 import i18n from '@/lib/i18n';
 
-import type { Referentiel } from './useReferentiels';
+import type { Bilingue, Referentiel } from './useReferentiels';
 
 /**
  * Libellé traduit d'un sport ou d'un objectif à partir de son slug ;
@@ -11,7 +11,7 @@ export function libelleReferentiel(groupe: 'sports' | 'objectifs', item: Referen
   return i18n.exists(cle) ? String(i18n.t(cle as never)) : item.nom;
 }
 
-export function descriptionObjectif(item: Referentiel): string | undefined {
-  const cle = `referentiels.objectifsDescription.${item.slug}`;
-  return i18n.exists(cle) ? String(i18n.t(cle as never)) : undefined;
+/** Texte bilingue stocké en base (`*_fr` / `*_en`) dans la langue de l'app. */
+export function texteLocal(texte: Bilingue): string {
+  return i18n.language === 'en' ? texte.en : texte.fr;
 }

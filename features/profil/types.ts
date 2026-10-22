@@ -1,4 +1,4 @@
-import type { Cadre, Niveau, Pays } from '@/features/inscription/constantes';
+import type { Ambition, Cadre, Niveau, Pays } from '@/features/inscription/constantes';
 
 export type Identite = {
   prenom: string | null;
@@ -12,9 +12,11 @@ export type SportAthlete = {
   role: 'principal' | 'complementaire' | 'maintien' | 'loisir' | null;
   niveau: Niveau | null;
   cadre_pratique: Cadre;
-  objectif_id: string | null;
-  sports: { slug: string; nom: string } | null;
-  objectifs_entrainement: { slug: string; nom: string } | null;
+  ambition: Ambition | null;
+  objectif_sport_id: string | null;
+  objectifs_secondaires: string[];
+  sports: { id: string; slug: string; nom: string } | null;
+  objectifs_sport: { libelle_fr: string; libelle_en: string } | null;
 };
 
 export type TypeConsentement = 'cgu' | 'donnees_sante';

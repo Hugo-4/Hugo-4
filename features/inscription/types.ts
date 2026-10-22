@@ -1,13 +1,16 @@
 import type {
-  Cadre,
+  Ambition,
   Cote,
   Creneau,
+  Encadrement,
   Gravite,
+  Impact,
   Lieu,
   Longueur,
   NatureDouleur,
   Niveau,
   Pays,
+  Precision,
   Sexe,
   Ton,
   TypeEvenement,
@@ -30,11 +33,23 @@ export type Reponses = {
   prenom: string;
   naissance: DateSaisie;
   pays: Pays | null;
+  /** « Tu pratiques déjà un sport ? » : parcours A (oui) ou B (pas encore). */
+  pratique: 'oui' | 'non' | null;
   sportId: string | null;
-  /** Cadre de pratique par identifiant de sport (principal et secondaires). */
-  cadres: Record<string, Cadre>;
-  objectifId: string | null;
+  ambition: Ambition | null;
+  objectifSport: ObjectifChoisi | null;
+  echeance: { date: DateSaisie; epreuve: string; precision: string };
   niveau: Niveau | null;
+  /** Slugs de `objectifs_entrainement` proposables en secondaire. */
+  objectifsSecondaires: string[];
+  // Parcours B
+  besoins: string[];
+  contraintes: {
+    impactMax: Impact | null;
+    lieux: string[];
+    encadrement: Encadrement | null;
+    minutesSemaine: number | null;
+  };
   jours: number[];
   creneau: Creneau | null;
   dureeMin: number | null;
@@ -51,16 +66,29 @@ export type Reponses = {
   longueur: Longueur | null;
 };
 
+/** Objectif précis choisi (`objectifs_sport`), avec ce qu'il demande en plus. */
+export type ObjectifChoisi = {
+  id: string;
+  echeanceRequise: boolean;
+  precisionDemandee: Precision | null;
+  qualitePrincipale: string;
+};
+
 export const DATE_VIDE: DateSaisie = { jour: '', mois: '', annee: '' };
 
 export const REPONSES_INITIALES: Reponses = {
   prenom: '',
   naissance: DATE_VIDE,
   pays: null,
+  pratique: null,
   sportId: null,
-  cadres: {},
-  objectifId: null,
+  ambition: null,
+  objectifSport: null,
+  echeance: { date: DATE_VIDE, epreuve: '', precision: '' },
   niveau: null,
+  objectifsSecondaires: [],
+  besoins: [],
+  contraintes: { impactMax: null, lieux: [], encadrement: null, minutesSemaine: null },
   jours: [],
   creneau: null,
   dureeMin: null,

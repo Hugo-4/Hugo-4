@@ -38,7 +38,9 @@ export function useSportsAthlete() {
     queryFn: async (): Promise<SportAthlete[]> => {
       const { data, error } = await supabase
         .from('user_sport_profiles')
-        .select('id, role, niveau, cadre_pratique, objectif_id, sports(slug, nom), objectifs_entrainement(slug, nom)')
+        .select(
+          'id, role, niveau, cadre_pratique, ambition, objectif_sport_id, objectifs_secondaires, sports(id, slug, nom), objectifs_sport(libelle_fr, libelle_en)',
+        )
         .eq('user_id', userId as string)
         .eq('actif', true)
         .order('priorite', { ascending: true, nullsFirst: false });

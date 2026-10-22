@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 
-import { enregistrerSport, styleCoaching, verifier } from './enregistrementOutils';
+import { echeanceJson, enregistrerSport, objectifEntrainementId, styleCoaching, verifier } from './enregistrementOutils';
 import { dateIso } from './dates';
 import { nombreSaisi } from './etapes';
 import type { Parcours, Reponses } from './types';
@@ -56,22 +56,21 @@ export const PARTIES: Partie[] = [
     nom: 'sports',
     executer: async ({ userId, reponses: r }) => {
       const principal = r.sportId as string;
+      // `cadre_pratique` est déduit de l'ambition par la base (déclencheur cadre_depuis_ambition).
       await enregistrerSport(userId, principal, {
         role: 'principal',
         priorite: 1,
         niveau: r.niveau,
-        objectif_id: r.objectifId,
-        cadre_pratique: r.cadres[principal] ?? 'loisir',
+        ambition: r.ambition,
+        objectif_sport_id: r.objectifSport?.id ?? null,
+        objectif_id: await objectifEntrainementId(r.objectifSport?.qualitePrincipale ?? null),
+        echeance: echeanceJson(r),
+        objectifs_secondaires: r.objectifsSecondaires,
         seances_semaine_cible: r.jours.length,
         actif: true,
       });
       for (const [i, sportId] of r.sportsSecondaires.entries()) {
-        await enregistrerSport(userId, sportId, {
-          role: 'complementaire',
-          priorite: i + 2,
-          cadre_pratique: r.cadres[sportId] ?? 'loisir',
-          actif: true,
-        });
+        await enregistrerSport(userId, sportId, { role: 'complementaire', priorite: i + 2, actif: true });
       }
     },
   },
@@ -124,20 +123,23 @@ export const PARTIES: Partie[] = [
   },
   {
     nom: 'competition',
-    executer: ({ userId, parcours, reponses: r }) =>
-      parcours === 'complet' && r.competition.prevue
-        ? verifier(
-            supabase.from('evenements_athlete').insert({
-              user_id: userId,
-              sport_id: r.sportId,
-              nom: r.competition.nom.trim(),
-              date_evenement: dateIso(r.competition.date),
-              priorite: 'A',
-              type_evenement: r.competition.type,
-              statut: 'prevu',
-            }),
-          )
-        : Promise.resolve(),
+    executer: ({ userId, parcours, reponses: r }) => {
+      // Échéance de l'objectif précis, sinon compétition saisie au parcours Complet : objectif A du programme.
+      const echeance = r.objectifSport?.echeanceRequise ? dateIso(r.echeance.date) : null;
+      const saisie = parcours === 'complet' && r.competition.prevue && !echeance;
+      if (!echeance && !saisie) return Promise.resolve();
+      return verifier(
+        supabase.from('evenements_athlete').insert({
+          user_id: userId,
+          sport_id: r.sportId,
+          nom: echeance ? r.echeance.epreuve.trim() : r.competition.nom.trim(),
+          date_evenement: echeance ?? dateIso(r.competition.date),
+          priorite: 'A',
+          type_evenement: echeance ? 'competition' : r.competition.type,
+          statut: 'prevu',
+        }),
+      );
+    },
   },
 ];
 

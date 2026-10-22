@@ -198,10 +198,6 @@
         "titre": "Ton sport principal",
         "sousTitre": "Le programme est construit autour de lui."
       },
-      "objectif": {
-        "titre": "Ton objectif",
-        "sousTitre": "Ce que tu veux développer en priorité."
-      },
       "niveau": {
         "titre": "Ton niveau",
         "sousTitre": "Dans ton sport principal."
@@ -234,9 +230,33 @@
         "titre": "Ton pays",
         "sousTitre": "Pour appliquer les règles de ton pays."
       },
-      "cadre": {
-        "titre": "Ton cadre de pratique",
-        "sousTitre": "Pour chacun de tes sports."
+      "pratique": {
+        "titre": "Tu pratiques déjà un sport ?",
+        "sousTitre": "On adapte les questions à ta situation."
+      },
+      "ambition": {
+        "titre": "Ton ambition",
+        "sousTitre": "Ce que tu veux viser dans ce sport."
+      },
+      "objectifSport": {
+        "titre": "Ton objectif",
+        "sousTitre": "Choisis celui qui te ressemble le plus."
+      },
+      "objectifsSecondaires": {
+        "titre": "En plus ?",
+        "sousTitre": "Facultatif : plusieurs choix possibles."
+      },
+      "besoins": {
+        "titre": "Ce que tu cherches",
+        "sousTitre": "On te proposera des sports qui y répondent."
+      },
+      "contraintes": {
+        "titre": "Tes contraintes",
+        "sousTitre": "Pour ne proposer que des sports possibles pour toi."
+      },
+      "recommandation": {
+        "titre": "Trois sports pour toi",
+        "sousTitre": "Choisis celui qui te tente le plus."
       }
     },
     "identite": {
@@ -411,6 +431,128 @@
       "amateur": "Amateur (club, compétitions)",
       "pro": "Pro",
       "aide": "Loisir : pour le plaisir. Amateur : en club ou en compétition. Pro : c'est ton métier ou tu vises le haut niveau."
+    },
+    "pratique": {
+      "oui": "Oui, j'ai un sport",
+      "ouiTexte": "Course, boxe, musculation, natation…",
+      "non": "Pas encore",
+      "nonTexte": "On t'aide à trouver le sport qui te correspond."
+    },
+    "ambition": {
+      "plaisir": "Plaisir et forme",
+      "progresser": "Progresser",
+      "competition": "Compétition amateur",
+      "elite": "Élite"
+    },
+    "echeance": {
+      "epreuve": "Nom de l'épreuve",
+      "date": "Date de l'épreuve",
+      "precision": {
+        "distance": "Distance",
+        "categorie_poids": "Catégorie de poids (kg)",
+        "poste": "Poste"
+      },
+      "precisionAide": {
+        "distance": "Par exemple : 10 km, semi-marathon, 70.3",
+        "categorie_poids": "Par exemple : 66",
+        "poste": "Par exemple : milieu, gardien"
+      }
+    },
+    "secondaires": {
+      "hypertrophie": "Prendre du muscle",
+      "perte_de_gras": "Perdre du gras",
+      "mobilite": "Gagner en mobilité",
+      "reathletisation": "Prévenir les blessures"
+    },
+    "besoins": {
+      "aide_one": "Choisis {{count}} réponse.",
+      "aide_other": "Choisis jusqu'à {{count}} réponses."
+    },
+    "contraintes": {
+      "impact": "Tes articulations",
+      "impactAide": "Douleurs, blessures ou articulations fragiles ? Choisis un impact plus faible.",
+      "impacts": {
+        "1": "Impact faible seulement",
+        "2": "Impact moyen",
+        "3": "Pas de contrainte"
+      },
+      "lieux": "Où peux-tu t'entraîner ?",
+      "plusieurs": "Plusieurs choix possibles.",
+      "lieuxPossibles": {
+        "salle": "Salle de sport",
+        "maison": "À la maison",
+        "exterieur": "Dehors",
+        "piscine": "Piscine",
+        "club": "En club"
+      },
+      "encadrement": "Seul ou encadré ?",
+      "encadrements": {
+        "seul": "Seul",
+        "club": "Encadré en club",
+        "indifferent": "Peu importe"
+      },
+      "temps": "Temps par semaine",
+      "heures": "{{heures}} h"
+    },
+    "recommandation": {
+      "aucunTitre": "Aucun sport ne correspond",
+      "aucunTexte": "Reviens en arrière pour assouplir une contrainte (lieux, temps, impact)."
+    },
+    "niveauRepere": {
+      "boxe_anglaise": {
+        "debutant": "Jamais boxé ou moins d'un an.",
+        "amateur": "Entraînement régulier en club, sparring.",
+        "confirme": "Quelques combats amateurs.",
+        "pro": "Combats pro ou équipe nationale."
+      },
+      "mma": {
+        "debutant": "Jamais pratiqué ou moins d'un an.",
+        "amateur": "Entraînement régulier, sparring.",
+        "confirme": "Quelques combats amateurs.",
+        "pro": "Combats pro."
+      },
+      "course_a_pied": {
+        "debutant": "10 km en plus d'1 h, ou jamais couru.",
+        "amateur": "10 km entre 50 min et 1 h.",
+        "confirme": "10 km entre 38 et 50 min.",
+        "pro": "10 km en moins de 38 min."
+      },
+      "trail": {
+        "debutant": "Sorties de moins de 15 km.",
+        "amateur": "Trails de 20 à 40 km.",
+        "confirme": "Ultras ou podiums régionaux.",
+        "pro": "Élite, sponsorisé."
+      },
+      "cyclisme": {
+        "debutant": "Sorties occasionnelles, FTP inconnue.",
+        "amateur": "FTP autour de 2,5 W/kg.",
+        "confirme": "FTP autour de 3,5 W/kg.",
+        "pro": "FTP au-dessus de 4,5 W/kg."
+      },
+      "natation": {
+        "debutant": "Moins de 400 m sans s'arrêter.",
+        "amateur": "1 500 m sans s'arrêter.",
+        "confirme": "100 m crawl en moins de 1:30.",
+        "pro": "Niveau national."
+      },
+      "triathlon": {
+        "debutant": "Jamais fait de triathlon.",
+        "amateur": "Distances S ou M terminées.",
+        "confirme": "70.3 ou Ironman terminé.",
+        "pro": "Élite ou groupe d'âge de haut niveau."
+      },
+      "musculation": {
+        "debutant": "Moins d'un an de pratique.",
+        "amateur": "Squat au poids du corps.",
+        "confirme": "Squat à 1,5 × le poids du corps.",
+        "pro": "Compétition (force athlétique, haltérophilie)."
+      },
+      "football": {
+        "debutant": "Loisir ou découverte.",
+        "amateur": "Club, niveau district.",
+        "confirme": "Niveau régional ou national amateur.",
+        "pro": "Centre de formation ou pro."
+      }
     }
   },
   "referentiels": {
@@ -422,7 +564,8 @@
       "mma": "MMA",
       "musculation": "Musculation",
       "natation": "Natation",
-      "triathlon": "Triathlon"
+      "triathlon": "Triathlon",
+      "trail": "Trail"
     },
     "objectifs": {
       "force_max": "Force maximale",

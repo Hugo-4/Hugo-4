@@ -75,3 +75,27 @@ export const PAYS = [
   'CI', 'CM', 'DE', 'ES', 'IT', 'PT', 'GB', 'IE', 'NL', 'US',
 ] as const;
 export type Pays = (typeof PAYS)[number];
+
+/** Ambition dans le sport (`user_sport_profiles.ambition`) ; la base en déduit `cadre_pratique`. */
+export const AMBITIONS = ['plaisir', 'progresser', 'competition', 'elite'] as const;
+export type Ambition = (typeof AMBITIONS)[number];
+
+/** Parcours B (pas encore de sport) : 2 besoins au maximum. */
+export const MAX_BESOINS = 2;
+
+/** Impact articulaire maximal toléré (`recommander_sports.p_impact_max`) : 1 faible, 2 moyen, 3 élevé. */
+export const IMPACTS = [1, 2, 3] as const;
+export type Impact = (typeof IMPACTS)[number];
+
+/** Lieux possibles (`sport_caracteristiques.lieux`). */
+export const LIEUX_POSSIBLES = ['salle', 'maison', 'exterieur', 'piscine', 'club'] as const;
+
+/** Seul, encadré en club, ou peu importe (`p_prefere_encadre` : false / true / null). */
+export const ENCADREMENTS = ['seul', 'club', 'indifferent'] as const;
+export type Encadrement = (typeof ENCADREMENTS)[number];
+
+/** Temps disponible par semaine, en minutes (`p_minutes_semaine`). */
+export const MINUTES_SEMAINE = [60, 90, 120, 180, 240, 300] as const;
+
+/** Précision demandée par un objectif (`objectifs_sport.precision_demandee`). */
+export type Precision = 'distance' | 'categorie_poids' | 'poste';

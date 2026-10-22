@@ -61,7 +61,20 @@ De haut en bas :
 **But** : un premier programme en moins de 5 minutes, ou une personnalisation maximale pour ceux qui le veulent.
 
 - Bascule FR / EN en haut, logo ATHLENIS.
-- Choix **Rapide (4 min)** : sport principal, objectif, niveau (débutant, amateur, confirmé, pro), disponibilités (jours, créneaux, durée), blessures et douleurs actuelles. Le reste est demandé au fil des jours, une question à la fois sur Aujourd'hui.
+- Date de naissance **obligatoire** dès le début (règles d'âge par technique, compte parent avant 15 ans).
+- Première question : **« Tu pratiques déjà un sport ? »** → parcours A (oui) ou B (pas encore).
+- **Parcours A — il a un sport** :
+  1. **Sport principal** (`sports`).
+  2. **Ambition**, 4 cartes : Plaisir et forme · Progresser · Compétition amateur · Élite. Libellés adaptés au sport (« Préparer mes combats », « Finir mon premier triathlon »…). Enregistrée dans `user_sport_profiles.ambition` ; un déclencheur en base remplit `cadre_pratique` (loisir / amateur / pro).
+  3. **Objectif précis** : liste de `objectifs_sport` filtrée par sport et ambition (libellé FR ou EN selon la langue). Si `echeance_requise` : date et épreuve ; si `precision_demandee` : distance, catégorie de poids ou poste → `user_sport_profiles.echeance`.
+  4. **Niveau actuel** dans ce sport : débutant, amateur, confirmé, pro, avec un repère concret selon le sport (nombre de combats, chrono sur 10 km, FTP…).
+  5. **Objectifs secondaires** (facultatif, plusieurs choix) : `objectifs_entrainement` où `proposable_en_secondaire` (perte de gras, prise de muscle, mobilité, prévention) → `objectifs_secondaires`.
+- **Parcours B — pas encore de sport** :
+  1. **Ce que je cherche** (2 choix maximum) : `besoins_debutant`.
+  2. **Mes contraintes** : articulations ou blessures (impact faible, moyen, élevé), lieux possibles, seul ou encadré en club, temps par semaine.
+  3. **Trois sports recommandés** : `rpc('recommander_sports', …)`, chacun avec sa raison ; il en choisit un. Ambition = Plaisir et forme, niveau = débutant ; puis on reprend le parcours A à l'étape 3 (objectif précis).
+  - Ne jamais montrer les qualités physiques (force maximale, hypertrophie…) comme objectif : elles sont déduites par le serveur depuis `objectifs_sport.qualites`.
+- Choix **Rapide (4 min)** : parcours A ou B ci-dessus, disponibilités (jours, créneaux, durée), blessures et douleurs actuelles. Le reste est demandé au fil des jours, une question à la fois sur Aujourd'hui.
 - Choix **Complet (15 min)** : en plus, tests physiques (ou valeurs connues : 1RM, VMA, FTP…), historique de blessures, sports secondaires, compétitions de la saison, matériel et lieux, nutrition (régime, aliments exclus), préférences d'entraînement, style de coaching.
 - Avant toute question de santé : écran de consentements (CGU, données de santé ; santé féminine proposée plus tard en option). Sans consentement santé, on ne pose pas les questions de santé.
 - Mineurs : avant 15 ans, compte parent obligatoire (écran dédié).

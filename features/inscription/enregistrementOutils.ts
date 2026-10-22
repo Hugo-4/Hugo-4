@@ -1,5 +1,9 @@
 import { supabase } from '@/lib/supabase';
 
+import { dateIso } from './dates';
+import { nombreSaisi } from './etapes';
+import type { Reponses } from './types';
+
 /** Lève l'erreur Supabase s'il y en a une, sinon renvoie le résultat. */
 export async function verifier<T extends { error: unknown }>(requete: PromiseLike<T>): Promise<T> {
   const resultat = await requete;
@@ -27,4 +31,32 @@ export async function styleCoaching(userId: string, choix: { ton: string; longue
   );
   const actuel = (data as { style_coaching?: Record<string, unknown> } | null)?.style_coaching ?? {};
   return { ...actuel, ...choix };
+}
+
+/**
+ * Pont avec le générateur actuel du serveur, qui lit encore `objectif_id` (objectifs_entrainement) :
+ * la qualité principale de l'objectif précis (`objectifs_sport.qualite_principale`, définie en base).
+ * Jamais affichée à l'athlète.
+ */
+export async function objectifEntrainementId(slug: string | null): Promise<string | null> {
+  if (!slug) return null;
+  const { data } = await verifier(supabase.from('objectifs_entrainement').select('id').eq('slug', slug).maybeSingle());
+  return (data as { id: string } | null)?.id ?? null;
+}
+
+/**
+ * `user_sport_profiles.echeance` (format documenté dans docs/API.md) :
+ * { date?, epreuve?, distance?, categorie_poids_kg?, poste? }.
+ */
+export function echeanceJson(r: Reponses): Record<string, unknown> {
+  const o = r.objectifSport;
+  if (!o) return {};
+  const json: Record<string, unknown> = {};
+  if (o.echeanceRequise) {
+    json.date = dateIso(r.echeance.date);
+    json.epreuve = r.echeance.epreuve.trim();
+  }
+  if (o.precisionDemandee === 'categorie_poids') json.categorie_poids_kg = nombreSaisi(r.echeance.precision);
+  else if (o.precisionDemandee) json[o.precisionDemandee] = r.echeance.precision.trim();
+  return json;
 }

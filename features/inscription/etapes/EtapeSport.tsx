@@ -12,7 +12,13 @@ export function EtapeSport() {
       libelle={(sport) => libelleReferentiel('sports', sport)}
       estSelectionne={(id) => reponses.sportId === id}
       onChoisir={(sportId) =>
-        modifier({ sportId, sportsSecondaires: reponses.sportsSecondaires.filter((id) => id !== sportId) })
+        sportId !== reponses.sportId &&
+        modifier({
+          sportId,
+          ambition: null,
+          objectifSport: null,
+          sportsSecondaires: reponses.sportsSecondaires.filter((id) => id !== sportId),
+        })
       }
     />
   );

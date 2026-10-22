@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
-import { libelleReferentiel } from '@/features/inscription/libelles';
+import { libelleReferentiel, texteLocal } from '@/features/inscription/libelles';
 import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
 
 import type { SportAthlete } from '../types';
@@ -20,11 +20,15 @@ export function CarteSports({ sports, onOuvrir }: Props) {
     <SectionProfil titre={t('profil.sports.titre')}>
       {sports.length === 0 ? <AppText variant="secondaire">{t('profil.sports.aucun')}</AppText> : null}
       {sports.map((sport) => {
-        const nom = sport.sports ? libelleReferentiel('sports', { id: sport.id, ...sport.sports }) : '';
+        const nom = sport.sports ? libelleReferentiel('sports', sport.sports) : '';
+        const objectif = sport.objectifs_sport
+          ? texteLocal({ fr: sport.objectifs_sport.libelle_fr, en: sport.objectifs_sport.libelle_en })
+          : null;
         const details = [
           sport.role === 'principal' ? t('profil.sports.principal') : t('profil.sports.secondaire'),
           sport.niveau ? t(`inscription.niveau.${sport.niveau}.titre`) : null,
-          t(`inscription.cadre.${sport.cadre_pratique}`),
+          sport.ambition ? t(`inscription.ambition.${sport.ambition}`) : t(`inscription.cadre.${sport.cadre_pratique}`),
+          objectif,
         ].filter(Boolean);
         return (
           <Pressable

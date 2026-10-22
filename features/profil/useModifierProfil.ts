@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useSession } from '@/features/auth/AuthProvider';
-import type { Cadre, Niveau } from '@/features/inscription/constantes';
+import type { Ambition, Cadre, Niveau } from '@/features/inscription/constantes';
 import { VERSION_DOCUMENTS } from '@/features/inscription/constantes';
-import { verifier } from '@/features/inscription/enregistrementOutils';
+import { objectifEntrainementId, verifier } from '@/features/inscription/enregistrementOutils';
+import type { ObjectifSport } from '@/features/inscription/useReferentiels';
 import { supabase } from '@/lib/supabase';
 
 import type { TypeConsentement } from './types';
@@ -40,22 +41,31 @@ export function useModifierIdentite() {
   });
 }
 
-type Sport = { id: string; principal: boolean; niveau: Niveau; cadre: Cadre; objectifId: string | null };
+export type ModificationSport =
+  | { id: string; principal: true; niveau: Niveau; ambition: Ambition; objectif: ObjectifSport; secondaires: string[] }
+  | { id: string; principal: false; niveau: Niveau; cadre: Cadre };
 
+/**
+ * Sport principal : niveau, ambition (la base en déduit le cadre), objectif précis, objectifs secondaires.
+ * Autre sport : niveau et cadre de pratique.
+ */
 export function useModifierSport() {
   const userId = useUserId();
   const actualiser = useActualiser();
   return useMutation({
-    mutationFn: async ({ id, principal, niveau, cadre, objectifId }: Sport) => {
-      await verifier(
-        supabase
-          .from('user_sport_profiles')
-          .update({ niveau, cadre_pratique: cadre, ...(principal ? { objectif_id: objectifId } : {}) })
-          .eq('id', id)
-          .eq('user_id', userId),
-      );
-      if (principal) {
-        await verifier(supabase.from('user_profiles').update({ niveau_general: niveau }).eq('user_id', userId));
+    mutationFn: async (m: ModificationSport) => {
+      const valeurs = m.principal
+        ? {
+            niveau: m.niveau,
+            ambition: m.ambition,
+            objectif_sport_id: m.objectif.id,
+            objectif_id: await objectifEntrainementId(m.objectif.qualitePrincipale),
+            objectifs_secondaires: m.secondaires,
+          }
+        : { niveau: m.niveau, cadre_pratique: m.cadre };
+      await verifier(supabase.from('user_sport_profiles').update(valeurs).eq('id', m.id).eq('user_id', userId));
+      if (m.principal) {
+        await verifier(supabase.from('user_profiles').update({ niveau_general: m.niveau }).eq('user_id', userId));
       }
     },
     onSuccess: actualiser,

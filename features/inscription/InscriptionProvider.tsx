@@ -35,7 +35,7 @@ export function InscriptionProvider({ children }: { children: ReactNode }) {
       setConsentementSante,
       reponses,
       modifier: (changement) => setReponses((actuelles) => ({ ...actuelles, ...changement })),
-      etapes: listeEtapes(parcours, consentementSante),
+      etapes: listeEtapes(parcours, consentementSante, reponses),
       index,
       setIndex,
       enregistrees,
