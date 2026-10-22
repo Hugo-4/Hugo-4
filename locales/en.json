@@ -21,81 +21,83 @@
       "jour": "Day",
       "mois": "Month",
       "annee": "Year"
-    }
+    },
+    "fermer": "Close"
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
-    "a11yNotifications_zero": "Notifications, none new",
-    "a11yNotifications_one": "Notifications, {{count}} new",
-    "a11yNotifications_other": "Notifications, {{count}} new",
+    "bonjourSansPrenom": "Hi",
+    "a11yNotifications": "Notifications",
     "a11yProfil": "Open my profile",
-    "videTitre": "Nothing planned yet",
-    "videTexte": "Your program will show up here as soon as it's ready.",
+    "videTitre": "No program yet",
+    "videTexte": "Your program will show up here as soon as it's ready. Pull down to refresh.",
     "forme": {
       "titre": "Today's readiness",
-      "a11yScore": "Today's readiness: {{score}} out of 100",
-      "sommeil": "Sleep",
-      "hrv": "HRV",
-      "hrvValeur": "{{valeur}} ms",
-      "ecartNormale": "{{ecart}} vs baseline",
-      "ressenti": "Feeling",
+      "a11yScore": "Today's readiness: {{score}} out of 10",
+      "sur10": "/10",
+      "energie": "Energy {{note}}/10",
+      "sommeil": "Sleep {{note}}/10",
+      "courbatures": "Soreness {{note}}/10",
+      "stress": "Stress {{note}}/10",
+      "recommandations": {
+        "intensifier": "In great shape",
+        "maintenir": "Ready to train",
+        "alleger": "Take it lighter today",
+        "recuperation_active": "Active recovery",
+        "repos_complet": "Rest day"
+      },
+      "refaire": "Redo my check-in",
       "checkinTitre": "How are you feeling?",
       "checkinTexte": "Do your check-in so your coach can adapt today's session.",
       "checkinBouton": "Do my check-in"
     },
     "fatigue": {
-      "titre": "Fatigue",
+      "titre": "Coach suggestion",
       "alleger": "Lighten my week",
-      "garder": "Keep my program",
-      "remplacee": "Your {{avant}} session is replaced by {{apres}} today."
+      "garder": "Keep my program"
     },
     "seance": {
-      "blocSemaine": "Block {{bloc}} · Week {{semaine}} / {{total}}",
-      "serie_one": "{{count}} week",
-      "serie_other": "{{count}} weeks",
-      "a11ySerie_one": "{{count}} successful week in a row",
-      "a11ySerie_other": "{{count}} successful weeks in a row",
+      "blocSemaine": "{{bloc}} · Week {{semaine}} / {{total}}",
       "duree": "{{minutes}} min",
       "rpeCible": "RPE {{rpe}}",
       "exercices_one": "{{count}} exercise",
       "exercices_other": "{{count}} exercises",
       "plusExercices_one": "+ {{count}} exercise",
       "plusExercices_other": "+ {{count}} exercises",
+      "enPreparation": "Session details are being prepared: pull down to refresh in a few seconds.",
+      "adaptee": "Adjusted: {{raison}}",
       "demarrer": "Start session",
       "modifier": "Adjust with the coach",
       "repos": "Rest",
       "reposTexte": "Recover well: that's part of getting better too.",
       "prochaine": "Next session: {{titre}}, {{jour}}"
     },
+    "evenement": {
+      "titre": "Next goal",
+      "jours_one": "{{count}} day",
+      "jours_other": "{{count}} days"
+    },
     "semaine": {
       "titre": "Your week",
       "voirMois": "See the month",
-      "charge": "Weekly load",
-      "chargeFaible": "Low",
-      "chargeOptimale": "Optimal zone",
-      "chargeElevee": "High",
-      "a11yCharge": "Weekly load: {{niveau}}",
+      "stats": "{{faites}}/{{prevues}} sessions done · {{minutes}} min planned",
       "a11yJour": "{{jour}}, {{type}}, {{statut}}",
       "statut": {
         "fait": "done",
         "aujourdhui": "today",
         "prevu": "planned",
+        "manque": "missed",
         "repos": "rest"
       }
     },
     "nutrition": {
-      "titre": "Nutrition",
-      "calories": "{{valeur}} / {{objectif}} kcal",
-      "proteines": "Protein",
+      "titre": "Today's nutrition",
       "glucides": "Carbs",
-      "eau": "Water",
-      "grammes": "{{valeur}} / {{objectif}} g",
-      "litres": "{{valeur}} / {{objectif}} L",
-      "ajouterRepas": "+ Meal",
-      "souvent": "Often eaten around this time"
-    },
-    "record": {
-      "titre": "Latest record"
+      "proteines": "Protein",
+      "eau": "Water during session",
+      "grammes": "{{plage}} g",
+      "mlParHeure": "{{plage}} ml/h",
+      "poidsInconnu": "Add your weight in your profile to get today's nutrition plan."
     }
   },
   "auth": {
@@ -412,5 +414,76 @@
       "reathletisation": "Coming back from injury and prevention.",
       "maintien": "Keep your level with less volume."
     }
+  },
+  "checkin": {
+    "titre": "Morning check-in",
+    "envoyer": "Submit my check-in",
+    "a11yNote": "{{echelle}}: {{note}} out of 10",
+    "echelles": {
+      "energie": {
+        "titre": "Energy",
+        "min": "Drained",
+        "max": "Full of energy"
+      },
+      "sommeil": {
+        "titre": "Sleep",
+        "min": "Very poor",
+        "max": "Excellent"
+      },
+      "courbatures": {
+        "titre": "Soreness",
+        "min": "None",
+        "max": "Very strong"
+      },
+      "motivation": {
+        "titre": "Motivation",
+        "min": "None",
+        "max": "All in"
+      },
+      "stress": {
+        "titre": "Stress",
+        "min": "Very calm",
+        "max": "Very stressed"
+      }
+    },
+    "passager": "Is it temporary?",
+    "passagerAide": "If so, only today's session is adapted.",
+    "causes": {
+      "mauvaise_nuit": "Bad night",
+      "soiree": "Night out",
+      "voyage": "Travel",
+      "decalage_horaire": "Jet lag",
+      "stress_ponctuel": "One-off stress",
+      "enfant": "Kids",
+      "travail_tardif": "Late work",
+      "autre": "Other"
+    },
+    "douleurs": "Pain",
+    "douleursAide": "Tap the areas that hurt today.",
+    "douleursSansConsentement": "Pain: you haven't allowed the use of your health data. You can turn it on in your profile.",
+    "duree": "Time available today",
+    "lieu": "Place",
+    "facultatif": "Optional"
+  },
+  "seance": {
+    "types": {
+      "force": "Strength",
+      "hypertrophie": "Hypertrophy",
+      "endurance": "Endurance",
+      "fractionne": "Intervals",
+      "hiit": "HIIT",
+      "technique": "Technique",
+      "recuperation_active": "Active recovery",
+      "mobilite": "Mobility",
+      "combat_sparring": "Sparring",
+      "pliometrie": "Plyometrics",
+      "mixte": "Mixed"
+    },
+    "series_one": "{{count}} set",
+    "series_other": "{{count}} sets",
+    "kg": "{{valeur}} kg",
+    "secondes": "{{valeur}} s",
+    "metres": "{{valeur}} m",
+    "rir": "RIR {{valeur}}"
   }
 }

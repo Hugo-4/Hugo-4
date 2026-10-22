@@ -4,77 +4,70 @@ import { useTranslation } from 'react-i18next';
 import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { Skeleton } from '@/components/Skeleton';
 import { formatNombre } from '@/lib/format';
-import { colors, radius, spacing } from '@/theme/tokens';
+import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
-import type { Nutrition } from '../types';
-import { MacroBarre } from './MacroBarre';
+import { useNutritionJour } from '../useNutritionJour';
 
-type Props = {
-  nutrition: Nutrition;
-  onAjouterRepas: () => void;
-};
+const plage = ([a, b]: [number, number]) => `${formatNombre(a)}–${formatNombre(b)}`;
 
-export function NutritionCard({ nutrition, onAjouterRepas }: Props) {
+/** Plan nutrition du jour (`GET /nutrition/jour`), selon la séance prévue. */
+export function NutritionCard() {
   const { t } = useTranslation();
-  const { calories, proteines, glucides, eau } = nutrition;
+  const requete = useNutritionJour();
+
   return (
     <Card>
-      <View style={styles.entete}>
-        <AppText variant="surTitre">{t('accueil.nutrition.titre')}</AppText>
-        <Button label={t('accueil.nutrition.ajouterRepas')} variant="discret" onPress={onAjouterRepas} />
-      </View>
-      <AppText variant="chiffre">
-        {t('accueil.nutrition.calories', {
-          valeur: formatNombre(calories.valeur),
-          objectif: formatNombre(calories.objectif),
-        })}
-      </AppText>
-      <View style={styles.macros}>
-        <MacroBarre
-          libelle={t('accueil.nutrition.proteines')}
-          valeur={proteines.valeur / proteines.objectif}
-          texte={t('accueil.nutrition.grammes', { valeur: proteines.valeur, objectif: proteines.objectif })}
-        />
-        <MacroBarre
-          libelle={t('accueil.nutrition.glucides')}
-          valeur={glucides.valeur / glucides.objectif}
-          texte={t('accueil.nutrition.grammes', { valeur: glucides.valeur, objectif: glucides.objectif })}
-        />
-        <MacroBarre
-          libelle={t('accueil.nutrition.eau')}
-          valeur={eau.valeur / eau.objectif}
-          texte={t('accueil.nutrition.litres', {
-            valeur: formatNombre(eau.valeur, 1),
-            objectif: formatNombre(eau.objectif, 1),
-          })}
-        />
-      </View>
-      {nutrition.frequents.length > 0 ? (
-        <View style={styles.frequents}>
-          <AppText variant="libelle">{t('accueil.nutrition.souvent')}</AppText>
-          <View style={styles.puces}>
-            {nutrition.frequents.map((aliment) => (
-              <View key={aliment} style={styles.puce}>
-                <AppText variant="secondaire">{aliment}</AppText>
-              </View>
-            ))}
-          </View>
+      <AppText variant="surTitre">{t('accueil.nutrition.titre')}</AppText>
+      {requete.isPending ? <Skeleton hauteur={sizes.cibleTactile * 2} /> : null}
+      {requete.isError ? (
+        <View style={styles.erreur}>
+          <AppText variant="secondaire">{t('commun.erreurTitre')}</AppText>
+          <Button label={t('commun.reessayer')} variant="discret" onPress={() => requete.refetch()} />
         </View>
+      ) : null}
+      {requete.data === null ? <AppText variant="secondaire">{t('accueil.nutrition.poidsInconnu')}</AppText> : null}
+      {requete.data ? (
+        <>
+          <View style={styles.valeurs}>
+            <Valeur libelle={t('accueil.nutrition.glucides')} valeur={t('accueil.nutrition.grammes', { plage: plage(requete.data.nutrition.glucides_jour_g) })} />
+            <Valeur libelle={t('accueil.nutrition.proteines')} valeur={t('accueil.nutrition.grammes', { plage: plage(requete.data.nutrition.proteines_jour_g) })} />
+            {requete.data.nutrition.hydratation ? (
+              <Valeur
+                libelle={t('accueil.nutrition.eau')}
+                valeur={t('accueil.nutrition.mlParHeure', { plage: plage(requete.data.nutrition.hydratation.pendant_ml_h) })}
+              />
+            ) : null}
+          </View>
+          {requete.data.nutrition.alertes.map((alerte) => (
+            <AppText key={alerte} variant="secondaire" color={colors.alerte}>
+              {alerte}
+            </AppText>
+          ))}
+        </>
       ) : null}
     </Card>
   );
 }
 
+function Valeur({ libelle, valeur }: { libelle: string; valeur: string }) {
+  return (
+    <View style={styles.valeur}>
+      <AppText variant="libelle">{libelle}</AppText>
+      <AppText variant="corpsGras">{valeur}</AppText>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  entete: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  macros: { flexDirection: 'row', gap: spacing.m },
-  frequents: { gap: spacing.s },
-  puces: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.s },
-  puce: {
+  erreur: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  valeurs: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.s },
+  valeur: {
+    flexGrow: 1,
+    gap: spacing.xxs,
     backgroundColor: colors.carte2,
     borderRadius: radius.petit,
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
+    padding: spacing.m,
   },
 });

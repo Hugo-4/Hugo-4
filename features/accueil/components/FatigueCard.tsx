@@ -5,19 +5,22 @@ import { useTranslation } from 'react-i18next';
 import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { ErreurEnregistrement } from '@/features/inscription/components/ErreurEnregistrement';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
-import type { Fatigue } from '../types';
+import type { Accueil } from '../types';
+import { useReponseAdaptation } from '../useReponseAdaptation';
 
 type Props = {
-  fatigue: Fatigue;
-  onAccepter: (adaptationId: string) => void;
-  onRefuser: (adaptationId: string) => void;
+  adaptation: NonNullable<Accueil['adaptation_proposee']>;
 };
 
-export function FatigueCard({ fatigue, onAccepter, onRefuser }: Props) {
+/** Adaptation proposée par le coach (ex. semaine allégée) : accepter ou garder le programme. */
+export function FatigueCard({ adaptation }: Props) {
   const { t } = useTranslation();
-  const { proposition, seanceRemplacee } = fatigue;
+  const reponse = useReponseAdaptation();
+  const message = adaptation.explication ?? adaptation.raison;
+
   return (
     <Card borderColor={colors.alerte}>
       <View style={styles.titre}>
@@ -26,22 +29,21 @@ export function FatigueCard({ fatigue, onAccepter, onRefuser }: Props) {
           {t('accueil.fatigue.titre')}
         </AppText>
       </View>
-      <AppText variant="corps">{fatigue.message}</AppText>
-      {seanceRemplacee ? (
-        <AppText variant="secondaire">
-          {t('accueil.fatigue.remplacee', { avant: seanceRemplacee.avant, apres: seanceRemplacee.apres })}
-        </AppText>
-      ) : null}
-      {proposition ? (
-        <View style={styles.boutons}>
-          <Button label={t('accueil.fatigue.alleger')} onPress={() => onAccepter(proposition.id)} />
-          <Button
-            label={t('accueil.fatigue.garder')}
-            variant="secondaire"
-            onPress={() => onRefuser(proposition.id)}
-          />
-        </View>
-      ) : null}
+      {message ? <AppText variant="corps">{message}</AppText> : null}
+      {reponse.isError ? <ErreurEnregistrement erreur={reponse.error} /> : null}
+      <View style={styles.boutons}>
+        <Button
+          label={t('accueil.fatigue.alleger')}
+          disabled={reponse.isPending}
+          onPress={() => reponse.mutate({ id: adaptation.id, choix: 'accepter' })}
+        />
+        <Button
+          label={t('accueil.fatigue.garder')}
+          variant="secondaire"
+          disabled={reponse.isPending}
+          onPress={() => reponse.mutate({ id: adaptation.id, choix: 'refuser' })}
+        />
+      </View>
     </Card>
   );
 }

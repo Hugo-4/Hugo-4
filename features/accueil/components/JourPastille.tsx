@@ -5,23 +5,23 @@ import { AppText } from '@/components/AppText';
 import { dateLocale, formatJourCourt, formatJourLong } from '@/lib/format';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
-import type { JourSemaine, StatutJour } from '../types';
+import { libelleType, type StatutPastille, statutJour } from '../presentation';
+import type { JourSemaine } from '../types';
 
-type Props = {
-  jour: JourSemaine;
-};
-
-const stylePastille: Record<StatutJour, { fond: string; bordure: string; texte: string }> = {
+const apparences: Record<StatutPastille, { fond: string; bordure: string; texte: string }> = {
   fait: { fond: colors.accent, bordure: colors.accent, texte: colors.surAccent },
   aujourdhui: { fond: 'transparent', bordure: colors.accent, texte: colors.accent },
   prevu: { fond: 'transparent', bordure: colors.discret, texte: colors.texte2 },
+  manque: { fond: 'transparent', bordure: colors.alerte, texte: colors.alerte },
   repos: { fond: colors.carte2, bordure: colors.carte2, texte: colors.discret },
 };
 
-export function JourPastille({ jour }: Props) {
+export function JourPastille({ jour }: { jour: JourSemaine }) {
   const { t } = useTranslation();
   const date = dateLocale(jour.date);
-  const apparence = stylePastille[jour.statut];
+  const statut = statutJour(jour);
+  const apparence = apparences[statut];
+  const type = jour.seances[0] ? libelleType(jour.seances[0].type) : t('accueil.seance.repos');
 
   return (
     <View
@@ -29,16 +29,16 @@ export function JourPastille({ jour }: Props) {
       accessible
       accessibilityLabel={t('accueil.semaine.a11yJour', {
         jour: formatJourLong(date),
-        type: jour.type,
-        statut: t(`accueil.semaine.statut.${jour.statut}`),
+        type,
+        statut: t(`accueil.semaine.statut.${statut}`),
       })}>
       <View style={[styles.pastille, { backgroundColor: apparence.fond, borderColor: apparence.bordure }]}>
         <AppText variant="corpsGras" color={apparence.texte} style={styles.initiale}>
           {formatJourCourt(date)}
         </AppText>
       </View>
-      <AppText variant="libelle" numberOfLines={1} style={styles.type}>
-        {jour.type}
+      <AppText variant="libelle" numberOfLines={1}>
+        {type}
       </AppText>
     </View>
   );
@@ -55,5 +55,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   initiale: { textTransform: 'uppercase' },
-  type: { maxWidth: '100%' },
 });

@@ -7,14 +7,14 @@ import { ErrorState } from '@/components/ErrorState';
 import { Screen } from '@/components/Screen';
 import { AccueilContent } from '@/features/accueil/components/AccueilContent';
 import { AccueilSkeleton } from '@/features/accueil/components/AccueilSkeleton';
-import { useAccueil } from '@/features/accueil/useAccueil';
+import { useAujourdhui } from '@/features/accueil/useAujourdhui';
 import { colors, sizes } from '@/theme/tokens';
 
 export default function AujourdhuiScreen() {
   const { t } = useTranslation();
-  const { data, isPending, isError, refetch, isRefetching } = useAccueil();
+  const { accueil, checkin, chargement, erreur, vide, rafraichir, rafraichissement } = useAujourdhui();
 
-  if (isPending) {
+  if (chargement) {
     return (
       <Screen>
         <AccueilSkeleton />
@@ -22,10 +22,10 @@ export default function AujourdhuiScreen() {
     );
   }
 
-  if (isError) {
+  if (erreur || !accueil) {
     return (
       <Screen>
-        <ErrorState onRetry={refetch} />
+        <ErrorState onRetry={rafraichir} />
       </Screen>
     );
   }
@@ -33,18 +33,16 @@ export default function AujourdhuiScreen() {
   return (
     <Screen>
       <ScrollView
-        contentContainerStyle={data ? undefined : { flexGrow: 1 }}
-        refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.accent} />
-        }>
-        {data ? (
-          <AccueilContent accueil={data} />
-        ) : (
+        contentContainerStyle={vide ? { flexGrow: 1 } : undefined}
+        refreshControl={<RefreshControl refreshing={rafraichissement} onRefresh={rafraichir} tintColor={colors.accent} />}>
+        {vide ? (
           <EmptyState
             icon={<CalendarDays color={colors.discret} size={sizes.icone * 2} />}
             titre={t('accueil.videTitre')}
             texte={t('accueil.videTexte')}
           />
+        ) : (
+          <AccueilContent accueil={accueil} checkin={checkin} />
         )}
       </ScrollView>
     </Screen>

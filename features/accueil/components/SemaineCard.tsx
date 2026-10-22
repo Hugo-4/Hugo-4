@@ -6,17 +6,17 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { spacing } from '@/theme/tokens';
 
-import type { Semaine } from '../types';
-import { ChargeGauge } from './ChargeGauge';
+import type { Accueil } from '../types';
 import { JourPastille } from './JourPastille';
 
 type Props = {
-  semaine: Semaine;
+  semaine: Accueil['semaine'];
   onVoirMois: () => void;
 };
 
 export function SemaineCard({ semaine, onVoirMois }: Props) {
   const { t } = useTranslation();
+  const { stats } = semaine;
   return (
     <Card>
       <View style={styles.entete}>
@@ -28,7 +28,9 @@ export function SemaineCard({ semaine, onVoirMois }: Props) {
           <JourPastille key={jour.date} jour={jour} />
         ))}
       </View>
-      <ChargeGauge niveau={semaine.charge.niveau} position={semaine.charge.position} />
+      <AppText variant="secondaire">
+        {t('accueil.semaine.stats', { faites: stats.faites, prevues: stats.prevues, minutes: stats.minutes_prevues })}
+      </AppText>
     </Card>
   );
 }

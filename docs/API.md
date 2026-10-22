@@ -4,7 +4,8 @@ Source : `routes/athlete.js` et `agents/programme/generateurProgramme.js` du ser
 
 ## Base de l'API
 
-- Les routes athlète sont montées sous un préfixe (probablement `/api/athlete`, à confirmer dans le fichier principal du serveur : ligne `app.use('/api/...', athleteRoutes)`). Mets ce préfixe dans `EXPO_PUBLIC_API_URL` ou dans `lib/api.ts`, pas dans chaque appel.
+- Les routes athlète sont montées sous `/api/athlete` (`index.js` du serveur : `app.use('/api/athlete', athleteRouter)`). Ce préfixe est inclus dans `EXPO_PUBLIC_API_URL`.
+- Les routes `/api/*` hors `/api/athlete` (ex. `/api/checkin`, `/api/agent/ask`) n'ont pas d'authentification et prennent un `userId` dans le corps : l'app ne les utilise pas.
 - Chaque requête : `Authorization: Bearer <access_token Supabase>`. Sans jeton ou jeton invalide : `401 { erreur }`.
 - Erreurs : `400 { erreur: "message lisible" }` pour une donnée invalide, `500 { erreur: "erreur serveur" }` sinon.
 - La liste complète des routes est dans l'en-tête de `routes/athlete.js` (copiée en bas de ce fichier).

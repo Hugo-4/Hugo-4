@@ -1,86 +1,100 @@
 /**
- * Forme provisoire des données de l'écran Aujourd'hui.
- * À l'étape 4, ces types seront alignés sur la réponse réelle de `GET /accueil`
- * et `GET /nutrition/jour` (aucun champ inventé ne sera conservé).
+ * Réponses du serveur coachia-agents-v6 utilisées par l'écran Aujourd'hui.
+ * Source : agents/programme/sortiesProgramme.js (accueil, detailSeance),
+ * tools/presentationSeance.js (resumeSeance, presenterExercices), routes/athlete.js (/nutrition/jour).
+ * Seuls les champs affichés par l'app sont typés.
  */
 
-export type StatutJour = 'fait' | 'aujourdhui' | 'prevu' | 'repos';
-export type NiveauCharge = 'faible' | 'optimale' | 'elevee';
+export type StatutSeanceCode = 'a_venir' | 'prete' | 'en_cours' | 'faite' | 'manquee' | 'reportee' | 'annulee';
 
-export type Forme = {
-  checkinFait: boolean;
-  /** Score 0-100 calculé par le serveur. */
-  score: number;
-  libelle: string;
-  sommeilMinutes: number;
-  hrv: number;
-  hrvEcart: number;
-  ressenti: string;
-  /** Phrase du coach expliquant l'adaptation du jour (jamais composée par l'app). */
-  messageCoach: string;
-};
-
-export type Fatigue = {
-  message: string;
-  proposition: { id: string } | null;
-  seanceRemplacee: { avant: string; apres: string } | null;
-};
-
-export type ExerciceApercu = {
-  nom: string;
-  prescription: string;
-};
-
-export type SeanceDuJour = {
+export type ResumeSeance = {
   id: string;
-  bloc: number;
-  semaine: number;
-  semainesTotal: number;
-  serieSemaines: number;
+  date: string;
+  creneau: 'matin' | 'midi' | 'soir' | null;
+  heure: string | null;
+  sport: { code: string; nom: string; slug: string | null };
+  type: { code: string; libelle: string };
+  intensite: { niveau: number; libelle: string; rpe_cible: number | null };
+  duree_min: number | null;
   titre: string;
-  dureeMinutes: number;
-  rpeCible: number;
-  nombreExercices: number;
-  lieu: string;
-  exercices: ExerciceApercu[];
+  statut: { code: StatutSeanceCode; libelle: string; aujourdhui?: boolean };
+  badges: string[];
+  modification: { portee: string; raison: string; le: string } | null;
 };
 
-export type ProchaineSeance = {
-  titre: string;
-  /** Date ISO AAAA-MM-JJ. */
-  date: string;
+export type ExercicePresente = {
+  ordre: number;
+  bloc: string;
+  exercice: { slug: string; nom: string };
+  series: number | null;
+  reps: number | string | null;
+  charge_kg: number | null;
+  rir_cible: number | null;
+  duree_s: number | null;
+  distance_m: number | null;
 };
+
+export type DetailSeance = {
+  source: 'finale' | 'apercu';
+  nom?: string;
+  lieu?: { nom?: string; environnement?: string } | string | null;
+  exercices?: { blocs: { bloc: string; libelle: string; exercices: ExercicePresente[] }[]; totaux: { exercices: number } };
+  en_preparation?: boolean;
+};
+
+export type SeanceDuJour = ResumeSeance & { detail: DetailSeance | null };
 
 export type JourSemaine = {
-  /** Date ISO AAAA-MM-JJ. */
   date: string;
-  statut: StatutJour;
-  type: string;
-};
-
-export type Semaine = {
-  jours: JourSemaine[];
-  charge: { niveau: NiveauCharge; /** Position du curseur, entre 0 et 1. */ position: number };
-};
-
-export type Nutrition = {
-  calories: { valeur: number; objectif: number };
-  proteines: { valeur: number; objectif: number };
-  glucides: { valeur: number; objectif: number };
-  eau: { valeur: number; objectif: number };
-  /** Aliments les plus fréquents de l'athlète à ce moment de la journée. */
-  frequents: string[];
+  jour: string;
+  aujourdhui: boolean;
+  seances: ResumeSeance[];
 };
 
 export type Accueil = {
-  athlete: { prenom: string; initiales: string; notificationsNonLues: number };
-  forme: Forme;
-  fatigue: Fatigue | null;
-  /** `null` = jour de repos. */
-  seance: SeanceDuJour | null;
-  prochaineSeance: ProchaineSeance | null;
-  semaine: Semaine | null;
-  nutrition: Nutrition | null;
-  /** Fait réel uniquement (record, percentile). */
-  record: { texte: string } | null;
+  date: string;
+  aujourdhui: { date: string; repos: boolean; seances: SeanceDuJour[] };
+  demain: { date: string; repos: boolean; seances: ResumeSeance[] };
+  semaine: {
+    debut: string;
+    fin: string;
+    jours: JourSemaine[];
+    stats: { prevues: number; faites: number; minutes_prevues: number };
+  };
+  bloc: {
+    nom: string;
+    phase: string;
+    semaine: number | null;
+    nb_semaines: number | null;
+    semaine_allegee: boolean;
+  } | null;
+  prochain_evenement: { nom: string; date: string; priorite: string; jours_restants: number } | null;
+  adaptation_proposee: { id: string; categorie: string; raison: string | null; explication: string | null } | null;
+  apercus_en_preparation: number;
+};
+
+type Intervalle = [number, number];
+
+export type NutritionJour = {
+  seance: { type: string; creneau: string; duree_min: number } | null;
+  nutrition: {
+    niveau_charge: string;
+    glucides_jour_g: Intervalle;
+    proteines_jour_g: Intervalle;
+    hydratation: { avant_ml: Intervalle; pendant_ml_h: Intervalle } | null;
+    alertes: string[];
+  };
+};
+
+/** Check-in du jour (table `checkins_forme`) : score et recommandation calculés par la base. */
+export type CheckinDuJour = {
+  id: string;
+  score_forme: number | null;
+  recommandation: 'intensifier' | 'maintenir' | 'alleger' | 'recuperation_active' | 'repos_complet' | null;
+  recommandation_raison: string | null;
+  energie: number | null;
+  sommeil_ressenti: number | null;
+  courbatures: number | null;
+  motivation: number | null;
+  stress_ressenti: number | null;
 };

@@ -7,13 +7,13 @@ import { Card } from '@/components/Card';
 import { dateLocale, formatJourLong } from '@/lib/format';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
-import type { ProchaineSeance } from '../types';
+import type { ResumeSeance } from '../types';
 
 type Props = {
-  prochaineSeance: ProchaineSeance | null;
+  prochaine: ResumeSeance | null;
 };
 
-export function ReposCard({ prochaineSeance }: Props) {
+export function ReposCard({ prochaine }: Props) {
   const { t } = useTranslation();
   return (
     <Card>
@@ -24,12 +24,9 @@ export function ReposCard({ prochaineSeance }: Props) {
           <AppText variant="secondaire">{t('accueil.seance.reposTexte')}</AppText>
         </View>
       </View>
-      {prochaineSeance ? (
+      {prochaine ? (
         <AppText variant="corpsGras">
-          {t('accueil.seance.prochaine', {
-            titre: prochaineSeance.titre,
-            jour: formatJourLong(dateLocale(prochaineSeance.date)),
-          })}
+          {t('accueil.seance.prochaine', { titre: prochaine.titre, jour: formatJourLong(dateLocale(prochaine.date)) })}
         </AppText>
       ) : null}
     </Card>

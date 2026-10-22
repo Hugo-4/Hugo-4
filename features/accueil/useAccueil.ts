@@ -1,19 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { accueilMock, SCENARIO } from './mock';
+import { api } from '@/lib/api';
+
 import type { Accueil } from './types';
 
-const DELAI_FICTIF_MS = 600;
+export const CLE_ACCUEIL = ['accueil'] as const;
 
-/** Étape 1 : données fictives. Étape 4 : remplacé par l'appel `GET /accueil` via lib/api.ts. */
-async function chargerAccueil(): Promise<Accueil | null> {
-  await new Promise((resolve) => setTimeout(resolve, DELAI_FICTIF_MS));
-  if (SCENARIO === 'erreur') {
-    throw new Error('Erreur fictive');
-  }
-  return accueilMock();
-}
-
+/** `GET /accueil` : aujourd'hui en détail, demain, la semaine, le bloc, la compétition, l'adaptation proposée. */
 export function useAccueil() {
-  return useQuery({ queryKey: ['accueil'], queryFn: chargerAccueil });
+  return useQuery({ queryKey: CLE_ACCUEIL, queryFn: () => api.get<Accueil>('/accueil') });
 }
