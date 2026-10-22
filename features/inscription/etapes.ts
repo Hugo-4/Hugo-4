@@ -3,11 +3,13 @@ import type { Parcours, Reponses } from './types';
 
 export type EtapeId =
   | 'identite'
+  | 'pays'
   | 'profilPhysique'
   | 'sport'
   | 'objectif'
   | 'niveau'
   | 'sportsSecondaires'
+  | 'cadre'
   | 'disponibilites'
   | 'lieu'
   | 'competition'
@@ -21,15 +23,17 @@ export type EtapeId =
 export function listeEtapes(parcours: Parcours, consentementSante: boolean): EtapeId[] {
   const sante: EtapeId[] = consentementSante ? ['douleurs'] : [];
   if (parcours === 'rapide') {
-    return ['identite', 'sport', 'objectif', 'niveau', 'disponibilites', ...sante];
+    return ['identite', 'pays', 'sport', 'objectif', 'niveau', 'cadre', 'disponibilites', ...sante];
   }
   return [
     'identite',
+    'pays',
     'profilPhysique',
     'sport',
     'objectif',
     'niveau',
     'sportsSecondaires',
+    'cadre',
     'disponibilites',
     'lieu',
     'competition',
@@ -51,7 +55,12 @@ function entre(valeur: number | null, min: number, max: number): boolean {
 export function etapeValide(etape: EtapeId, r: Reponses): boolean {
   switch (etape) {
     case 'identite':
+      // Date de naissance obligatoire : sans elle, l'inscription ne peut pas continuer.
       return r.prenom.trim().length > 0 && dateIso(r.naissance) !== null;
+    case 'pays':
+      return r.pays !== null;
+    case 'cadre':
+      return r.sportId !== null && r.cadres[r.sportId] !== undefined;
     case 'profilPhysique':
       return r.sexe !== null && entre(nombreSaisi(r.tailleCm), 100, 250) && entre(nombreSaisi(r.poidsKg), 25, 250);
     case 'sport':

@@ -1,6 +1,6 @@
-import { api } from '@/lib/api';
 import { supabase } from '@/lib/supabase';
 
+import { enregistrerSport, styleCoaching, verifier } from './enregistrementOutils';
 import { dateIso } from './dates';
 import { nombreSaisi } from './etapes';
 import type { Parcours, Reponses } from './types';
@@ -17,27 +17,9 @@ type Contexte = {
 
 type Partie = { nom: string; executer: (c: Contexte) => Promise<unknown> };
 
-async function verifier<T extends { error: unknown }>(requete: PromiseLike<T>): Promise<T> {
-  const resultat = await requete;
-  if (resultat.error) throw resultat.error;
-  return resultat;
-}
-
-/** Ligne `user_sport_profiles` du sport, mise à jour si elle existe déjà, créée sinon. */
-async function enregistrerSport(userId: string, sportId: string, valeurs: Record<string, unknown>) {
-  const { data } = await verifier(
-    supabase.from('user_sport_profiles').select('id').eq('user_id', userId).eq('sport_id', sportId).limit(1),
-  );
-  const existante = (data as { id: string }[] | null)?.[0];
-  await verifier(
-    existante
-      ? supabase.from('user_sport_profiles').update(valeurs).eq('id', existante.id)
-      : supabase.from('user_sport_profiles').insert({ user_id: userId, sport_id: sportId, ...valeurs }),
-  );
-}
-
 /**
- * Parties de l'enregistrement, dans l'ordre. Les parties qui ajoutent des lignes
+ * Parties de l'enregistrement, dans l'ordre. Toutes passent par Supabase avec la session
+ * de l'athlète (RLS) et filtrent sur son identifiant. Les parties qui ajoutent des lignes
  * (douleurs, lieu, compétition) viennent en dernier et ne sont jamais rejouées.
  */
 export const PARTIES: Partie[] = [
@@ -48,12 +30,13 @@ export const PARTIES: Partie[] = [
   },
   {
     nom: 'profil',
-    executer: ({ userId, parcours, reponses: r }) =>
+    executer: async ({ userId, parcours, reponses: r }) =>
       verifier(
         supabase
           .from('user_profiles')
           .update({
             date_naissance: dateIso(r.naissance),
+            pays: r.pays,
             niveau_general: r.niveau,
             sport_principal_id: r.sportId,
             seances_par_semaine: r.jours.length,
@@ -62,6 +45,9 @@ export const PARTIES: Partie[] = [
             ...(parcours === 'complet'
               ? { sexe: r.sexe, taille_cm: Math.round(nombreSaisi(r.tailleCm) ?? 0), poids_kg: nombreSaisi(r.poidsKg) }
               : {}),
+            ...(parcours === 'complet' && r.ton && r.longueur
+              ? { style_coaching: await styleCoaching(userId, { ton: r.ton, longueur: r.longueur }) }
+              : {}),
           })
           .eq('user_id', userId),
       ),
@@ -69,34 +55,37 @@ export const PARTIES: Partie[] = [
   {
     nom: 'sports',
     executer: async ({ userId, reponses: r }) => {
-      await enregistrerSport(userId, r.sportId as string, {
+      const principal = r.sportId as string;
+      await enregistrerSport(userId, principal, {
         role: 'principal',
         priorite: 1,
         niveau: r.niveau,
         objectif_id: r.objectifId,
+        cadre_pratique: r.cadres[principal] ?? 'loisir',
         seances_semaine_cible: r.jours.length,
         actif: true,
       });
       for (const [i, sportId] of r.sportsSecondaires.entries()) {
-        await enregistrerSport(userId, sportId, { role: 'complementaire', priorite: i + 2, actif: true });
+        await enregistrerSport(userId, sportId, {
+          role: 'complementaire',
+          priorite: i + 2,
+          cadre_pratique: r.cadres[sportId] ?? 'loisir',
+          actif: true,
+        });
       }
     },
   },
   {
     nom: 'disponibilites',
-    executer: ({ reponses: r }) =>
-      api.put('/disponibilites', {
-        creneaux: r.jours.map((jour) => ({ jour, creneau: r.creneau, duree_max_min: r.dureeMin })),
-      }),
-  },
-  {
-    nom: 'preferences',
-    executer: ({ parcours, reponses: r }) =>
-      parcours === 'complet'
-        ? api.patch('/preferences', {
-            style_coaching: { ton: r.ton, longueur: r.longueur },
-          })
-        : Promise.resolve(),
+    executer: async ({ userId, reponses: r }) => {
+      // Remplace tous les créneaux de l'athlète (une ligne par jour et par moment).
+      await verifier(supabase.from('disponibilites_athlete').delete().eq('user_id', userId));
+      await verifier(
+        supabase.from('disponibilites_athlete').insert(
+          r.jours.map((jour) => ({ user_id: userId, jour, creneau: r.creneau, duree_max_min: r.dureeMin, actif: true })),
+        ),
+      );
+    },
   },
   {
     nom: 'douleurs',
@@ -135,14 +124,20 @@ export const PARTIES: Partie[] = [
   },
   {
     nom: 'competition',
-    executer: ({ parcours, reponses: r }) =>
+    executer: ({ userId, parcours, reponses: r }) =>
       parcours === 'complet' && r.competition.prevue
-        ? api.post('/evenements', {
-            nom: r.competition.nom.trim(),
-            date_evenement: dateIso(r.competition.date),
-            priorite: 'A',
-            type_evenement: r.competition.type,
-          })
+        ? verifier(
+            supabase.from('evenements_athlete').insert({
+              user_id: userId,
+              sport_id: r.sportId,
+              nom: r.competition.nom.trim(),
+              date_evenement: dateIso(r.competition.date),
+              priorite: 'A',
+              type_evenement: r.competition.type,
+              statut: 'prevu',
+            }),
+          )
         : Promise.resolve(),
   },
 ];
+

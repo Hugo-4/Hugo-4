@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -23,6 +23,8 @@ type Props = {
   lienTexte: string;
   lienLibelle: string;
   onLien: () => void;
+  /** Contenu sous le bouton principal (mot de passe oublié, Google, Apple). */
+  pied?: ReactNode;
 };
 
 /** Formulaire email + mot de passe partagé par la connexion et la création de compte. */
@@ -73,6 +75,7 @@ export function AuthForm(props: Props) {
           />
           {props.erreurServeur ? <MessageErreur texte={props.erreurServeur} /> : null}
           <Button label={props.libelleBouton} onPress={envoyer} disabled={props.enCours} />
+          {props.pied}
           <View style={styles.lien}>
             <AppText variant="secondaire" color={colors.discret}>
               {props.lienTexte}

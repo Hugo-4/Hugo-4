@@ -22,7 +22,8 @@
       "mois": "Mois",
       "annee": "Année"
     },
-    "fermer": "Fermer"
+    "fermer": "Fermer",
+    "horodatage": "{{date}} à {{heure}}"
   },
   "accueil": {
     "bonjour": "Bonjour {{prenom}}",
@@ -106,7 +107,8 @@
       "sousTitre": "Content de te revoir. Ton coach t'attend.",
       "bouton": "Se connecter",
       "pasDeCompte": "Pas encore de compte ?",
-      "creerCompte": "Créer un compte"
+      "creerCompte": "Créer un compte",
+      "oublie": "Mot de passe oublié ?"
     },
     "creerCompte": {
       "titre": "Créer un compte",
@@ -133,9 +135,27 @@
       "motDePasseFaible": "Mot de passe trop faible : choisis-en un plus long ou plus varié.",
       "tropDeTentatives": "Trop de tentatives. Réessaie dans quelques minutes.",
       "reseau": "Pas de connexion internet. Vérifie ton réseau.",
-      "inconnue": "Une erreur est survenue. Réessaie."
+      "inconnue": "Une erreur est survenue. Réessaie.",
+      "lien": "Le lien n'a pas fonctionné : {{detail}}"
     },
-    "deconnexion": "Se déconnecter"
+    "deconnexion": "Se déconnecter",
+    "ou": "ou",
+    "google": "Continuer avec Google",
+    "apple": "Continuer avec Apple",
+    "connexionEnCours": "Connexion en cours…",
+    "oublie": {
+      "titre": "Mot de passe oublié",
+      "sousTitre": "Indique ton email : on t'envoie un lien pour choisir un nouveau mot de passe.",
+      "bouton": "Recevoir le lien",
+      "envoyeTitre": "Vérifie tes emails",
+      "envoyeTexte": "Si un compte existe pour {{email}}, un lien de réinitialisation vient d'être envoyé. Ouvre-le sur ce téléphone.",
+      "retour": "Retour à la connexion"
+    },
+    "nouveau": {
+      "titre": "Nouveau mot de passe",
+      "sousTitre": "Choisis ton nouveau mot de passe.",
+      "bouton": "Enregistrer le mot de passe"
+    }
   },
   "inscription": {
     "suivant": "Suivant",
@@ -209,6 +229,14 @@
       "coaching": {
         "titre": "Ton style de coaching",
         "sousTitre": "Comment veux-tu que le coach te parle ?"
+      },
+      "pays": {
+        "titre": "Ton pays",
+        "sousTitre": "Pour appliquer les règles de ton pays."
+      },
+      "cadre": {
+        "titre": "Ton cadre de pratique",
+        "sousTitre": "Pour chacun de tes sports."
       }
     },
     "identite": {
@@ -377,6 +405,12 @@
       "date": "Cette date n'existe pas.",
       "dateFuture": "Choisis une date à venir.",
       "enregistrement": "Impossible d'enregistrer tes réponses. Vérifie ta connexion puis réessaie."
+    },
+    "cadre": {
+      "loisir": "Loisir",
+      "amateur": "Amateur (club, compétitions)",
+      "pro": "Pro",
+      "aide": "Loisir : pour le plaisir. Amateur : en club ou en compétition. Pro : c'est ton métier ou tu vises le haut niveau."
     }
   },
   "referentiels": {
@@ -485,5 +519,58 @@
     "secondes": "{{valeur}} s",
     "metres": "{{valeur}} m",
     "rir": "RIR {{valeur}}"
+  },
+  "pays": {
+    "FR": "France",
+    "BE": "Belgique",
+    "CH": "Suisse",
+    "LU": "Luxembourg",
+    "MC": "Monaco",
+    "CA": "Canada",
+    "MA": "Maroc",
+    "DZ": "Algérie",
+    "TN": "Tunisie",
+    "SN": "Sénégal",
+    "CI": "Côte d'Ivoire",
+    "CM": "Cameroun",
+    "DE": "Allemagne",
+    "ES": "Espagne",
+    "IT": "Italie",
+    "PT": "Portugal",
+    "GB": "Royaume-Uni",
+    "IE": "Irlande",
+    "NL": "Pays-Bas",
+    "US": "États-Unis"
+  },
+  "profil": {
+    "modifier": "Modifier",
+    "enregistrer": "Enregistrer",
+    "nonRenseigne": "Non renseigné",
+    "identite": {
+      "titre": "Identité",
+      "pays": "Pays",
+      "mineur": "Avant 15 ans, un compte parent est obligatoire : vérifie ta date de naissance."
+    },
+    "sports": {
+      "titre": "Mes sports",
+      "aucun": "Aucun sport enregistré.",
+      "principal": "Principal",
+      "secondaire": "Complémentaire",
+      "cadre": "Cadre de pratique",
+      "introuvable": "Ce sport n'est plus dans ton profil."
+    },
+    "consentements": {
+      "titre": "Consentements",
+      "cgu": "Conditions d'utilisation",
+      "sante": "Données de santé",
+      "statut": "Statut",
+      "accordeLe": "Accordé le {{horodatage}}",
+      "retireLe": "Retiré le {{horodatage}}",
+      "jamais": "Non accordé",
+      "accorder": "Donner mon accord",
+      "retirer": "Retirer mon accord",
+      "effetRetrait": "Si tu retires ton accord, le coach ne te posera plus de question de santé (douleurs, blessures) et rien de nouveau ne sera enregistré.",
+      "cguRetrait": "Les conditions d'utilisation sont nécessaires pour utiliser Athlenis. Pour les refuser, il faut supprimer ton compte."
+    }
   }
 }

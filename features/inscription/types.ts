@@ -1,4 +1,5 @@
 import type {
+  Cadre,
   Cote,
   Creneau,
   Gravite,
@@ -6,6 +7,7 @@ import type {
   Longueur,
   NatureDouleur,
   Niveau,
+  Pays,
   Sexe,
   Ton,
   TypeEvenement,
@@ -27,7 +29,10 @@ export type Douleur = {
 export type Reponses = {
   prenom: string;
   naissance: DateSaisie;
+  pays: Pays | null;
   sportId: string | null;
+  /** Cadre de pratique par identifiant de sport (principal et secondaires). */
+  cadres: Record<string, Cadre>;
   objectifId: string | null;
   niveau: Niveau | null;
   jours: number[];
@@ -51,7 +56,9 @@ export const DATE_VIDE: DateSaisie = { jour: '', mois: '', annee: '' };
 export const REPONSES_INITIALES: Reponses = {
   prenom: '',
   naissance: DATE_VIDE,
+  pays: null,
   sportId: null,
+  cadres: {},
   objectifId: null,
   niveau: null,
   jours: [],

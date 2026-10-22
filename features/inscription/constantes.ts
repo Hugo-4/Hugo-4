@@ -61,3 +61,17 @@ export type Ton = (typeof TONS)[number];
 
 export const LONGUEURS = ['bref', 'standard', 'detaille'] as const;
 export type Longueur = (typeof LONGUEURS)[number];
+
+/** Cadre de pratique par sport (`user_sport_profiles.cadre_pratique`, défaut en base : 'loisir'). */
+export const CADRES = ['loisir', 'amateur', 'pro'] as const;
+export type Cadre = (typeof CADRES)[number];
+
+/**
+ * Pays (code ISO 3166-1 alpha-2 dans `user_profiles.pays`) : sert à appliquer
+ * les règles françaises ou internationales côté serveur.
+ */
+export const PAYS = [
+  'FR', 'BE', 'CH', 'LU', 'MC', 'CA', 'MA', 'DZ', 'TN', 'SN',
+  'CI', 'CM', 'DE', 'ES', 'IT', 'PT', 'GB', 'IE', 'NL', 'US',
+] as const;
+export type Pays = (typeof PAYS)[number];

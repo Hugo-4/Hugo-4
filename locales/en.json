@@ -22,7 +22,8 @@
       "mois": "Month",
       "annee": "Year"
     },
-    "fermer": "Close"
+    "fermer": "Close",
+    "horodatage": "{{date}} at {{heure}}"
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
@@ -106,7 +107,8 @@
       "sousTitre": "Good to see you again. Your coach is waiting.",
       "bouton": "Log in",
       "pasDeCompte": "No account yet?",
-      "creerCompte": "Create an account"
+      "creerCompte": "Create an account",
+      "oublie": "Forgot password?"
     },
     "creerCompte": {
       "titre": "Create an account",
@@ -133,9 +135,27 @@
       "motDePasseFaible": "Password too weak: choose a longer or more varied one.",
       "tropDeTentatives": "Too many attempts. Try again in a few minutes.",
       "reseau": "No internet connection. Check your network.",
-      "inconnue": "Something went wrong. Please try again."
+      "inconnue": "Something went wrong. Please try again.",
+      "lien": "The link didn't work: {{detail}}"
     },
-    "deconnexion": "Log out"
+    "deconnexion": "Log out",
+    "ou": "or",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple",
+    "connexionEnCours": "Signing you in…",
+    "oublie": {
+      "titre": "Forgot password",
+      "sousTitre": "Enter your email: we'll send you a link to choose a new password.",
+      "bouton": "Send me the link",
+      "envoyeTitre": "Check your email",
+      "envoyeTexte": "If an account exists for {{email}}, a reset link has just been sent. Open it on this phone.",
+      "retour": "Back to log in"
+    },
+    "nouveau": {
+      "titre": "New password",
+      "sousTitre": "Choose your new password.",
+      "bouton": "Save password"
+    }
   },
   "inscription": {
     "suivant": "Next",
@@ -209,6 +229,14 @@
       "coaching": {
         "titre": "Your coaching style",
         "sousTitre": "How do you want your coach to talk to you?"
+      },
+      "pays": {
+        "titre": "Your country",
+        "sousTitre": "To apply your country's rules."
+      },
+      "cadre": {
+        "titre": "How you practice",
+        "sousTitre": "For each of your sports."
       }
     },
     "identite": {
@@ -377,6 +405,12 @@
       "date": "This date doesn't exist.",
       "dateFuture": "Pick a future date.",
       "enregistrement": "Couldn't save your answers. Check your connection and try again."
+    },
+    "cadre": {
+      "loisir": "Recreational",
+      "amateur": "Amateur (club, competitions)",
+      "pro": "Pro",
+      "aide": "Recreational: for fun. Amateur: in a club or competing. Pro: it's your job or you aim for elite level."
     }
   },
   "referentiels": {
@@ -485,5 +519,58 @@
     "secondes": "{{valeur}} s",
     "metres": "{{valeur}} m",
     "rir": "RIR {{valeur}}"
+  },
+  "pays": {
+    "FR": "France",
+    "BE": "Belgium",
+    "CH": "Switzerland",
+    "LU": "Luxembourg",
+    "MC": "Monaco",
+    "CA": "Canada",
+    "MA": "Morocco",
+    "DZ": "Algeria",
+    "TN": "Tunisia",
+    "SN": "Senegal",
+    "CI": "Côte d'Ivoire",
+    "CM": "Cameroon",
+    "DE": "Germany",
+    "ES": "Spain",
+    "IT": "Italy",
+    "PT": "Portugal",
+    "GB": "United Kingdom",
+    "IE": "Ireland",
+    "NL": "Netherlands",
+    "US": "United States"
+  },
+  "profil": {
+    "modifier": "Edit",
+    "enregistrer": "Save",
+    "nonRenseigne": "Not set",
+    "identite": {
+      "titre": "Identity",
+      "pays": "Country",
+      "mineur": "Under 15, a parent account is required: check your date of birth."
+    },
+    "sports": {
+      "titre": "My sports",
+      "aucun": "No sport saved.",
+      "principal": "Main",
+      "secondaire": "Secondary",
+      "cadre": "Practice setting",
+      "introuvable": "This sport is no longer in your profile."
+    },
+    "consentements": {
+      "titre": "Consents",
+      "cgu": "Terms of use",
+      "sante": "Health data",
+      "statut": "Status",
+      "accordeLe": "Granted on {{horodatage}}",
+      "retireLe": "Withdrawn on {{horodatage}}",
+      "jamais": "Not granted",
+      "accorder": "Give my consent",
+      "retirer": "Withdraw my consent",
+      "effetRetrait": "If you withdraw your consent, the coach won't ask you health questions (pain, injuries) anymore and nothing new will be stored.",
+      "cguRetrait": "The terms of use are required to use Athlenis. To refuse them, you need to delete your account."
+    }
   }
 }
