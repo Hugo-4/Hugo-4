@@ -3,19 +3,17 @@ import { StyleSheet, View } from 'react-native';
 import { AppText } from '@/components/AppText';
 import { colors, radius, spacing } from '@/theme/tokens';
 
-import type { ExerciceApercu } from '../types';
+import { prescription } from '../presentation';
+import type { ExercicePresente } from '../types';
 
-type Props = {
-  exercice: ExerciceApercu;
-};
-
-export function ExerciceLigne({ exercice }: Props) {
+export function ExerciceLigne({ exercice }: { exercice: ExercicePresente }) {
+  const texte = prescription(exercice);
   return (
     <View style={styles.ligne}>
-      <AppText variant="corpsGras" style={styles.nom} numberOfLines={1}>
-        {exercice.nom}
+      <AppText variant="corpsGras" numberOfLines={1}>
+        {exercice.exercice.nom}
       </AppText>
-      <AppText variant="secondaire">{exercice.prescription}</AppText>
+      {texte ? <AppText variant="secondaire">{texte}</AppText> : null}
     </View>
   );
 }
@@ -28,5 +26,4 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.s,
     gap: spacing.xxs,
   },
-  nom: { flexShrink: 1 },
 });

@@ -53,6 +53,7 @@ export function RootNavigator({ policesPretes }: Props) {
       </Stack.Protected>
       <Stack.Protected guard={connecte && profilTermine}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="checkin" options={{ presentation: 'modal' }} />
       </Stack.Protected>
     </Stack>
   );

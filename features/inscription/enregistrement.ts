@@ -94,7 +94,7 @@ export const PARTIES: Partie[] = [
     executer: ({ parcours, reponses: r }) =>
       parcours === 'complet'
         ? api.patch('/preferences', {
-            style_coaching: { ton: r.ton, longueur: r.longueur, tutoiement: true, emojis: false, motivations: [] },
+            style_coaching: { ton: r.ton, longueur: r.longueur },
           })
         : Promise.resolve(),
   },

@@ -21,81 +21,83 @@
       "jour": "Jour",
       "mois": "Mois",
       "annee": "Année"
-    }
+    },
+    "fermer": "Fermer"
   },
   "accueil": {
     "bonjour": "Bonjour {{prenom}}",
-    "a11yNotifications_zero": "Notifications, aucune nouvelle",
-    "a11yNotifications_one": "Notifications, {{count}} nouvelle",
-    "a11yNotifications_other": "Notifications, {{count}} nouvelles",
+    "bonjourSansPrenom": "Bonjour",
+    "a11yNotifications": "Notifications",
     "a11yProfil": "Ouvrir mon profil",
-    "videTitre": "Rien de prévu pour le moment",
-    "videTexte": "Ton programme apparaîtra ici dès qu'il sera prêt.",
+    "videTitre": "Pas encore de programme",
+    "videTexte": "Ton programme apparaîtra ici dès qu'il sera prêt. Tire vers le bas pour actualiser.",
     "forme": {
       "titre": "Forme du jour",
-      "a11yScore": "Forme du jour : {{score}} sur 100",
-      "sommeil": "Sommeil",
-      "hrv": "HRV",
-      "hrvValeur": "{{valeur}} ms",
-      "ecartNormale": "{{ecart}} vs normale",
-      "ressenti": "Ressenti",
+      "a11yScore": "Forme du jour : {{score}} sur 10",
+      "sur10": "/10",
+      "energie": "Énergie {{note}}/10",
+      "sommeil": "Sommeil {{note}}/10",
+      "courbatures": "Courbatures {{note}}/10",
+      "stress": "Stress {{note}}/10",
+      "recommandations": {
+        "intensifier": "En pleine forme",
+        "maintenir": "Prêt à t'entraîner",
+        "alleger": "Journée à alléger",
+        "recuperation_active": "Récupération active",
+        "repos_complet": "Journée de repos"
+      },
+      "refaire": "Refaire mon check-in",
       "checkinTitre": "Comment tu te sens ?",
       "checkinTexte": "Fais ton check-in pour que le coach adapte ta séance du jour.",
       "checkinBouton": "Faire mon check-in"
     },
     "fatigue": {
-      "titre": "Fatigue",
+      "titre": "Proposition du coach",
       "alleger": "Alléger ma semaine",
-      "garder": "Garder mon programme",
-      "remplacee": "Ta séance {{avant}} est remplacée par {{apres}} aujourd'hui."
+      "garder": "Garder mon programme"
     },
     "seance": {
-      "blocSemaine": "Bloc {{bloc}} · Semaine {{semaine}} / {{total}}",
-      "serie_one": "{{count}} semaine",
-      "serie_other": "{{count}} semaines",
-      "a11ySerie_one": "{{count}} semaine réussie d'affilée",
-      "a11ySerie_other": "{{count}} semaines réussies d'affilée",
+      "blocSemaine": "{{bloc}} · Semaine {{semaine}} / {{total}}",
       "duree": "{{minutes}} min",
       "rpeCible": "RPE {{rpe}}",
       "exercices_one": "{{count}} exercice",
       "exercices_other": "{{count}} exercices",
       "plusExercices_one": "+ {{count}} exercice",
       "plusExercices_other": "+ {{count}} exercices",
+      "enPreparation": "Le détail de la séance est en préparation : tire vers le bas dans quelques secondes.",
+      "adaptee": "Adaptée : {{raison}}",
       "demarrer": "Démarrer la séance",
       "modifier": "Modifier avec le coach",
       "repos": "Repos",
       "reposTexte": "Récupère bien : c'est aussi comme ça qu'on progresse.",
       "prochaine": "Prochaine séance : {{titre}}, {{jour}}"
     },
+    "evenement": {
+      "titre": "Prochain objectif",
+      "jours_one": "J-{{count}}",
+      "jours_other": "J-{{count}}"
+    },
     "semaine": {
       "titre": "Ta semaine",
       "voirMois": "Voir le mois",
-      "charge": "Charge de la semaine",
-      "chargeFaible": "Faible",
-      "chargeOptimale": "Zone optimale",
-      "chargeElevee": "Élevée",
-      "a11yCharge": "Charge de la semaine : {{niveau}}",
+      "stats": "{{faites}}/{{prevues}} séances faites · {{minutes}} min prévues",
       "a11yJour": "{{jour}}, {{type}}, {{statut}}",
       "statut": {
         "fait": "fait",
         "aujourdhui": "aujourd'hui",
         "prevu": "prévu",
+        "manque": "manqué",
         "repos": "repos"
       }
     },
     "nutrition": {
-      "titre": "Nutrition",
-      "calories": "{{valeur}} / {{objectif}} kcal",
-      "proteines": "Protéines",
+      "titre": "Nutrition du jour",
       "glucides": "Glucides",
-      "eau": "Eau",
-      "grammes": "{{valeur}} / {{objectif}} g",
-      "litres": "{{valeur}} / {{objectif}} L",
-      "ajouterRepas": "+ Repas",
-      "souvent": "Souvent mangé à cette heure"
-    },
-    "record": {
-      "titre": "Dernier record"
+      "proteines": "Protéines",
+      "eau": "Eau pendant la séance",
+      "grammes": "{{plage}} g",
+      "mlParHeure": "{{plage}} ml/h",
+      "poidsInconnu": "Renseigne ton poids dans ton profil pour obtenir ton plan nutrition du jour."
     }
   },
   "auth": {
@@ -412,5 +414,76 @@
       "reathletisation": "Retour de blessure et prévention.",
       "maintien": "Garder ton niveau avec moins de volume."
     }
+  },
+  "checkin": {
+    "titre": "Check-in du matin",
+    "envoyer": "Valider mon check-in",
+    "a11yNote": "{{echelle}} : {{note}} sur 10",
+    "echelles": {
+      "energie": {
+        "titre": "Énergie",
+        "min": "Vidé",
+        "max": "Plein d'énergie"
+      },
+      "sommeil": {
+        "titre": "Sommeil",
+        "min": "Très mauvais",
+        "max": "Excellent"
+      },
+      "courbatures": {
+        "titre": "Courbatures",
+        "min": "Aucune",
+        "max": "Très fortes"
+      },
+      "motivation": {
+        "titre": "Motivation",
+        "min": "Aucune",
+        "max": "À fond"
+      },
+      "stress": {
+        "titre": "Stress",
+        "min": "Très calme",
+        "max": "Très stressé"
+      }
+    },
+    "passager": "C'est passager ?",
+    "passagerAide": "Si oui, seule la séance d'aujourd'hui est adaptée.",
+    "causes": {
+      "mauvaise_nuit": "Mauvaise nuit",
+      "soiree": "Soirée",
+      "voyage": "Voyage",
+      "decalage_horaire": "Décalage horaire",
+      "stress_ponctuel": "Stress ponctuel",
+      "enfant": "Enfant",
+      "travail_tardif": "Travail tardif",
+      "autre": "Autre"
+    },
+    "douleurs": "Douleurs",
+    "douleursAide": "Touche les zones qui te font mal aujourd'hui.",
+    "douleursSansConsentement": "Douleurs : tu n'as pas autorisé l'utilisation de tes données de santé. Tu peux l'activer dans ton profil.",
+    "duree": "Temps disponible aujourd'hui",
+    "lieu": "Lieu",
+    "facultatif": "Facultatif"
+  },
+  "seance": {
+    "types": {
+      "force": "Force",
+      "hypertrophie": "Hypertrophie",
+      "endurance": "Endurance",
+      "fractionne": "Fractionné",
+      "hiit": "HIIT",
+      "technique": "Technique",
+      "recuperation_active": "Récup. active",
+      "mobilite": "Mobilité",
+      "combat_sparring": "Sparring",
+      "pliometrie": "Pliométrie",
+      "mixte": "Mixte"
+    },
+    "series_one": "{{count}} série",
+    "series_other": "{{count}} séries",
+    "kg": "{{valeur}} kg",
+    "secondes": "{{valeur}} s",
+    "metres": "{{valeur}} m",
+    "rir": "RIR {{valeur}}"
   }
 }
