@@ -23,7 +23,12 @@
       "annee": "Year"
     },
     "fermer": "Close",
-    "horodatage": "{{date}} at {{heure}}"
+    "horodatage": "{{date}} at {{heure}}",
+    "erreurs": {
+      "injoignable": "Can't reach the server {{adresse}}. Check that the server is running and that your phone is on the same Wi-Fi.",
+      "delai": "The server is taking too long to respond. Try again in a moment.",
+      "serveur": "The server hit an error. Try again, and if it happens again, check the server terminal."
+    }
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
