@@ -1,11 +1,18 @@
 import { supabase } from '@/lib/supabase';
 
-import { echeanceJson, enregistrerSport, objectifEntrainementId, styleCoaching, verifier } from './enregistrementOutils';
+import { PARTIES_AJOUTS } from './enregistrementAjouts';
+import {
+  echeanceJson,
+  enregistrerSport,
+  objectifEntrainementId,
+  styleCoaching,
+  verifier,
+} from './enregistrementOutils';
 import { dateIso } from './dates';
 import { nombreSaisi } from './etapes';
 import type { Parcours, Reponses } from './types';
 
-type Contexte = {
+export type Contexte = {
   userId: string;
   parcours: Parcours;
   consentementSante: boolean;
@@ -15,12 +22,12 @@ type Contexte = {
   nomLieu: string;
 };
 
-type Partie = { nom: string; executer: (c: Contexte) => Promise<unknown> };
+export type Partie = { nom: string; executer: (c: Contexte) => Promise<unknown> };
 
 /**
  * Parties de l'enregistrement, dans l'ordre. Toutes passent par Supabase avec la session
  * de l'athlète (RLS) et filtrent sur son identifiant. Les parties qui ajoutent des lignes
- * (douleurs, lieu, compétition) viennent en dernier et ne sont jamais rejouées.
+ * (douleurs, lieu, compétition) viennent en dernier (enregistrementAjouts.ts).
  */
 export const PARTIES: Partie[] = [
   {
@@ -86,60 +93,6 @@ export const PARTIES: Partie[] = [
       );
     },
   },
-  {
-    nom: 'douleurs',
-    executer: ({ userId, consentementSante, reponses: r }) =>
-      consentementSante && !r.aucuneDouleur && r.douleurs.length > 0
-        ? verifier(
-            supabase.from('blessures').insert(
-              r.douleurs.map((d) => ({
-                user_id: userId,
-                type: d.nature,
-                zone: d.zone,
-                cote: d.cote,
-                gravite: d.gravite,
-                statut: 'active',
-                source: 'onboarding',
-              })),
-            ),
-          )
-        : Promise.resolve(),
-  },
-  {
-    nom: 'lieu',
-    executer: ({ userId, parcours, reponses: r, nomLieu }) =>
-      parcours === 'complet' && r.lieu
-        ? verifier(
-            supabase.from('lieux_athlete').insert({
-              user_id: userId,
-              nom: nomLieu,
-              type_lieu: r.lieu,
-              environnement: r.lieu,
-              salle_complete: r.lieu === 'salle',
-              par_defaut: true,
-            }),
-          )
-        : Promise.resolve(),
-  },
-  {
-    nom: 'competition',
-    executer: ({ userId, parcours, reponses: r }) => {
-      // Échéance de l'objectif précis, sinon compétition saisie au parcours Complet : objectif A du programme.
-      const echeance = r.objectifSport?.echeanceRequise ? dateIso(r.echeance.date) : null;
-      const saisie = parcours === 'complet' && r.competition.prevue && !echeance;
-      if (!echeance && !saisie) return Promise.resolve();
-      return verifier(
-        supabase.from('evenements_athlete').insert({
-          user_id: userId,
-          sport_id: r.sportId,
-          nom: echeance ? r.echeance.epreuve.trim() : r.competition.nom.trim(),
-          date_evenement: echeance ?? dateIso(r.competition.date),
-          priorite: 'A',
-          type_evenement: echeance ? 'competition' : r.competition.type,
-          statut: 'prevu',
-        }),
-      );
-    },
-  },
+  ...PARTIES_AJOUTS,
 ];
 
