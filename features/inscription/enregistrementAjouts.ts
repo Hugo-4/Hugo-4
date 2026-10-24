@@ -1,11 +1,12 @@
 import { supabase } from '@/lib/supabase';
 
 import { dateIso } from './dates';
+import { nombreSaisi } from './etapes';
 import type { Partie } from './enregistrement';
 import { existeDeja, verifier } from './enregistrementOutils';
 
 /**
- * Parties qui ajoutent des lignes. Chacune vérifie d'abord qu'elle n'a pas déjà été enregistrée :
+ * Parties qui ajoutent des lignes. Chacune vérifie d'abord ce qui existe déjà :
  * relancer l'inscription (ou l'app) ne crée pas de doublon.
  */
 export const PARTIES_AJOUTS: Partie[] = [
@@ -56,20 +57,34 @@ export const PARTIES_AJOUTS: Partie[] = [
       const echeance = r.objectifSport?.echeanceRequise ? dateIso(r.echeance.date) : null;
       const saisie = parcours === 'complet' && r.competition.prevue && !echeance;
       if (!echeance && !saisie) return;
-      const nom = echeance ? r.echeance.epreuve.trim() : r.competition.nom.trim();
-      const date = echeance ?? dateIso(r.competition.date);
-      const deja = supabase.from('evenements_athlete').select('id').eq('user_id', userId).eq('nom', nom).eq('date_evenement', date as string).limit(1);
-      if (await existeDeja(deja)) return;
+      const poids = echeance && r.objectifSport?.precisionDemandee === 'categorie_poids' ? nombreSaisi(r.echeance.precision) : null;
+      const valeurs = {
+        sport_id: r.sportId,
+        nom: echeance ? r.echeance.epreuve.trim() : r.competition.nom.trim(),
+        date_evenement: echeance ?? dateIso(r.competition.date),
+        priorite: 'A',
+        type_evenement: echeance ? 'competition' : r.competition.type,
+        statut: 'prevu',
+        // Catégorie de poids de l'échéance (sports de combat) recopiée sur l'événement.
+        ...(poids !== null ? { categorie_poids_kg: poids } : {}),
+      };
+      // Un seul objectif A prévu par sport : chaque passage du questionnaire met à jour l'existant.
+      const { data } = await verifier(
+        supabase
+          .from('evenements_athlete')
+          .select('id')
+          .eq('user_id', userId)
+          .eq('sport_id', r.sportId as string)
+          .eq('priorite', 'A')
+          .eq('statut', 'prevu')
+          .order('created_at', { ascending: false })
+          .limit(1),
+      );
+      const existant = (data as { id: string }[] | null)?.[0];
       await verifier(
-        supabase.from('evenements_athlete').insert({
-          user_id: userId,
-          sport_id: r.sportId,
-          nom,
-          date_evenement: date,
-          priorite: 'A',
-          type_evenement: echeance ? 'competition' : r.competition.type,
-          statut: 'prevu',
-        }),
+        existant
+          ? supabase.from('evenements_athlete').update(valeurs).eq('id', existant.id).eq('user_id', userId)
+          : supabase.from('evenements_athlete').insert({ user_id: userId, ...valeurs }),
       );
     },
   },
