@@ -18,12 +18,13 @@ export function useAujourdhui() {
     donnees.semaine.jours.every((j) => j.seances.length === 0) &&
     donnees.demain.seances.length === 0;
 
-  const rafraichir = () =>
-    Promise.all([
+  const rafraichir = async () => {
+    await Promise.all([
       accueil.refetch(),
       checkin.refetch(),
       queryClient.invalidateQueries({ queryKey: ['nutrition'] }),
     ]);
+  };
 
   return {
     accueil: donnees,

@@ -23,7 +23,7 @@ export function FormulaireSport({ sport }: { sport: SportAthlete }) {
   const [cadre, setCadre] = useState<Cadre>(sport.cadre_pratique);
   const [ambition, setAmbition] = useState<Ambition | null>(sport.ambition);
   const [objectifId, setObjectifId] = useState<string | null>(sport.objectif_sport_id);
-  const [secondaires, setSecondaires] = useState<string[]>(sport.objectifs_secondaires);
+  const [secondaires, setSecondaires] = useState<string[]>(sport.objectifs_secondaires ?? []);
   const objectifs = useObjectifsSport(principal ? (sport.sports?.id ?? null) : null);
   const objectif = objectifs.data?.find((o) => o.id === objectifId && o.ambition === ambition);
   const modification = useModifierSport();
