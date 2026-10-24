@@ -60,3 +60,9 @@ export function echeanceJson(r: Reponses): Record<string, unknown> {
   else if (o.precisionDemandee) json[o.precisionDemandee] = r.echeance.precision.trim();
   return json;
 }
+
+/** Vrai si la requête renvoie déjà au moins une ligne (évite les doublons quand l'inscription est relancée). */
+export async function existeDeja(requete: PromiseLike<{ data: unknown[] | null; error: unknown }>): Promise<boolean> {
+  const { data } = await verifier(requete);
+  return (data?.length ?? 0) > 0;
+}

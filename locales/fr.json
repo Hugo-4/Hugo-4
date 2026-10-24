@@ -23,7 +23,12 @@
       "annee": "Année"
     },
     "fermer": "Fermer",
-    "horodatage": "{{date}} à {{heure}}"
+    "horodatage": "{{date}} à {{heure}}",
+    "erreurs": {
+      "injoignable": "Impossible de joindre le serveur {{adresse}}. Vérifie que le serveur tourne et que ton téléphone est sur le même Wi-Fi.",
+      "delai": "Le serveur met trop de temps à répondre. Réessaie dans un instant.",
+      "serveur": "Le serveur a rencontré une erreur. Réessaie, et si ça recommence, regarde le terminal du serveur."
+    }
   },
   "accueil": {
     "bonjour": "Bonjour {{prenom}}",

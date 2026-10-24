@@ -8,6 +8,10 @@ import { supabase } from './supabase';
  * l'athlète est déconnecté et renvoyé vers l'écran de connexion.
  */
 
+/**
+ * `status` : code HTTP du serveur, ou 0 si la requête n'a pas abouti
+ * (`corps` vaut alors 'injoignable' : serveur hors d'atteinte, ou 'delai' : temps d'attente dépassé).
+ */
 export class ApiError extends Error {
   constructor(
     readonly status: number,
@@ -51,6 +55,9 @@ async function envoyer(methode: Methode, chemin: string, jeton: string | null, o
       body: options.corps !== undefined ? JSON.stringify(options.corps) : undefined,
       signal: controleur.signal,
     });
+  } catch (erreur) {
+    const delai = controleur.signal.aborted;
+    throw new ApiError(0, `${methode} ${chemin} : ${delai ? 'délai dépassé' : 'serveur injoignable'} (${String(erreur)})`, delai ? 'delai' : 'injoignable');
   } finally {
     clearTimeout(minuteur);
   }
@@ -89,6 +96,16 @@ async function requete<T>(methode: Methode, chemin: string, options: Options = {
     throw new ApiError(reponse.status, `${methode} ${chemin} : ${reponse.status}`, corps);
   }
   return corps as T;
+}
+
+export type CauseEchec = 'injoignable' | 'delai' | 'serveur' | 'autre';
+
+/** Nature d'un échec d'appel au serveur, pour afficher un message utile. */
+export function causeEchec(erreur: unknown): CauseEchec {
+  if (!(erreur instanceof ApiError)) return 'autre';
+  if (erreur.status === 0) return erreur.corps === 'delai' ? 'delai' : 'injoignable';
+  if (erreur.status >= 500) return 'serveur';
+  return 'autre';
 }
 
 /** Message lisible renvoyé par le serveur (`{ erreur }`), s'il y en a un. */
