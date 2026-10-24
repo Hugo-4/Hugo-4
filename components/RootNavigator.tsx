@@ -50,7 +50,10 @@ export function RootNavigator({ policesPretes }: Props) {
         <Stack.Screen name="nouveau-mot-de-passe" />
       </Stack.Protected>
       <Stack.Protected guard={!connecte && !recuperation}>
-        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="connexion" />
+        <Stack.Screen name="creer-compte" />
+        <Stack.Screen name="mot-de-passe-oublie" />
+        <Stack.Screen name="auth-callback" />
       </Stack.Protected>
       <Stack.Protected guard={connecte && !recuperation && !profilTermine}>
         <Stack.Screen name="inscription" />

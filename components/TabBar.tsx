@@ -9,7 +9,7 @@ import { TabBarItem } from './TabBarItem';
 export const ROUTE_COACH = 'coach';
 
 /** Barre d'onglets : quatre onglets classiques et le bouton Coach surélevé au centre. */
-export function TabBar({ state, descriptors, navigation, insets }: BottomTabBarProps) {
+export function TabBar({ state, descriptors, emitter, navigateToTab, insets }: BottomTabBarProps) {
   return (
     <View style={[styles.barre, { paddingBottom: Math.max(insets.bottom, spacing.s) }]}>
       {state.routes.map((route, index) => {
@@ -18,9 +18,9 @@ export function TabBar({ state, descriptors, navigation, insets }: BottomTabBarP
         const label = typeof options.title === 'string' ? options.title : route.name;
 
         const onPress = () => {
-          const event = navigation.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
+          const event = emitter.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
           if (!actif && !event.defaultPrevented) {
-            navigation.navigate(route.name, route.params);
+            navigateToTab(route.key);
           }
         };
 
