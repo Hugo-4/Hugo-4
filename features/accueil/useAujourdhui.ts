@@ -31,6 +31,7 @@ export function useAujourdhui() {
     checkin: checkin.data ?? null,
     chargement: accueil.isPending || checkin.isPending,
     erreur: accueil.isError || checkin.isError,
+    detailErreur: accueil.error ?? checkin.error,
     vide,
     rafraichir,
     rafraichissement: accueil.isRefetching,

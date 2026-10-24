@@ -12,7 +12,7 @@ import { colors, sizes } from '@/theme/tokens';
 
 export default function AujourdhuiScreen() {
   const { t } = useTranslation();
-  const { accueil, checkin, chargement, erreur, vide, rafraichir, rafraichissement } = useAujourdhui();
+  const { accueil, checkin, chargement, erreur, detailErreur, vide, rafraichir, rafraichissement } = useAujourdhui();
 
   if (chargement) {
     return (
@@ -25,7 +25,7 @@ export default function AujourdhuiScreen() {
   if (erreur || !accueil) {
     return (
       <Screen>
-        <ErrorState onRetry={rafraichir} />
+        <ErrorState onRetry={rafraichir} erreur={detailErreur} />
       </Screen>
     );
   }

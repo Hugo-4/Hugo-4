@@ -37,7 +37,7 @@ export function RootNavigator({ policesPretes }: Props) {
   if (connecte && statut.isError) {
     return (
       <Screen>
-        <ErrorState onRetry={statut.refetch} />
+        <ErrorState onRetry={statut.refetch} erreur={statut.error} />
       </Screen>
     );
   }
