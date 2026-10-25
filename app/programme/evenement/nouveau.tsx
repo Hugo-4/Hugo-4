@@ -1,9 +1,6 @@
-import { useTranslation } from 'react-i18next';
+import { EcranEvenement } from '@/features/programme/components/EcranEvenement';
 
-import { EcranAVenir } from '@/components/EcranAVenir';
-
-/** Ajouter une compétition (étape 7). */
+/** Ajouter une compétition (FRONTEND.md §4.5). */
 export default function NouvelEvenementScreen() {
-  const { t } = useTranslation();
-  return <EcranAVenir titre={t('programme.titre')} />;
+  return <EcranEvenement />;
 }

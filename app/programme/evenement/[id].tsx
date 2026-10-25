@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next';
+import { useLocalSearchParams } from 'expo-router';
 
-import { EcranAVenir } from '@/components/EcranAVenir';
+import { EcranEvenement } from '@/features/programme/components/EcranEvenement';
 
-/** Modifier ou supprimer une compétition (étape 7). */
+/** Modifier ou supprimer une compétition (FRONTEND.md §4.5). */
 export default function EvenementScreen() {
-  const { t } = useTranslation();
-  return <EcranAVenir titre={t('programme.titre')} />;
+  const { id } = useLocalSearchParams<{ id: string }>();
+  return <EcranEvenement id={id} />;
 }
