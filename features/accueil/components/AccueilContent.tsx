@@ -70,11 +70,13 @@ export function AccueilContent({ accueil, checkin }: Props) {
           />
         ))
       )}
-      {accueil.prochain_evenement ? <EvenementCard
+      {accueil.prochain_evenement ? (
+        <EvenementCard
           evenement={accueil.prochain_evenement}
           aujourdhui={accueil.date}
           onPress={() => accueil.prochain_evenement && ouvrirEvenement(accueil.prochain_evenement)}
-        /> : null}
+        />
+      ) : null}
       <SemaineCard
         semaine={accueil.semaine}
         aVenir={premiereSemaineAVenir(programme.data, accueil.date)}
