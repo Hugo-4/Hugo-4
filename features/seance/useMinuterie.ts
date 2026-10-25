@@ -21,9 +21,11 @@ export function formatChrono(secondes: number): string {
   return h ? `${h}:${deux(m)}:${deux(s % 60)}` : `${m}:${deux(s % 60)}`;
 }
 
+const RETARD_MAX_VIBRATION_MS = 3000;
+
 /**
  * Secondes restantes du repos. L'heure de fin est enregistrée : le minuteur reste juste
- * si l'app passe en arrière-plan. Vibration forte une seule fois à la fin.
+ * si l'app passe en arrière-plan (la notification locale prévient alors). Vibration forte une seule fois à la fin.
  */
 export function useRepos(fin: number | null, onFini: () => void): number | null {
   const maintenant = useMaintenant(250);
@@ -33,7 +35,8 @@ export function useRepos(fin: number | null, onFini: () => void): number | null 
   useEffect(() => {
     if (fin !== null && restant !== null && restant <= 0 && vibre.current !== fin) {
       vibre.current = fin;
-      vibrerFinRepos();
+      // Repos fini pendant que l'app était en arrière-plan : la notification a déjà prévenu.
+      if (Date.now() - fin < RETARD_MAX_VIBRATION_MS) vibrerFinRepos();
       onFini();
     }
   }, [fin, restant, onFini]);

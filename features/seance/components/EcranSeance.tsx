@@ -11,6 +11,7 @@ import { useSeance } from '../SeanceProvider';
 import { lireVue, sauverVue } from '../stockageSeance';
 import type { Vue } from '../types';
 import { useActionsSeance } from '../useActionsSeance';
+import { useNotificationRepos } from '../useNotificationRepos';
 import { BandeauEnvoi } from './BandeauEnvoi';
 import { BoutonDouleur } from './BoutonDouleur';
 import { EnteteSeance } from './EnteteSeance';
@@ -25,6 +26,7 @@ export function EcranSeance() {
   const { t } = useTranslation();
   const { etat, dispatch } = useSeance();
   const { abandonner } = useActionsSeance();
+  useNotificationRepos();
   const [vue, setVue] = useState<Vue>('exercice');
   const [feuille, setFeuille] = useState<Feuille>(null);
   const exercice = exercicesDe(etat.seance)[etat.index] ?? null;

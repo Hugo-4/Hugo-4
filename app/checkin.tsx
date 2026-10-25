@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { X } from 'lucide-react-native';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
@@ -17,14 +17,14 @@ import { useCheckin } from '@/features/checkin/useCheckin';
 import { ErreurEnregistrement } from '@/features/inscription/components/ErreurEnregistrement';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
-/** Check-in du matin (feuille modale). */
+/** Check-in du matin : feuille native (formSheet) qui se ferme en glissant vers le bas. */
 export default function CheckinScreen() {
   const { t } = useTranslation();
   const c = useCheckin();
 
   return (
-    <Screen>
-      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <Screen edges={['left', 'right', 'bottom']}>
+      <View style={styles.flex}>
         <View style={styles.entete}>
           <AppText variant="titre" accessibilityRole="header" style={styles.flex}>
             {t('checkin.titre')}
@@ -76,14 +76,14 @@ export default function CheckinScreen() {
             disabled={!c.complet || c.enregistrement.isPending}
           />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  entete: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing.ecran, paddingTop: spacing.s },
+  entete: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing.ecran, paddingTop: spacing.l },
   contenu: { padding: spacing.ecran, gap: spacing.xxl },
   groupe: { gap: spacing.l },
   pied: { padding: spacing.ecran, gap: spacing.s, borderTopWidth: sizes.bordure, borderTopColor: colors.ligne },

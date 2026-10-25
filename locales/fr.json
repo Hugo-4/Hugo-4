@@ -846,6 +846,12 @@
       "duree": "Durée",
       "envoi": "Tout est enregistré sur ton téléphone et sera envoyé dès que le réseau le permet.",
       "terminer": "Terminer"
+    },
+    "notification": {
+      "canal": "Fin de repos",
+      "titre": "Repos terminé",
+      "suivante": "À toi : {{nom}}, série {{numero}} / {{total}}",
+      "reprendre": "Reprends ta séance"
     }
   }
 }

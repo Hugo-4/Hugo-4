@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { cleExercice, exercicesDe, seriesPrevues } from './etat';
 import { ajouter } from './fileEnvoi';
 import { viderFile } from './envoi';
+import { annulerFinRepos } from './notificationRepos';
 import { vibrerValidation } from './retours';
 import type { Saisie } from './saisie';
 import { mesureDe } from './saisie';
@@ -54,6 +55,7 @@ export function useActionsSeance() {
   };
 
   const fermer = async () => {
+    await annulerFinRepos();
     await effacerSeanceEnCours();
     queryClient.invalidateQueries({ queryKey: ['seanceEnCours'] });
     queryClient.invalidateQueries({ queryKey: ['accueil'] });

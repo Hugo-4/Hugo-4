@@ -846,6 +846,12 @@
       "duree": "Duration",
       "envoi": "Everything is saved on your phone and will be sent as soon as you're online.",
       "terminer": "Finish"
+    },
+    "notification": {
+      "canal": "End of rest",
+      "titre": "Rest is over",
+      "suivante": "Your turn: {{nom}}, set {{numero}} / {{total}}",
+      "reprendre": "Back to your session"
     }
   }
 }
