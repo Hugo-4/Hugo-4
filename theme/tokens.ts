@@ -14,6 +14,10 @@ export const colors = {
   accent: '#C8FF2E',
   surAccent: '#0B0D0C',
   alerte: '#FF8A3D',
+  /** Forme moyenne (FRONTEND.md §5.1). */
+  vigilance: '#FFC94D',
+  /** Forme basse, erreur, urgence. */
+  danger: '#FF6B6B',
 } as const;
 
 export const radius = {
@@ -58,6 +62,7 @@ export const fontSizes = {
   xl: 22,
   xxl: 28,
   display: 40,
+  chiffreXL: 44,
 } as const;
 
 export const sizes = {
@@ -76,11 +81,16 @@ export const sizes = {
   jauge: 8,
   bordure: 1,
   bordureForte: 2,
+  /** En séance : boutons − / + et gros bouton de validation (FRONTEND.md §4.3). */
+  pasAPas: 48,
+  boutonSeance: 60,
 } as const;
 
 export const opacity = {
   presse: 0.7,
   desactive: 0.4,
+  /** Voile derrière une feuille modale. */
+  voile: 0.7,
 } as const;
 
 export const tokens = { colors, radius, spacing, fonts, fontSizes, sizes, opacity };

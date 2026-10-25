@@ -11,7 +11,7 @@ export type Langue = (typeof LANGUES)[number];
 /** Les deux fichiers doivent avoir exactement les mêmes clés : tsc échoue sinon. */
 const enComplet: typeof fr = en;
 
-function langueDuTelephone(): Langue {
+export function langueDuTelephone(): Langue {
   for (const locale of getLocales()) {
     const code = locale.languageCode;
     if (code && (LANGUES as readonly string[]).includes(code)) {
@@ -25,6 +25,10 @@ export const resources = {
   fr: { translation: fr },
   en: { translation: enComplet },
 } as const;
+
+export function estLangue(valeur: string): valeur is Langue {
+  return (LANGUES as readonly string[]).includes(valeur);
+}
 
 const i18n = createInstance();
 

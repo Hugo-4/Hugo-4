@@ -7,6 +7,7 @@ export const typography = {
   display: { fontFamily: fonts.titreGras, fontSize: fontSizes.display, color: colors.texte },
   titre: { fontFamily: fonts.titreGras, fontSize: fontSizes.xxl, color: colors.texte },
   sousTitre: { fontFamily: fonts.titre, fontSize: fontSizes.xl, color: colors.texte },
+  chiffreXL: { fontFamily: fonts.titreGras, fontSize: fontSizes.chiffreXL, lineHeight: fontSizes.chiffreXL, color: colors.texte },
   chiffre: { fontFamily: fonts.titreGras, fontSize: fontSizes.xl, color: colors.texte },
   surTitre: {
     fontFamily: fonts.titre,

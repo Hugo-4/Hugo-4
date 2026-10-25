@@ -5,23 +5,23 @@ import { AppText } from '@/components/AppText';
 import { dateLocale, formatJourCourt, formatJourLong } from '@/lib/format';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
-import { libelleType, type StatutPastille, statutJour } from '../presentation';
-import type { JourSemaine } from '../types';
+import { type JourPastille as Jour, libelleType, type StatutPastille, statutJour } from '../presentation';
 
 const apparences: Record<StatutPastille, { fond: string; bordure: string; texte: string }> = {
   fait: { fond: colors.accent, bordure: colors.accent, texte: colors.surAccent },
   aujourdhui: { fond: 'transparent', bordure: colors.accent, texte: colors.accent },
   prevu: { fond: 'transparent', bordure: colors.discret, texte: colors.texte2 },
   manque: { fond: 'transparent', bordure: colors.alerte, texte: colors.alerte },
-  repos: { fond: colors.carte2, bordure: colors.carte2, texte: colors.discret },
+  vide: { fond: colors.carte2, bordure: colors.carte2, texte: colors.discret },
 };
 
-export function JourPastille({ jour }: { jour: JourSemaine }) {
+export function JourPastille({ jour }: { jour: Jour }) {
   const { t } = useTranslation();
   const date = dateLocale(jour.date);
   const statut = statutJour(jour);
   const apparence = apparences[statut];
-  const type = jour.seances[0] ? libelleType(jour.seances[0].type) : t('accueil.seance.repos');
+  // Rien de prévu : on laisse vide, sans écrire « Repos ».
+  const type = jour.seances[0] ? libelleType(jour.seances[0].type) : '';
 
   return (
     <View
@@ -29,7 +29,7 @@ export function JourPastille({ jour }: { jour: JourSemaine }) {
       accessible
       accessibilityLabel={t('accueil.semaine.a11yJour', {
         jour: formatJourLong(date),
-        type,
+        type: type || t('accueil.semaine.rienDePrevu'),
         statut: t(`accueil.semaine.statut.${statut}`),
       })}>
       <View style={[styles.pastille, { backgroundColor: apparence.fond, borderColor: apparence.bordure }]}>
@@ -37,7 +37,7 @@ export function JourPastille({ jour }: { jour: JourSemaine }) {
           {formatJourCourt(date)}
         </AppText>
       </View>
-      <AppText variant="libelle" numberOfLines={1}>
+      <AppText variant="libelle" color={colors.texte2} numberOfLines={1}>
         {type}
       </AppText>
     </View>

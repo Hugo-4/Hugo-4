@@ -6,6 +6,8 @@ export type StatutCompte = {
   prenom: string | null;
   /** `false` tant que le questionnaire d'inscription n'est pas terminé. */
   onboardingComplete: boolean;
+  /** Langue de l'app choisie dans le profil (`users.langue`, « fr » par défaut en base). */
+  langue: string;
 };
 
 /**
@@ -15,11 +17,15 @@ export type StatutCompte = {
 async function chargerStatut(userId: string): Promise<StatutCompte> {
   const { data, error } = await supabase
     .from('users')
-    .select('prenom, onboarding_complete')
+    .select('prenom, onboarding_complete, langue')
     .eq('id', userId)
     .maybeSingle();
   if (error) throw error;
-  return { prenom: data?.prenom ?? null, onboardingComplete: data?.onboarding_complete ?? false };
+  return {
+    prenom: data?.prenom ?? null,
+    onboardingComplete: data?.onboarding_complete ?? false,
+    langue: data?.langue ?? 'fr',
+  };
 }
 
 export function useStatutCompte(userId: string | undefined) {

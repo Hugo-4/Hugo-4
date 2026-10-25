@@ -28,7 +28,10 @@
       "injoignable": "Can't reach the server {{adresse}}. Check that the server is running and that your phone is on the same Wi-Fi.",
       "delai": "The server is taking too long to respond. Try again in a moment.",
       "serveur": "The server hit an error. Try again, and if it happens again, check the server terminal."
-    }
+    },
+    "moins": "Minus {{pas}}: {{libelle}}",
+    "plus": "Plus {{pas}}: {{libelle}}",
+    "annuler": "Cancel"
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
@@ -55,7 +58,8 @@
       "refaire": "Redo my check-in",
       "checkinTitre": "How are you feeling?",
       "checkinTexte": "Do your check-in so your coach can adapt today's session.",
-      "checkinBouton": "Do my check-in"
+      "checkinBouton": "Do my check-in",
+      "checkinAide": "30 seconds, 7 questions"
     },
     "fatigue": {
       "titre": "Coach suggestion",
@@ -75,13 +79,22 @@
       "demarrer": "Start session",
       "modifier": "Adjust with the coach",
       "repos": "Rest",
-      "reposTexte": "Recover well: that's part of getting better too.",
-      "prochaine": "Next session: {{titre}}, {{jour}}"
+      "prochaine": "Next session: {{titre}}, {{jour}}",
+      "reprendre": "Resume session",
+      "voirProchaine": "See my next session"
     },
     "evenement": {
       "titre": "Next goal",
       "jours_one": "{{count}} day",
-      "jours_other": "{{count}} days"
+      "jours_other": "{{count}} days",
+      "semaines_one": "in {{count}} week",
+      "semaines_other": "in {{count}} weeks",
+      "ans_one": "{{count}} year",
+      "ans_other": "{{count}} years",
+      "mois_one": "{{count}} month",
+      "mois_other": "{{count}} months",
+      "ansEtMois": "in {{ans}} and {{mois}}",
+      "dansAns": "in {{ans}}"
     },
     "semaine": {
       "titre": "Your week",
@@ -93,8 +106,10 @@
         "aujourdhui": "today",
         "prevu": "planned",
         "manque": "missed",
-        "repos": "rest"
-      }
+        "vide": "nothing planned"
+      },
+      "aVenir": "Week {{numero}} · from {{jour}} {{date}}",
+      "rienDePrevu": "nothing planned"
     },
     "nutrition": {
       "titre": "Today's nutrition",
@@ -719,6 +734,124 @@
       "retirer": "Withdraw my consent",
       "effetRetrait": "If you withdraw your consent, the coach won't ask you health questions (pain, injuries) anymore and nothing new will be stored.",
       "cguRetrait": "The terms of use are required to use Athlenis. To refuse them, you need to delete your account."
+    }
+  },
+  "enSeance": {
+    "quitter": "Leave session",
+    "quitterTitre": "Leave the session?",
+    "quitterTexte": "Your logged sets are saved.",
+    "terminer": "Finish session",
+    "abandonner": "Discard",
+    "position": "Exercise {{numero}} / {{total}} · {{chrono}}",
+    "a11yProgression": "{{faits}} of {{total}} exercises done",
+    "vue": {
+      "a11y": "Session view",
+      "exercice": "Exercise",
+      "liste": "Whole session"
+    },
+    "serie": "Set {{numero}} / {{total}}",
+    "rirCible": "RIR {{rir}}",
+    "tempo": "Tempo {{tempo}}",
+    "precedente": "Previous set: {{detail}}",
+    "conseillee": "Suggested: {{charge}} kg · {{raison}}",
+    "kg": "{{valeur}} kg",
+    "foisReps": "× {{reps}}",
+    "secondes": "{{valeur}} s",
+    "minutes": "{{valeur}} min",
+    "charge": "Load",
+    "reps": "Reps",
+    "duree": "Duration",
+    "rpe": "RPE (perceived effort)",
+    "uniteKg": "kg",
+    "uniteReps": "reps",
+    "uniteSecondes": "s",
+    "uniteMin": "min",
+    "a11yRpe": "RPE {{rpe}}",
+    "a11yFiche": "Opens the exercise guide",
+    "valider": "Log set",
+    "statut": {
+      "fait": "Exercise done.",
+      "passe": "Exercise skipped.",
+      "arrete": "Exercise stopped (pain).",
+      "en_cours": "",
+      "a_faire": ""
+    },
+    "statutCourt": {
+      "fait": "done",
+      "passe": "skipped",
+      "arrete": "stopped",
+      "en_cours": "in progress",
+      "a_faire": "to do"
+    },
+    "a11yLigne": "{{nom}}, {{statut}}",
+    "seriesFaites_one": "{{count}} set",
+    "seriesFaites_other": "{{count}} sets",
+    "repos": {
+      "titre": "Rest",
+      "a11yRestant": "{{secondes}} seconds of rest left",
+      "moins": "−{{s}} s",
+      "plus": "+{{s}} s",
+      "passer": "Skip"
+    },
+    "menu": {
+      "titre": "Exercise options",
+      "remplacer": "Replace with the coach",
+      "ajouterSerie": "Add a set",
+      "passer": "Skip exercise",
+      "confirmerPasser": "Skip this exercise"
+    },
+    "raisons": {
+      "materiel_occupe": "Equipment busy",
+      "douleur": "Pain",
+      "fatigue": "Too tired",
+      "manque_de_temps": "Short on time",
+      "autre": "Other"
+    },
+    "fiche": {
+      "muscles": "Muscles",
+      "consignes": "Key points",
+      "vide": "The guide for this exercise is coming soon."
+    },
+    "douleur": {
+      "titre": "Report pain",
+      "court": "Pain",
+      "intensite": "Intensity (0 to 10)",
+      "a11yIntensite": "Intensity {{valeur}} out of 10",
+      "urgence": "Chest pain, feeling faint, unusual breathlessness: stop and call 112 (or your local emergency number).",
+      "arret": "Above 3/10, the exercise is stopped.",
+      "valider": "Save pain",
+      "arreteTitre": "Exercise stopped",
+      "arreteTexte": "You can ask the coach for a replacement or carry on with the next exercise.",
+      "continuer": "Continue session",
+      "sansConsentement": "You haven't allowed health data to be stored: the pain isn't saved, but you can stop the exercise.",
+      "arreterExercice": "Stop the exercise",
+      "consentements": "Manage my consents"
+    },
+    "horsLigne_one": "Offline · {{count}} upload pending",
+    "horsLigne_other": "Offline · {{count}} uploads pending",
+    "fin": {
+      "titre": "End of session",
+      "rpe": "Overall session effort (RPE)",
+      "duree": "Actual duration",
+      "fatigue": "Fatigue after the session (1 to 10)",
+      "a11yFatigue": "Fatigue {{valeur}} out of 10",
+      "douleurs": "Pain reported: {{liste}}",
+      "commentaire": "A note for the coach (optional)",
+      "valider": "Save"
+    },
+    "resume": {
+      "titre": "Session done",
+      "volume": "Volume lifted",
+      "series": "Sets done / planned",
+      "duree": "Duration",
+      "envoi": "Everything is saved on your phone and will be sent as soon as you're online.",
+      "terminer": "Finish"
+    },
+    "notification": {
+      "canal": "End of rest",
+      "titre": "Rest is over",
+      "suivante": "Your turn: {{nom}}, set {{numero}} / {{total}}",
+      "reprendre": "Back to your session"
     }
   }
 }

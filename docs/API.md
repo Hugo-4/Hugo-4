@@ -54,6 +54,31 @@ Source : `routes/athlete.js` et `agents/programme/generateurProgramme.js` du ser
 
 ---
 
+## En séance (docs/PLAN.md, étape 5 ; FRONTEND.md §0 et §4.3)
+
+À ajouter côté serveur (option B validée) :
+
+```
+POST /programme/seances/:id/demarrer   protégée par le jeton (req.userId)
+  → crée la séance finale du jour avec le check-in (comme le fait le superviseur) et renvoie
+    detailSeance(userId, id) au format « finale » : seance_finale_id, exercices.blocs[].exercices[]
+    avec exercice_seance_id (lignes exercices_seance). Si la séance finale existe déjà, la renvoie telle quelle.
+```
+
+En attendant, l'app utilise une séance fictive au même format (`features/seance/source.ts`, `SEANCE_FICTIVE = true`) :
+passer la constante à `false` quand la route est en ligne, rien d'autre ne change.
+
+L'app envoie ensuite, via sa file hors ligne (`features/seance/fileEnvoi.ts`) :
+- `PUT /exercices-seance/:id/series` après chaque série validée, avec la liste complète des séries de l'exercice ;
+- `POST /seances/:id/feedback` à la fin (`douleurs` seulement avec le consentement santé) ;
+- `POST /serie-suivante` directement (sans file) pour la charge conseillée.
+
+Chaque envoi de la file porte un en-tête `Idempotency-Key` (identifiant généré sur le téléphone) : le serveur peut
+ignorer un doublon. `PUT …/series` et `…/feedback` sont déjà idempotents (ils remplacent les valeurs).
+
+Tous les appels portent aussi `Accept-Language: fr` ou `en` (langue du profil, `users.langue`) : le serveur peut rédiger
+ses textes dans cette langue.
+
 ## En-tête de routes/athlete.js (référence)
 
 ```

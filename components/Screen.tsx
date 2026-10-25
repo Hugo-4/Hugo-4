@@ -1,17 +1,19 @@
 import type { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { type Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 import { colors } from '@/theme/tokens';
 
 type Props = {
   children: ReactNode;
+  /** Par défaut le haut (la barre d'onglets gère le bas) ; une feuille gère plutôt le bas. */
+  edges?: Edge[];
 };
 
-/** Conteneur d'écran : fond sombre et marges de sécurité en haut (la barre d'onglets gère le bas). */
-export function Screen({ children }: Props) {
+/** Conteneur d'écran : fond sombre et marges de sécurité. */
+export function Screen({ children, edges = ['top', 'left', 'right'] }: Props) {
   return (
-    <SafeAreaView edges={['top', 'left', 'right']} style={styles.ecran}>
+    <SafeAreaView edges={edges} style={styles.ecran}>
       {children}
     </SafeAreaView>
   );

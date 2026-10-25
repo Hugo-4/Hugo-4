@@ -23,7 +23,12 @@ export function CheckinCard({ onCheckin }: Props) {
           <AppText variant="secondaire">{t('accueil.forme.checkinTexte')}</AppText>
         </View>
       </View>
-      <Button label={t('accueil.forme.checkinBouton')} onPress={onCheckin} />
+      <View style={styles.action}>
+        <Button label={t('accueil.forme.checkinBouton')} onPress={onCheckin} />
+        <AppText variant="libelle" color={colors.texte2} style={styles.aide}>
+          {t('accueil.forme.checkinAide')}
+        </AppText>
+      </View>
     </Card>
   );
 }
@@ -31,4 +36,6 @@ export function CheckinCard({ onCheckin }: Props) {
 const styles = StyleSheet.create({
   ligne: { flexDirection: 'row', alignItems: 'center', gap: spacing.l },
   texte: { flex: 1, gap: spacing.xs },
+  action: { gap: spacing.s },
+  aide: { textAlign: 'center' },
 });

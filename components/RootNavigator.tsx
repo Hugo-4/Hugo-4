@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 
 import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
-import { colors } from '@/theme/tokens';
+import { useLangueProfil } from '@/features/langue/useLangueProfil';
+import { colors, radius } from '@/theme/tokens';
 
 import { ErrorState } from './ErrorState';
 import { Screen } from './Screen';
@@ -22,6 +23,7 @@ type Props = {
 export function RootNavigator({ policesPretes }: Props) {
   const { session, pret, recuperation } = useSession();
   const statut = useStatutCompte(session?.user.id);
+  useLangueProfil(session?.user.id, statut.data);
   const connecte = session !== null;
   const etatConnu = pret && (!connecte || !statut.isPending);
   const toutPret = policesPretes && etatConnu;
@@ -60,7 +62,17 @@ export function RootNavigator({ policesPretes }: Props) {
       </Stack.Protected>
       <Stack.Protected guard={connecte && !recuperation && profilTermine}>
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="checkin" options={{ presentation: 'modal' }} />
+        <Stack.Screen
+          name="checkin"
+          options={{
+            presentation: 'formSheet',
+            sheetAllowedDetents: [0.92],
+            sheetGrabberVisible: true,
+            sheetCornerRadius: radius.carte,
+            contentStyle: { backgroundColor: colors.fond },
+          }}
+        />
+        <Stack.Screen name="seance/[id]" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="compte" />
       </Stack.Protected>
     </Stack>

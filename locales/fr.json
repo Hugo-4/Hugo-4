@@ -28,7 +28,10 @@
       "injoignable": "Impossible de joindre le serveur {{adresse}}. Vérifie que le serveur tourne et que ton téléphone est sur le même Wi-Fi.",
       "delai": "Le serveur met trop de temps à répondre. Réessaie dans un instant.",
       "serveur": "Le serveur a rencontré une erreur. Réessaie, et si ça recommence, regarde le terminal du serveur."
-    }
+    },
+    "moins": "Moins {{pas}} : {{libelle}}",
+    "plus": "Plus {{pas}} : {{libelle}}",
+    "annuler": "Annuler"
   },
   "accueil": {
     "bonjour": "Bonjour {{prenom}}",
@@ -55,7 +58,8 @@
       "refaire": "Refaire mon check-in",
       "checkinTitre": "Comment tu te sens ?",
       "checkinTexte": "Fais ton check-in pour que le coach adapte ta séance du jour.",
-      "checkinBouton": "Faire mon check-in"
+      "checkinBouton": "Faire mon check-in",
+      "checkinAide": "30 secondes, 7 questions"
     },
     "fatigue": {
       "titre": "Proposition du coach",
@@ -75,13 +79,22 @@
       "demarrer": "Démarrer la séance",
       "modifier": "Modifier avec le coach",
       "repos": "Repos",
-      "reposTexte": "Récupère bien : c'est aussi comme ça qu'on progresse.",
-      "prochaine": "Prochaine séance : {{titre}}, {{jour}}"
+      "prochaine": "Prochaine séance : {{titre}}, {{jour}}",
+      "reprendre": "Reprendre la séance",
+      "voirProchaine": "Voir ma prochaine séance"
     },
     "evenement": {
       "titre": "Prochain objectif",
       "jours_one": "J-{{count}}",
-      "jours_other": "J-{{count}}"
+      "jours_other": "J-{{count}}",
+      "semaines_one": "dans {{count}} semaine",
+      "semaines_other": "dans {{count}} semaines",
+      "ans_one": "{{count}} an",
+      "ans_other": "{{count}} ans",
+      "mois_one": "{{count}} mois",
+      "mois_other": "{{count}} mois",
+      "ansEtMois": "dans {{ans}} et {{mois}}",
+      "dansAns": "dans {{ans}}"
     },
     "semaine": {
       "titre": "Ta semaine",
@@ -93,8 +106,10 @@
         "aujourdhui": "aujourd'hui",
         "prevu": "prévu",
         "manque": "manqué",
-        "repos": "repos"
-      }
+        "vide": "rien de prévu"
+      },
+      "aVenir": "Semaine {{numero}} · dès {{jour}} {{date}}",
+      "rienDePrevu": "rien de prévu"
     },
     "nutrition": {
       "titre": "Nutrition du jour",
@@ -719,6 +734,124 @@
       "retirer": "Retirer mon accord",
       "effetRetrait": "Si tu retires ton accord, le coach ne te posera plus de question de santé (douleurs, blessures) et rien de nouveau ne sera enregistré.",
       "cguRetrait": "Les conditions d'utilisation sont nécessaires pour utiliser Athlenis. Pour les refuser, il faut supprimer ton compte."
+    }
+  },
+  "enSeance": {
+    "quitter": "Quitter la séance",
+    "quitterTitre": "Quitter la séance ?",
+    "quitterTexte": "Tes séries validées sont enregistrées.",
+    "terminer": "Terminer la séance",
+    "abandonner": "Abandonner",
+    "position": "Exercice {{numero}} / {{total}} · {{chrono}}",
+    "a11yProgression": "{{faits}} exercices terminés sur {{total}}",
+    "vue": {
+      "a11y": "Affichage de la séance",
+      "exercice": "Exercice",
+      "liste": "Toute la séance"
+    },
+    "serie": "Série {{numero}} / {{total}}",
+    "rirCible": "RIR {{rir}}",
+    "tempo": "Tempo {{tempo}}",
+    "precedente": "Série précédente : {{detail}}",
+    "conseillee": "Conseillé : {{charge}} kg · {{raison}}",
+    "kg": "{{valeur}} kg",
+    "foisReps": "× {{reps}}",
+    "secondes": "{{valeur}} s",
+    "minutes": "{{valeur}} min",
+    "charge": "Charge",
+    "reps": "Répétitions",
+    "duree": "Durée",
+    "rpe": "RPE (effort ressenti)",
+    "uniteKg": "kg",
+    "uniteReps": "reps",
+    "uniteSecondes": "s",
+    "uniteMin": "min",
+    "a11yRpe": "RPE {{rpe}}",
+    "a11yFiche": "Ouvre la fiche technique",
+    "valider": "Valider la série",
+    "statut": {
+      "fait": "Exercice terminé.",
+      "passe": "Exercice passé.",
+      "arrete": "Exercice arrêté (douleur).",
+      "en_cours": "",
+      "a_faire": ""
+    },
+    "statutCourt": {
+      "fait": "fait",
+      "passe": "passé",
+      "arrete": "arrêté",
+      "en_cours": "en cours",
+      "a_faire": "à faire"
+    },
+    "a11yLigne": "{{nom}}, {{statut}}",
+    "seriesFaites_one": "{{count}} série",
+    "seriesFaites_other": "{{count}} séries",
+    "repos": {
+      "titre": "Repos",
+      "a11yRestant": "{{secondes}} secondes de repos restantes",
+      "moins": "−{{s}} s",
+      "plus": "+{{s}} s",
+      "passer": "Passer"
+    },
+    "menu": {
+      "titre": "Options de l'exercice",
+      "remplacer": "Remplacer avec le coach",
+      "ajouterSerie": "Ajouter une série",
+      "passer": "Passer l'exercice",
+      "confirmerPasser": "Passer cet exercice"
+    },
+    "raisons": {
+      "materiel_occupe": "Matériel occupé",
+      "douleur": "Douleur",
+      "fatigue": "Trop fatigué",
+      "manque_de_temps": "Manque de temps",
+      "autre": "Autre"
+    },
+    "fiche": {
+      "muscles": "Muscles",
+      "consignes": "Points clés",
+      "vide": "La fiche de cet exercice arrive bientôt."
+    },
+    "douleur": {
+      "titre": "Signaler une douleur",
+      "court": "Douleur",
+      "intensite": "Intensité (0 à 10)",
+      "a11yIntensite": "Intensité {{valeur}} sur 10",
+      "urgence": "Douleur dans la poitrine, malaise, essoufflement anormal : arrête-toi et appelle le 15 ou le 112.",
+      "arret": "Au-delà de 3/10, l'exercice est arrêté.",
+      "valider": "Enregistrer la douleur",
+      "arreteTitre": "Exercice arrêté",
+      "arreteTexte": "Tu peux demander un remplacement au coach ou continuer avec l'exercice suivant.",
+      "continuer": "Continuer la séance",
+      "sansConsentement": "Tu n'as pas autorisé l'enregistrement des données de santé : la douleur n'est pas enregistrée, mais tu peux arrêter l'exercice.",
+      "arreterExercice": "Arrêter l'exercice",
+      "consentements": "Gérer mes consentements"
+    },
+    "horsLigne_one": "Hors ligne · {{count}} envoi en attente",
+    "horsLigne_other": "Hors ligne · {{count}} envois en attente",
+    "fin": {
+      "titre": "Fin de séance",
+      "rpe": "Effort global de la séance (RPE)",
+      "duree": "Durée réelle",
+      "fatigue": "Fatigue après la séance (1 à 10)",
+      "a11yFatigue": "Fatigue {{valeur}} sur 10",
+      "douleurs": "Douleurs signalées : {{liste}}",
+      "commentaire": "Un mot pour le coach (facultatif)",
+      "valider": "Enregistrer"
+    },
+    "resume": {
+      "titre": "Séance terminée",
+      "volume": "Volume soulevé",
+      "series": "Séries faites / prévues",
+      "duree": "Durée",
+      "envoi": "Tout est enregistré sur ton téléphone et sera envoyé dès que le réseau le permet.",
+      "terminer": "Terminer"
+    },
+    "notification": {
+      "canal": "Fin de repos",
+      "titre": "Repos terminé",
+      "suivante": "À toi : {{nom}}, série {{numero}} / {{total}}",
+      "reprendre": "Reprends ta séance"
     }
   }
 }

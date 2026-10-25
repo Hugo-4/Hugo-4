@@ -15,6 +15,7 @@ import { useFonts } from 'expo-font';
 import { DarkTheme, ThemeProvider, type Theme } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { LogBox } from 'react-native';
 
 import { RootNavigator } from '@/components/RootNavigator';
 import { AuthProvider } from '@/features/auth/AuthProvider';
@@ -22,6 +23,10 @@ import { queryClient } from '@/lib/queryClient';
 import { colors } from '@/theme/tokens';
 
 SplashScreen.preventAutoHideAsync();
+
+// Expo Go prévient que les notifications PUSH n'y existent pas : l'app n'utilise que des notifications
+// locales (fin de repos), qui fonctionnent dans Expo Go.
+LogBox.ignoreLogs(['`expo-notifications` functionality is not fully supported in Expo Go']);
 
 const theme: Theme = {
   ...DarkTheme,
