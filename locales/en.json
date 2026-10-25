@@ -31,7 +31,32 @@
     },
     "moins": "Minus {{pas}}: {{libelle}}",
     "plus": "Plus {{pas}}: {{libelle}}",
-    "annuler": "Cancel"
+    "annuler": "Cancel",
+    "compteARebours": {
+      "jours_one": "{{count}} day",
+      "jours_other": "{{count}} days",
+      "semaines_one": "in {{count}} week",
+      "semaines_other": "in {{count}} weeks",
+      "ans_one": "{{count}} year",
+      "ans_other": "{{count}} years",
+      "mois_one": "{{count}} month",
+      "mois_other": "{{count}} months",
+      "ansEtMois": "in {{ans}} and {{mois}}",
+      "dansAns": "in {{ans}}"
+    },
+    "horsLigne": "Offline · latest data received",
+    "bientotDisponible": "Coming soon",
+    "modification": {
+      "avant": "Before",
+      "apres": "After",
+      "inchange": "What stays the same",
+      "appliquer": "Apply",
+      "garder": "Keep the original",
+      "appliquee": "Applied",
+      "gardee": "Original kept",
+      "annuler": "Undo ({{secondes}} s)",
+      "a11yAvant": "Before: {{liste}}"
+    }
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
@@ -84,17 +109,7 @@
       "voirProchaine": "See my next session"
     },
     "evenement": {
-      "titre": "Next goal",
-      "jours_one": "{{count}} day",
-      "jours_other": "{{count}} days",
-      "semaines_one": "in {{count}} week",
-      "semaines_other": "in {{count}} weeks",
-      "ans_one": "{{count}} year",
-      "ans_other": "{{count}} years",
-      "mois_one": "{{count}} month",
-      "mois_other": "{{count}} months",
-      "ansEtMois": "in {{ans}} and {{mois}}",
-      "dansAns": "in {{ans}}"
+      "titre": "Next goal"
     },
     "semaine": {
       "titre": "Your week",

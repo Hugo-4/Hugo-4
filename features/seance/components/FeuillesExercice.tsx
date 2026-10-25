@@ -1,6 +1,7 @@
-import { router } from 'expo-router';
 import { Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
+
+import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
 
 import { cleExercice } from '../etat';
 import { useSeance } from '../SeanceProvider';
@@ -18,12 +19,16 @@ type Props = {
 /** Fiche technique, menu « ⋯ » et douleur de l'exercice affiché. */
 export function FeuillesExercice({ exercice, feuille, onFermer }: Props) {
   const { t } = useTranslation();
-  const { dispatch } = useSeance();
+  const { etat, dispatch } = useSeance();
   const cle = exercice ? cleExercice(exercice) : null;
-  // Le remplacement est proposé par le coach (étape 6) ; la séance reste sauvegardée.
+  // Le remplacement est proposé par le coach, avec l'exercice en contexte ; la séance reste sauvegardée.
   const remplacer = () => {
     onFermer();
-    router.push('/coach');
+    if (exercice) {
+      ouvrirCoach({ type: 'exercice', programmeSeanceId: etat.programmeSeanceId, exerciceSlug: exercice.exercice.slug, nom: exercice.exercice.nom });
+    } else {
+      ouvrirCoach();
+    }
   };
 
   return (

@@ -4,11 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
-import { dateLocale } from '@/lib/format';
-import i18n from '@/lib/i18n';
+import { CompteARebours } from '@/components/CompteARebours';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
-import { compteARebours } from '../presentation';
 import type { Accueil } from '../types';
 
 type Props = { evenement: NonNullable<Accueil['prochain_evenement']>; aujourdhui: string };
@@ -19,7 +17,6 @@ type Props = { evenement: NonNullable<Accueil['prochain_evenement']>; aujourdhui
  */
 export function EvenementCard({ evenement, aujourdhui }: Props) {
   const { t } = useTranslation();
-  const date = dateLocale(evenement.date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' });
   return (
     <Card>
       <View style={styles.ligne}>
@@ -28,14 +25,7 @@ export function EvenementCard({ evenement, aujourdhui }: Props) {
           <AppText variant="surTitre">{t('accueil.evenement.titre')}</AppText>
           <AppText variant="corpsGras">{evenement.nom}</AppText>
         </View>
-        <View style={styles.compte}>
-          <AppText variant="chiffre" color={colors.accent}>
-            {compteARebours(evenement.jours_restants, evenement.date, aujourdhui)}
-          </AppText>
-          <AppText variant="libelle" color={colors.texte2}>
-            {date}
-          </AppText>
-        </View>
+        <CompteARebours jours={evenement.jours_restants} date={evenement.date} aujourdhui={aujourdhui} />
       </View>
     </Card>
   );
@@ -44,5 +34,4 @@ export function EvenementCard({ evenement, aujourdhui }: Props) {
 const styles = StyleSheet.create({
   ligne: { flexDirection: 'row', alignItems: 'center', gap: spacing.m },
   texte: { flex: 1, gap: spacing.xxs },
-  compte: { alignItems: 'flex-end', gap: spacing.xxs, flexShrink: 1 },
 });

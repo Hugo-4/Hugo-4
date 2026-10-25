@@ -2,14 +2,10 @@ import { getLocales } from 'expo-localization';
 import { createInstance } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import en from '@/locales/en.json';
-import fr from '@/locales/fr.json';
+import { traductionsEn, traductionsFr } from '@/locales';
 
 export const LANGUES = ['fr', 'en'] as const;
 export type Langue = (typeof LANGUES)[number];
-
-/** Les deux fichiers doivent avoir exactement les mêmes clés : tsc échoue sinon. */
-const enComplet: typeof fr = en;
 
 export function langueDuTelephone(): Langue {
   for (const locale of getLocales()) {
@@ -22,8 +18,8 @@ export function langueDuTelephone(): Langue {
 }
 
 export const resources = {
-  fr: { translation: fr },
-  en: { translation: enComplet },
+  fr: { translation: traductionsFr },
+  en: { translation: traductionsEn },
 } as const;
 
 export function estLangue(valeur: string): valeur is Langue {

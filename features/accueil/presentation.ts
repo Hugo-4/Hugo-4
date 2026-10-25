@@ -1,7 +1,5 @@
 import i18n from '@/lib/i18n';
 
-import { dateLocale } from '@/lib/format';
-
 import type { DetailSeance, ExercicePresente, ResumeSeance } from './types';
 
 /** Libellé traduit d'un type de séance (code du serveur), sinon le libellé du serveur. */
@@ -49,22 +47,4 @@ export function prescription(e: ExercicePresente): string {
   if (e.distance_m) morceaux.push(String(i18n.t('seance.metres', { valeur: e.distance_m })));
   if (e.rir_cible !== null && e.rir_cible !== undefined) morceaux.push(String(i18n.t('seance.rir', { valeur: e.rir_cible })));
   return morceaux.join(' · ');
-}
-
-/**
- * Compte à rebours lisible (FRONTEND.md §1) : plus d'un an → « dans 4 ans et 7 mois »,
- * de 60 à 365 jours → « dans 23 semaines », moins de 60 jours → « J-45 ».
- */
-export function compteARebours(jours: number, dateEvenement: string, aujourdhui: string): string {
-  if (jours < 60) return String(i18n.t('accueil.evenement.jours', { count: Math.max(0, jours) }));
-  if (jours <= 365) return String(i18n.t('accueil.evenement.semaines', { count: Math.floor(jours / 7) }));
-  const debut = dateLocale(aujourdhui);
-  const fin = dateLocale(dateEvenement);
-  const mois =
-    (fin.getFullYear() - debut.getFullYear()) * 12 + fin.getMonth() - debut.getMonth() - (fin.getDate() < debut.getDate() ? 1 : 0);
-  const ans = String(i18n.t('accueil.evenement.ans', { count: Math.floor(mois / 12) }));
-  const reste = mois % 12;
-  return reste
-    ? String(i18n.t('accueil.evenement.ansEtMois', { ans, mois: i18n.t('accueil.evenement.mois', { count: reste }) }))
-    : String(i18n.t('accueil.evenement.dansAns', { ans }));
 }

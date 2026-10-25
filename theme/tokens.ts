@@ -84,6 +84,15 @@ export const sizes = {
   /** En séance : boutons − / + et gros bouton de validation (FRONTEND.md §4.3). */
   pasAPas: 48,
   boutonSeance: 60,
+  /** Graphiques de Progrès (react-native-svg). */
+  graphique: 160,
+  traitCourbe: 2,
+  pointCourbe: 4,
+  /** Pastille d'un jour du calendrier du mois. */
+  jourCalendrier: 44,
+  /** Pastille de badge (point orange sur un onglet, compteur de la cloche). */
+  badge: 8,
+  compteur: 18,
 } as const;
 
 export const opacity = {
@@ -91,6 +100,8 @@ export const opacity = {
   desactive: 0.4,
   /** Voile derrière une feuille modale. */
   voile: 0.7,
+  /** Fond de la zone optimale d'un graphique. */
+  zone: 0.18,
 } as const;
 
 export const tokens = { colors, radius, spacing, fonts, fontSizes, sizes, opacity };

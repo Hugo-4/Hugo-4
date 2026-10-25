@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
+import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
 import { useSeanceEnCours } from '@/features/seance/useSeanceEnCours';
 import { bientot } from '@/lib/bientot';
 import { spacing } from '@/theme/tokens';
@@ -62,7 +63,7 @@ export function AccueilContent({ accueil, checkin }: Props) {
             bloc={accueil.bloc}
             enCours={enCours.data?.programmeSeanceId === seance.id}
             onDemarrer={() => router.push(`/seance/${seance.id}`)}
-            onModifier={() => router.navigate('/coach')}
+            onModifier={() => ouvrirCoach({ type: 'seance', programmeSeanceId: seance.id, titre: seance.titre })}
           />
         ))
       )}

@@ -1,10 +1,10 @@
 import 'i18next';
 
-import type fr from '@/locales/fr.json';
+import type { Traductions } from '@/locales';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
     defaultNS: 'translation';
-    resources: { translation: typeof fr };
+    resources: { translation: Traductions };
   }
 }

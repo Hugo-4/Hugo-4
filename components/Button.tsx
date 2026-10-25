@@ -5,7 +5,7 @@ import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
 
 import { AppText } from './AppText';
 
-type Variant = 'principal' | 'secondaire' | 'discret';
+type Variant = 'principal' | 'secondaire' | 'discret' | 'danger';
 
 type Props = {
   label: string;
@@ -20,6 +20,7 @@ const couleurTexte: Record<Variant, string> = {
   principal: colors.surAccent,
   secondaire: colors.texte,
   discret: colors.accent,
+  danger: colors.danger,
 };
 
 export function Button({ label, onPress, variant = 'principal', icon, disabled, style }: Props) {
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
   principal: { backgroundColor: colors.accent },
   secondaire: { backgroundColor: colors.carte2, borderWidth: sizes.bordure, borderColor: colors.ligne },
   discret: { backgroundColor: 'transparent', minHeight: sizes.cibleTactile, paddingHorizontal: spacing.s },
+  danger: { backgroundColor: 'transparent', borderWidth: sizes.bordure, borderColor: colors.danger },
   presse: { opacity: opacity.presse },
   desactive: { opacity: opacity.desactive },
   label: { textTransform: 'uppercase' },
