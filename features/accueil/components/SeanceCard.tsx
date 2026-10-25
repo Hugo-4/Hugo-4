@@ -14,13 +14,15 @@ import { ExerciceLigne } from './ExerciceLigne';
 type Props = {
   seance: SeanceDuJour;
   bloc: Accueil['bloc'];
+  /** Séance commencée puis quittée : le bouton devient « Reprendre la séance ». */
+  enCours: boolean;
   onDemarrer: () => void;
   onModifier: () => void;
 };
 
 const EXERCICES_VISIBLES = 3;
 
-export function SeanceCard({ seance, bloc, onDemarrer, onModifier }: Props) {
+export function SeanceCard({ seance, bloc, enCours, onDemarrer, onModifier }: Props) {
   const { t } = useTranslation();
   const exercices = exercicesTravail(seance.detail);
   const restants = exercices.length - Math.min(exercices.length, EXERCICES_VISIBLES);
@@ -61,7 +63,7 @@ export function SeanceCard({ seance, bloc, onDemarrer, onModifier }: Props) {
           <AppText variant="libelle">{t('accueil.seance.enPreparation')}</AppText>
         ) : null}
       </View>
-      <Button label={t('accueil.seance.demarrer')} onPress={onDemarrer} />
+      <Button label={t(enCours ? 'accueil.seance.reprendre' : 'accueil.seance.demarrer')} onPress={onDemarrer} />
       <Button label={t('accueil.seance.modifier')} variant="secondaire" onPress={onModifier} />
     </Card>
   );

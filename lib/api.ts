@@ -1,4 +1,5 @@
 import { env } from './env';
+import i18n from './i18n';
 import { supabase } from './supabase';
 
 /**
@@ -29,6 +30,8 @@ type Options = {
   corps?: unknown;
   /** Délai maximal de la requête (ex. 150 s pour la génération du programme). */
   delaiMs?: number;
+  /** En-têtes en plus (ex. `Idempotency-Key` pour la file d'envoi hors ligne). */
+  entetes?: Record<string, string>;
 };
 
 async function jetonActuel(): Promise<string | null> {
@@ -49,6 +52,9 @@ async function envoyer(methode: Methode, chemin: string, jeton: string | null, o
       method: methode,
       headers: {
         Accept: 'application/json',
+        // Le serveur rédige ses textes dans la langue de l'app.
+        'Accept-Language': i18n.language,
+        ...options.entetes,
         ...(options.corps !== undefined ? { 'Content-Type': 'application/json' } : {}),
         ...(jeton ? { Authorization: `Bearer ${jeton}` } : {}),
       },

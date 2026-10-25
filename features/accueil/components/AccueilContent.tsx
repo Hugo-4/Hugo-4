@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
+import { useSeanceEnCours } from '@/features/seance/useSeanceEnCours';
 import { bientot } from '@/lib/bientot';
 import { spacing } from '@/theme/tokens';
 
@@ -24,11 +25,12 @@ type Props = {
 
 /**
  * Écran Aujourd'hui, dans l'ordre de la fiche (docs/ECRANS.md), avec les données du serveur.
- * « Démarrer la séance » et les notifications arrivent aux étapes suivantes.
+ * Les notifications arrivent à une étape suivante.
  */
 export function AccueilContent({ accueil, checkin }: Props) {
   const { session } = useSession();
   const statut = useStatutCompte(session?.user.id);
+  const enCours = useSeanceEnCours();
   const ouvrirCheckin = () => router.push('/checkin');
   const { aujourdhui, demain } = accueil;
 
@@ -49,7 +51,8 @@ export function AccueilContent({ accueil, checkin }: Props) {
             key={seance.id}
             seance={seance}
             bloc={accueil.bloc}
-            onDemarrer={bientot}
+            enCours={enCours.data?.programmeSeanceId === seance.id}
+            onDemarrer={() => router.push(`/seance/${seance.id}`)}
             onModifier={() => router.navigate('/coach')}
           />
         ))

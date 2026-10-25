@@ -61,6 +61,7 @@ export function RootNavigator({ policesPretes }: Props) {
       <Stack.Protected guard={connecte && !recuperation && profilTermine}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="checkin" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="seance/[id]" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="compte" />
       </Stack.Protected>
     </Stack>
