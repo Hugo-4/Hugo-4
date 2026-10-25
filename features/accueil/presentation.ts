@@ -1,4 +1,5 @@
 import i18n from '@/lib/i18n';
+import { colors } from '@/theme/tokens';
 
 import type { DetailSeance, ExercicePresente, ResumeSeance } from './types';
 
@@ -47,4 +48,15 @@ export function prescription(e: ExercicePresente): string {
   if (e.distance_m) morceaux.push(String(i18n.t('seance.metres', { valeur: e.distance_m })));
   if (e.rir_cible !== null && e.rir_cible !== undefined) morceaux.push(String(i18n.t('seance.rir', { valeur: e.rir_cible })));
   return morceaux.join(' · ');
+}
+
+/**
+ * Couleur de la forme du jour (score sur 10, FRONTEND.md §4.1) : bonne ≥ 6,7, moyenne de 3,4 à 6,6, basse ≤ 3,3.
+ * Toujours accompagnée d'un libellé : la couleur ne porte jamais seule l'information.
+ */
+export function couleurForme(score: number | null): string {
+  if (score === null) return colors.discret;
+  if (score >= 6.7) return colors.accent;
+  if (score > 3.3) return colors.vigilance;
+  return colors.danger;
 }

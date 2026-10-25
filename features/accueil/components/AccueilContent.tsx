@@ -5,12 +5,12 @@ import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
 import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
 import { useSeanceEnCours } from '@/features/seance/useSeanceEnCours';
-import { bientot } from '@/lib/bientot';
 import { spacing } from '@/theme/tokens';
 
 import { libelleType } from '../presentation';
 import { premiereSemaineAVenir, prochaineSeance } from '../semaineProgramme';
 import type { Accueil, CheckinDuJour } from '../types';
+import { useOuvrirEvenement } from '../useOuvrirEvenement';
 import { useProgrammeActif } from '../useProgrammeActif';
 import { AccueilHeader } from './AccueilHeader';
 import { CheckinCard } from './CheckinCard';
@@ -43,12 +43,14 @@ export function AccueilContent({ accueil, checkin }: Props) {
       ? { titre: suivante.focus ?? libelleType({ code: suivante.type_seance, libelle: suivante.type_seance }), date: suivante.date_prevue }
       : null;
   const ouvrirCheckin = () => router.push('/checkin');
+  const ouvrirEvenement = useOuvrirEvenement();
 
   return (
     <View style={styles.contenu}>
       <AccueilHeader
         prenom={statut.data?.prenom ?? null}
-        onNotifications={bientot}
+        nonLues={0}
+        onNotifications={() => router.push('/notifications')}
         onProfil={() => router.navigate('/profil')}
       />
       {checkin ? <FormeCard checkin={checkin} onRefaire={ouvrirCheckin} /> : <CheckinCard onCheckin={ouvrirCheckin} />}
@@ -64,10 +66,15 @@ export function AccueilContent({ accueil, checkin }: Props) {
             enCours={enCours.data?.programmeSeanceId === seance.id}
             onDemarrer={() => router.push(`/seance/${seance.id}`)}
             onModifier={() => ouvrirCoach({ type: 'seance', programmeSeanceId: seance.id, titre: seance.titre })}
+            onOuvrir={() => router.push({ pathname: '/programme/seance/[id]', params: { id: seance.id } })}
           />
         ))
       )}
-      {accueil.prochain_evenement ? <EvenementCard evenement={accueil.prochain_evenement} aujourdhui={accueil.date} /> : null}
+      {accueil.prochain_evenement ? <EvenementCard
+          evenement={accueil.prochain_evenement}
+          aujourdhui={accueil.date}
+          onPress={() => accueil.prochain_evenement && ouvrirEvenement(accueil.prochain_evenement)}
+        /> : null}
       <SemaineCard
         semaine={accueil.semaine}
         aVenir={premiereSemaineAVenir(programme.data, accueil.date)}

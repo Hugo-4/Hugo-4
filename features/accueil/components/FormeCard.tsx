@@ -8,6 +8,7 @@ import { Ring } from '@/components/Ring';
 import { formatNombre } from '@/lib/format';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
+import { couleurForme } from '../presentation';
 import type { CheckinDuJour } from '../types';
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
 export function FormeCard({ checkin, onRefaire }: Props) {
   const { t } = useTranslation();
   const score = checkin.score_forme;
+  const couleur = couleurForme(score);
   return (
     <Card>
       <AppText variant="surTitre">{t('accueil.forme.titre')}</AppText>
@@ -26,14 +28,14 @@ export function FormeCard({ checkin, onRefaire }: Props) {
         <View
           accessible
           accessibilityLabel={score !== null ? t('accueil.forme.a11yScore', { score: formatNombre(score, 1) }) : undefined}>
-          <Ring progression={(score ?? 0) / 10} taille={sizes.anneauForme} epaisseur={sizes.epaisseurAnneau}>
+          <Ring progression={(score ?? 0) / 10} taille={sizes.anneauForme} epaisseur={sizes.epaisseurAnneau} couleur={couleur}>
             <AppText variant="display">{score !== null ? formatNombre(score, 1) : '–'}</AppText>
             <AppText variant="libelle">{t('accueil.forme.sur10')}</AppText>
           </Ring>
         </View>
         <View style={styles.mesures}>
           {checkin.recommandation ? (
-            <AppText variant="sousTitre" color={colors.accent}>
+            <AppText variant="sousTitre" color={couleur}>
               {t(`accueil.forme.recommandations.${checkin.recommandation}`)}
             </AppText>
           ) : null}

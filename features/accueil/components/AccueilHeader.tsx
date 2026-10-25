@@ -9,11 +9,13 @@ import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
 
 type Props = {
   prenom: string | null;
+  /** Notifications non lues : compteur orange sur la cloche. */
+  nonLues: number;
   onNotifications: () => void;
   onProfil: () => void;
 };
 
-export function AccueilHeader({ prenom, onNotifications, onProfil }: Props) {
+export function AccueilHeader({ prenom, nonLues, onNotifications, onProfil }: Props) {
   const { t } = useTranslation();
   const initiale = prenom?.trim().charAt(0).toUpperCase() ?? '';
   return (
@@ -24,9 +26,20 @@ export function AccueilHeader({ prenom, onNotifications, onProfil }: Props) {
           {prenom ? t('accueil.bonjour', { prenom }) : t('accueil.bonjourSansPrenom')}
         </AppText>
       </View>
-      <IconButton accessibilityLabel={t('accueil.a11yNotifications')} onPress={onNotifications}>
-        <Bell color={colors.texte} size={sizes.icone} />
-      </IconButton>
+      <View>
+        <IconButton
+          accessibilityLabel={nonLues ? t('accueil.a11yNotificationsNonLues', { count: nonLues }) : t('accueil.a11yNotifications')}
+          onPress={onNotifications}>
+          <Bell color={colors.texte} size={sizes.icone} />
+        </IconButton>
+        {nonLues ? (
+          <View style={styles.compteur} pointerEvents="none" importantForAccessibility="no-hide-descendants">
+            <AppText variant="libelle" color={colors.surAccent}>
+              {nonLues > 9 ? '9+' : String(nonLues)}
+            </AppText>
+          </View>
+        ) : null}
+      </View>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={t('accueil.a11yProfil')}
@@ -52,4 +65,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   presse: { opacity: opacity.presse },
+  compteur: {
+    position: 'absolute',
+    top: -spacing.xs,
+    right: -spacing.xs,
+    minWidth: sizes.compteur,
+    height: sizes.compteur,
+    borderRadius: radius.rond,
+    paddingHorizontal: spacing.xs,
+    backgroundColor: colors.alerte,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

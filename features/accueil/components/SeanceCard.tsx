@@ -1,11 +1,12 @@
-import { StyleSheet, View } from 'react-native';
+import { CheckCircle2 } from 'lucide-react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { formatNombre } from '@/lib/format';
-import { colors, spacing } from '@/theme/tokens';
+import { colors, opacity, sizes, spacing } from '@/theme/tokens';
 
 import { exercicesTravail, libelleType } from '../presentation';
 import type { Accueil, SeanceDuJour } from '../types';
@@ -18,11 +19,13 @@ type Props = {
   enCours: boolean;
   onDemarrer: () => void;
   onModifier: () => void;
+  /** Toucher la carte (hors boutons) ouvre le détail de la séance. */
+  onOuvrir: () => void;
 };
 
 const EXERCICES_VISIBLES = 3;
 
-export function SeanceCard({ seance, bloc, enCours, onDemarrer, onModifier }: Props) {
+export function SeanceCard({ seance, bloc, enCours, onDemarrer, onModifier, onOuvrir }: Props) {
   const { t } = useTranslation();
   const exercices = exercicesTravail(seance.detail);
   const restants = exercices.length - Math.min(exercices.length, EXERCICES_VISIBLES);
@@ -33,6 +36,7 @@ export function SeanceCard({ seance, bloc, enCours, onDemarrer, onModifier }: Pr
     exercices.length ? t('accueil.seance.exercices', { count: exercices.length }) : null,
     seance.heure,
   ].filter(Boolean);
+  const faite = seance.statut.code === 'faite';
 
   return (
     <Card>
@@ -43,15 +47,29 @@ export function SeanceCard({ seance, bloc, enCours, onDemarrer, onModifier }: Pr
             : bloc.nom}
         </AppText>
       ) : null}
-      <View style={styles.titre}>
-        <AppText variant="titre">{seance.titre}</AppText>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityHint={t('accueil.seance.a11yOuvrir')}
+        onPress={onOuvrir}
+        style={({ pressed }) => [styles.titre, pressed && styles.presse]}>
+        <View style={styles.ligneTitre}>
+          {faite ? <CheckCircle2 color={colors.accent} size={sizes.icone} /> : null}
+          <AppText variant="titre" style={styles.flex}>
+            {seance.titre}
+          </AppText>
+        </View>
+        {faite ? (
+          <AppText variant="corpsGras" color={colors.accent}>
+            {t('accueil.seance.faite')}
+          </AppText>
+        ) : null}
         <AppText variant="secondaire">{details.join(' · ')}</AppText>
         {seance.modification ? (
           <AppText variant="secondaire" color={colors.alerte}>
             {t('accueil.seance.adaptee', { raison: seance.modification.raison })}
           </AppText>
         ) : null}
-      </View>
+      </Pressable>
       <View style={styles.exercices}>
         {exercices.slice(0, EXERCICES_VISIBLES).map((exercice) => (
           <ExerciceLigne key={`${exercice.ordre}-${exercice.exercice.slug}`} exercice={exercice} />
@@ -63,13 +81,22 @@ export function SeanceCard({ seance, bloc, enCours, onDemarrer, onModifier }: Pr
           <AppText variant="libelle">{t('accueil.seance.enPreparation')}</AppText>
         ) : null}
       </View>
-      <Button label={t(enCours ? 'accueil.seance.reprendre' : 'accueil.seance.demarrer')} onPress={onDemarrer} />
-      <Button label={t('accueil.seance.modifier')} variant="secondaire" onPress={onModifier} />
+      {faite ? (
+        <Button label={t('accueil.seance.voirDetail')} variant="discret" onPress={onOuvrir} />
+      ) : (
+        <>
+          <Button label={t(enCours ? 'accueil.seance.reprendre' : 'accueil.seance.demarrer')} onPress={onDemarrer} />
+          <Button label={t('accueil.seance.modifier')} variant="secondaire" onPress={onModifier} />
+        </>
+      )}
     </Card>
   );
 }
 
 const styles = StyleSheet.create({
   titre: { gap: spacing.xs },
+  ligneTitre: { flexDirection: 'row', alignItems: 'center', gap: spacing.s },
+  flex: { flex: 1 },
+  presse: { opacity: opacity.presse },
   exercices: { gap: spacing.s },
 });

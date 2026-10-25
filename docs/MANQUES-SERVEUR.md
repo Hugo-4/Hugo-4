@@ -52,3 +52,18 @@ passer à `false` est indiquée pour chaque route.
 { "aujourdhui": { "repos": true, "seances": [], "recuperation": { "titre": "Mobilité des hanches", "duree_min": 10, "description": "3 exercices doux pour relâcher les hanches après la semaine de force.", "type": "mobilite" } } }
 ```
 - `null` les jours de séance. Écran : Aujourd'hui, carte Repos.
+
+### Champ `prochain_evenement.id` de GET /accueil
+- La carte « Prochain objectif » ouvre la compétition (`programme/evenement/[id]`). Aujourd'hui l'app retrouve l'id
+  dans `GET /evenements` (même nom, même date) : ajouter `id` évite cet appel.
+```json
+{ "prochain_evenement": { "id": "uuid", "nom": "Olympics game", "date": "2031-06-20", "priorite": "A", "jours_restants": 1699 } }
+```
+- Écran : Aujourd'hui (`features/accueil/useOuvrirEvenement.ts`).
+
+### Champ `realise` des séances faites dans GET /accueil
+- Carte « Séance faite » : résumé réel (comme `GET /calendrier`).
+```json
+{ "aujourdhui": { "seances": [ { "id": "uuid", "statut": { "code": "faite", "libelle": "Réalisée" }, "realise": { "duree_min": 58, "rpe": 7.5 }, "record": "Squat : 100 kg × 5 (nouveau record)" } ] } }
+```
+- `record` : fait réel rédigé par le serveur, `null` sinon. Écran : Aujourd'hui, carte séance.

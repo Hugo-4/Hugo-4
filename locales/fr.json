@@ -106,10 +106,14 @@
       "repos": "Repos",
       "prochaine": "Prochaine séance : {{titre}}, {{jour}}",
       "reprendre": "Reprendre la séance",
-      "voirProchaine": "Voir ma prochaine séance"
+      "voirProchaine": "Voir ma prochaine séance",
+      "faite": "Séance faite",
+      "voirDetail": "Voir le détail",
+      "a11yOuvrir": "Ouvrir le détail de la séance"
     },
     "evenement": {
-      "titre": "Prochain objectif"
+      "titre": "Prochain objectif",
+      "a11yOuvrir": "Ouvrir la compétition"
     },
     "semaine": {
       "titre": "Ta semaine",
@@ -134,7 +138,11 @@
       "grammes": "{{plage}} g",
       "mlParHeure": "{{plage}} ml/h",
       "poidsInconnu": "Renseigne ton poids dans ton profil pour obtenir ton plan nutrition du jour."
-    }
+    },
+    "genererProgramme": "Générer mon programme",
+    "generationEnCours": "Génération en cours : environ une minute.",
+    "a11yNotificationsNonLues_one": "Notifications, {{count}} non lue",
+    "a11yNotificationsNonLues_other": "Notifications, {{count}} non lues"
   },
   "auth": {
     "connexion": {

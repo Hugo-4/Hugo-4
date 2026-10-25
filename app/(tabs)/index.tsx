@@ -1,17 +1,14 @@
-import { CalendarDays } from 'lucide-react-native';
 import { RefreshControl, ScrollView } from 'react-native';
-import { useTranslation } from 'react-i18next';
 
-import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Screen } from '@/components/Screen';
 import { AccueilContent } from '@/features/accueil/components/AccueilContent';
 import { AccueilSkeleton } from '@/features/accueil/components/AccueilSkeleton';
+import { AucunProgramme } from '@/features/accueil/components/AucunProgramme';
 import { useAujourdhui } from '@/features/accueil/useAujourdhui';
-import { colors, sizes } from '@/theme/tokens';
+import { colors } from '@/theme/tokens';
 
 export default function AujourdhuiScreen() {
-  const { t } = useTranslation();
   const { accueil, checkin, chargement, erreur, detailErreur, vide, rafraichir, rafraichissement } = useAujourdhui();
 
   if (chargement) {
@@ -36,11 +33,7 @@ export default function AujourdhuiScreen() {
         contentContainerStyle={vide ? { flexGrow: 1 } : undefined}
         refreshControl={<RefreshControl refreshing={rafraichissement} onRefresh={rafraichir} tintColor={colors.accent} />}>
         {vide ? (
-          <EmptyState
-            icon={<CalendarDays color={colors.discret} size={sizes.icone * 2} />}
-            titre={t('accueil.videTitre')}
-            texte={t('accueil.videTexte')}
-          />
+          <AucunProgramme />
         ) : (
           <AccueilContent accueil={accueil} checkin={checkin} />
         )}

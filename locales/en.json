@@ -106,10 +106,14 @@
       "repos": "Rest",
       "prochaine": "Next session: {{titre}}, {{jour}}",
       "reprendre": "Resume session",
-      "voirProchaine": "See my next session"
+      "voirProchaine": "See my next session",
+      "faite": "Session done",
+      "voirDetail": "See details",
+      "a11yOuvrir": "Open session details"
     },
     "evenement": {
-      "titre": "Next goal"
+      "titre": "Next goal",
+      "a11yOuvrir": "Open the competition"
     },
     "semaine": {
       "titre": "Your week",
@@ -134,7 +138,11 @@
       "grammes": "{{plage}} g",
       "mlParHeure": "{{plage}} ml/h",
       "poidsInconnu": "Add your weight in your profile to get today's nutrition plan."
-    }
+    },
+    "genererProgramme": "Generate my program",
+    "generationEnCours": "Generating: about one minute.",
+    "a11yNotificationsNonLues_one": "Notifications, {{count}} unread",
+    "a11yNotificationsNonLues_other": "Notifications, {{count}} unread"
   },
   "auth": {
     "connexion": {
