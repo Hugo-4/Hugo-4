@@ -1,15 +1,6 @@
-import { Sparkles } from 'lucide-react-native';
-import { useTranslation } from 'react-i18next';
+import { EcranCoach } from '@/features/coach/components/EcranCoach';
 
-import { PlaceholderScreen } from '@/components/PlaceholderScreen';
-import { colors, sizes } from '@/theme/tokens';
-
+/** Onglet Coach : le chat (la barre d'onglets est masquée, l'en-tête a son bouton retour). */
 export default function CoachScreen() {
-  const { t } = useTranslation();
-  return (
-    <PlaceholderScreen
-      titre={t('onglets.coach')}
-      icon={<Sparkles color={colors.discret} size={sizes.icone * 2} />}
-    />
-  );
+  return <EcranCoach />;
 }

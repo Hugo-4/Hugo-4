@@ -1,4 +1,62 @@
 {
   "titre": "Coach",
-  "a11yRetour": "Go back"
+  "contexte": {
+    "sur": "About: {{titre}}",
+    "a11yRetirer": "Stop talking about: {{titre}}"
+  },
+  "credits": {
+    "a11ySolde_one": "{{count}} credit left out of {{total}}",
+    "a11ySolde_other": "{{count}} credits left out of {{total}}",
+    "a11yIndice": "Opens the credits explanation",
+    "feuilleTitre": "Your credits",
+    "surTotal": "out of {{total}} this month",
+    "explication": "Each message you send to the coach uses credits. They are topped up every month with your subscription.",
+    "renouvellement": "Next top-up on {{date}}.",
+    "voirAbonnement": "See my subscription",
+    "bas_one": "Only {{count}} credit left this month · top-up on {{date}}",
+    "bas_other": "Only {{count}} credits left this month · top-up on {{date}}",
+    "epuisesTitre": "You have used all your credits this month",
+    "epuisesTexte": "They are topped up on {{date}}. You can change your plan to get more."
+  },
+  "vide": {
+    "titre": "What do you want to change?",
+    "texte": "Duration, place, day, pain: just write it. The coach shows you what changes before you accept."
+  },
+  "horsLigne": {
+    "titre": "You are offline",
+    "texte": "The conversation will appear as soon as you are back online."
+  },
+  "reponsesRapides": {
+    "a11y": "Quick replies",
+    "duree_30": "I only have 30 min",
+    "sans_salle": "No gym today",
+    "decaler_demain": "Move to tomorrow",
+    "douleur": "Something hurts"
+  },
+  "saisie": {
+    "placeholder": "Write to the coach…",
+    "a11yChamp": "Message to the coach",
+    "envoyer": "Send message"
+  },
+  "message": {
+    "a11yAthlete": "You: {{texte}}",
+    "a11yCoach": "Coach: {{texte}}",
+    "envoiEnCours": "Sending…",
+    "nonEnvoye": "Not sent"
+  },
+  "reflexion": "The coach is thinking…",
+  "avis": {
+    "utile": "👍",
+    "pasUtile": "👎",
+    "a11yUtile": "Helpful answer",
+    "a11yPasUtile": "Not a helpful answer",
+    "erreur": "Your feedback was not saved."
+  },
+  "urgence": {
+    "texte": "Call 15 or 112 (emergency services).",
+    "appeler": "Call {{numero}}"
+  },
+  "proposition": {
+    "erreur": "The change could not be saved. Try again."
+  }
 }

@@ -1,4 +1,62 @@
 {
   "titre": "Coach",
-  "a11yRetour": "Revenir à l'écran précédent"
+  "contexte": {
+    "sur": "Sur : {{titre}}",
+    "a11yRetirer": "Ne plus parler de : {{titre}}"
+  },
+  "credits": {
+    "a11ySolde_one": "{{count}} crédit restant sur {{total}}",
+    "a11ySolde_other": "{{count}} crédits restants sur {{total}}",
+    "a11yIndice": "Ouvre l'explication des crédits",
+    "feuilleTitre": "Tes crédits",
+    "surTotal": "sur {{total}} ce mois-ci",
+    "explication": "Chaque message envoyé au coach utilise des crédits. Ils se rechargent chaque mois avec ton abonnement.",
+    "renouvellement": "Prochaine recharge le {{date}}.",
+    "voirAbonnement": "Voir mon abonnement",
+    "bas_one": "Plus que {{count}} crédit ce mois-ci · recharge le {{date}}",
+    "bas_other": "Plus que {{count}} crédits ce mois-ci · recharge le {{date}}",
+    "epuisesTitre": "Tu as utilisé tous tes crédits du mois",
+    "epuisesTexte": "Ils se rechargent le {{date}}. Tu peux changer d'offre pour en avoir plus."
+  },
+  "vide": {
+    "titre": "Qu'est-ce que tu veux changer ?",
+    "texte": "Durée, lieu, jour, douleur : écris-le simplement. Le coach te montre ce qui change avant que tu acceptes."
+  },
+  "horsLigne": {
+    "titre": "Tu es hors ligne",
+    "texte": "La conversation s'affichera dès le retour du réseau."
+  },
+  "reponsesRapides": {
+    "a11y": "Réponses rapides",
+    "duree_30": "Je n'ai que 30 min",
+    "sans_salle": "Pas de salle aujourd'hui",
+    "decaler_demain": "Décaler à demain",
+    "douleur": "J'ai mal quelque part"
+  },
+  "saisie": {
+    "placeholder": "Écris au coach…",
+    "a11yChamp": "Message au coach",
+    "envoyer": "Envoyer le message"
+  },
+  "message": {
+    "a11yAthlete": "Toi : {{texte}}",
+    "a11yCoach": "Coach : {{texte}}",
+    "envoiEnCours": "Envoi…",
+    "nonEnvoye": "Non envoyé"
+  },
+  "reflexion": "Le coach réfléchit…",
+  "avis": {
+    "utile": "👍",
+    "pasUtile": "👎",
+    "a11yUtile": "Réponse utile",
+    "a11yPasUtile": "Réponse pas utile",
+    "erreur": "Ton avis n'a pas été enregistré."
+  },
+  "urgence": {
+    "texte": "Appelle le 15 ou le 112.",
+    "appeler": "Appeler le {{numero}}"
+  },
+  "proposition": {
+    "erreur": "La modification n'a pas pu être enregistrée. Réessaie."
+  }
 }
