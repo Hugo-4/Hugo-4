@@ -5,6 +5,7 @@ import type { Ambition, Cadre, Niveau } from '@/features/inscription/constantes'
 import { VERSION_DOCUMENTS } from '@/features/inscription/constantes';
 import { objectifEntrainementId, verifier } from '@/features/inscription/enregistrementOutils';
 import type { ObjectifSport } from '@/features/inscription/useReferentiels';
+import { CLES } from '@/features/parametres/constantes';
 import { supabase } from '@/lib/supabase';
 
 import type { TypeConsentement } from './types';
@@ -72,10 +73,15 @@ export function useModifierSport() {
   });
 }
 
-/** Accorde ou retire un consentement : ajoute une ligne horodatée au journal (rien n'est écrasé). */
+/**
+ * Accorde ou retire un consentement : ajoute une ligne horodatée au journal (rien n'est écrasé).
+ * Données de santé : le nouvel état s'applique tout de suite à toute l'app (sans attendre la relecture) ;
+ * après un retrait, les données de santé déjà en cache sont supprimées (rubrique Santé, etc.).
+ */
 export function useChangerConsentement() {
   const userId = useUserId();
   const actualiser = useActualiser();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ type, accorde }: { type: TypeConsentement; accorde: boolean }) =>
       verifier(
@@ -87,6 +93,14 @@ export function useChangerConsentement() {
           source: 'parametres',
         }),
       ),
-    onSuccess: actualiser,
+    onSuccess: (_resultat, { type, accorde }) => {
+      if (type === 'donnees_sante') {
+        queryClient.setQueryData(['consentement', 'donnees_sante', userId], accorde);
+        if (!accorde) queryClient.removeQueries({ queryKey: CLES.sante });
+        queryClient.invalidateQueries({ queryKey: CLES.memoire });
+        queryClient.invalidateQueries({ queryKey: CLES.nutrition });
+      }
+      return actualiser();
+    },
   });
 }

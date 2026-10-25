@@ -1,5 +1,34 @@
 {
   "titre": "Notifications",
   "badgeCoach": "une proposition attend ta réponse",
-  "badgeProfil": "un réglage manque"
+  "badgeProfil": "un réglage manque",
+  "toutLire": "Tout marquer comme lu",
+  "nonLue": "Nouveau",
+  "nonLues_one": "{{count}} non lue",
+  "nonLues_other": "{{count}} non lues",
+  "a11yNonLue": "Non lue",
+  "a11yLue": "Lue",
+  "a11yLigne": "{{etat}}. {{type}}. {{titre}}. {{corps}}. {{moment}}",
+  "videTitre": "Aucune notification",
+  "videTexte": "Les propositions du coach, les adaptations de ta semaine, les rappels et tes records apparaîtront ici.",
+  "fictif": "Données de démonstration : le centre de notifications n'est pas encore relié au serveur.",
+  "erreurMarquage": "Impossible de marquer comme lu. Réessaie.",
+  "types": {
+    "proposition_coach": "Proposition du coach",
+    "adaptation_semaine": "Adaptation de la semaine",
+    "rappel_checkin": "Rappel de check-in",
+    "competition_proche": "Compétition proche",
+    "nouveau_record": "Nouveau record",
+    "autre": "Notification"
+  },
+  "ilYa": {
+    "instant": "à l'instant",
+    "minutes_one": "il y a {{count}} min",
+    "minutes_other": "il y a {{count}} min",
+    "heures_one": "il y a {{count}} h",
+    "heures_other": "il y a {{count}} h",
+    "hier": "hier",
+    "jours_one": "il y a {{count}} jour",
+    "jours_other": "il y a {{count}} jours"
+  }
 }

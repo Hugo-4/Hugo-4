@@ -1,5 +1,34 @@
 {
   "titre": "Notifications",
   "badgeCoach": "a proposal is waiting for you",
-  "badgeProfil": "a setting is missing"
+  "badgeProfil": "a setting is missing",
+  "toutLire": "Mark all as read",
+  "nonLue": "New",
+  "nonLues_one": "{{count}} unread",
+  "nonLues_other": "{{count}} unread",
+  "a11yNonLue": "Unread",
+  "a11yLue": "Read",
+  "a11yLigne": "{{etat}}. {{type}}. {{titre}}. {{corps}}. {{moment}}",
+  "videTitre": "No notifications",
+  "videTexte": "The coach's proposals, your week's adjustments, reminders and your records will show up here.",
+  "fictif": "Demo data: the notification center isn't connected to the server yet.",
+  "erreurMarquage": "Couldn't mark as read. Try again.",
+  "types": {
+    "proposition_coach": "Coach's proposal",
+    "adaptation_semaine": "Weekly adjustment",
+    "rappel_checkin": "Check-in reminder",
+    "competition_proche": "Upcoming competition",
+    "nouveau_record": "New record",
+    "autre": "Notification"
+  },
+  "ilYa": {
+    "instant": "just now",
+    "minutes_one": "{{count}} min ago",
+    "minutes_other": "{{count}} min ago",
+    "heures_one": "{{count}} h ago",
+    "heures_other": "{{count}} h ago",
+    "hier": "yesterday",
+    "jours_one": "{{count}} day ago",
+    "jours_other": "{{count}} days ago"
+  }
 }

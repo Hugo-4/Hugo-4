@@ -1,9 +1,10 @@
-import { useTranslation } from 'react-i18next';
+import { useLocalSearchParams } from 'expo-router';
 
-import { EcranAVenir } from '@/components/EcranAVenir';
+import { EditionSouvenir } from '@/features/parametres/components/EditionSouvenir';
+import { ListeMemoire } from '@/features/parametres/components/ListeMemoire';
 
-/** Profil : memoire (étape 9). */
+/** Profil : ce que le coach a retenu. Sans paramètre : la liste ; `?id=<uuid>` : un élément (modifier, effacer). */
 export default function MemoireScreen() {
-  const { t } = useTranslation();
-  return <EcranAVenir titre={t('parametres.titre')} />;
+  const { id } = useLocalSearchParams<{ id?: string }>();
+  return id ? <EditionSouvenir id={id} /> : <ListeMemoire />;
 }
