@@ -1,9 +1,12 @@
-import { useTranslation } from 'react-i18next';
+import { useLocalSearchParams } from 'expo-router';
 
-import { EcranAVenir } from '@/components/EcranAVenir';
+import { type ParametresVue, VueProgres } from '@/features/progres/components/VueProgres';
 
-/** Détail Progrès : tests, charge, records, niveaux, régularité (étape 8). */
+/**
+ * Détail Progrès : tests, charge, records, niveaux, régularité, ligues (niveau 2 : la tendance) ;
+ * un détail précis passe en paramètre (niveau 3 : `/progres/tests?type=vma`, `/progres/niveaux?qualite=vma`).
+ */
 export default function ProgresDetailScreen() {
-  const { t } = useTranslation();
-  return <EcranAVenir titre={t('progres.titre')} />;
+  const parametres = useLocalSearchParams<ParametresVue>();
+  return <VueProgres parametres={parametres} />;
 }
