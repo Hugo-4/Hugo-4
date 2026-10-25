@@ -18,6 +18,8 @@ export const colors = {
   vigilance: '#FFC94D',
   /** Forme basse, erreur, urgence. */
   danger: '#FF6B6B',
+  /** Information neutre, liens dans le chat. */
+  info: '#5EC8FF',
 } as const;
 
 export const radius = {
@@ -66,8 +68,8 @@ export const fontSizes = {
 } as const;
 
 export const sizes = {
-  /** Cible tactile minimale. */
-  cibleTactile: 44,
+  /** Cible tactile minimale (FRONTEND.md §5.3 : 48 × 48). */
+  cibleTactile: 48,
   icone: 20,
   iconePetite: 16,
   avatar: 44,

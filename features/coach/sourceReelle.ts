@@ -12,7 +12,7 @@ export const CANAL_COACH = 'coach';
 const HISTORIQUE = 200;
 
 /**
- * Implémentation réelle, prête pour les routes de docs/manques/coach.md.
+ * Implémentation réelle, prête pour les routes de docs/MANQUES-SERVEUR.md §3.
  * Lectures simples en direct avec Supabase (RLS : l'athlète ne lit et ne note que ses lignes) ;
  * tout le reste passe par le serveur, avec le jeton (jamais de userId dans un corps de requête).
  */
@@ -66,5 +66,9 @@ export const sourceReelle: SourceCoach = {
   appliquer: (id) => api.post<ReponseProposition>(`/coach/propositions/${id}/appliquer`, undefined, { delaiMs: 30_000 }),
   garder: (id) => api.post<ReponseProposition>(`/coach/propositions/${id}/garder`),
   annuler: (id) => api.post<ReponseProposition>(`/coach/propositions/${id}/annuler`, undefined, { delaiMs: 30_000 }),
-  lireCredits: () => api.get<CreditsCoach>('/coach/credits'),
+  // Une seule route de crédits pour le Coach et le Profil (GET /credits) : on n'en garde que le solde.
+  lireCredits: async (): Promise<CreditsCoach> => {
+    const c = await api.get<{ inclus: number; restants: number; renouvellement_le: string }>('/credits');
+    return { restant: c.restants, total: c.inclus, renouvellement_le: c.renouvellement_le };
+  },
 };

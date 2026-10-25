@@ -122,7 +122,7 @@ export type Echeance = {
 
 export type Offre = 'free' | 'premium' | 'pro' | 'coach';
 
-/** Route manquante GET /credits (docs/manques/profil.md). */
+/** Route manquante GET /credits (docs/MANQUES-SERVEUR.md §6). */
 export type Credits = {
   offre: Offre;
   periode: { debut: string; fin: string };

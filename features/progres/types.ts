@@ -2,7 +2,7 @@
  * Réponses du serveur coachia-agents-v6 utilisées par l'onglet Progrès.
  * Routes existantes : routes/athlete.js (GET /tests, GET /tests/types, POST /tests, GET /progressions,
  * GET /assiduite, GET /profil → charge). Routes manquantes (source fictive, `features/progres/source.ts`) :
- * format proposé dans docs/manques/progres.md.
+ * format proposé dans docs/MANQUES-SERVEUR.md §5.
  */
 
 // ─── Routes existantes ──────────────────────────────────────────────────────
@@ -97,7 +97,7 @@ export type Assiduite = {
   lecture: string[];
 };
 
-// ─── Routes manquantes (docs/manques/progres.md) ────────────────────────────
+// ─── Routes manquantes (docs/MANQUES-SERVEUR.md §5) ────────────────────────────
 
 /** `GET /progres/records` : un record ou un jalon, fait réel daté. */
 export type RecordJalon = {

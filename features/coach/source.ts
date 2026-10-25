@@ -12,7 +12,7 @@ import type {
 /**
  * Accès aux données du Coach. Aucune route de chat protégée par le jeton n'existe encore côté serveur
  * (le superviseur n'est joignable que par `POST /api/agent/ask`, interdit à l'app) : tant que les routes de
- * docs/manques/coach.md ne sont pas en ligne, le Coach tourne sur une source fictive au même format.
+ * docs/MANQUES-SERVEUR.md §3 ne sont pas en ligne, le Coach tourne sur une source fictive au même format.
  * Passer `COACH_FICTIF` à false quand elles le sont.
  */
 export const COACH_FICTIF = true;

@@ -1,7 +1,7 @@
 import type { Credits, ExportDonnees, Offre, PreferencesNutrition } from './types';
 
 /**
- * Données fictives au format des routes manquantes du Profil (docs/manques/profil.md).
+ * Données fictives au format des routes manquantes du Profil (docs/MANQUES-SERVEUR.md §6).
  * Les identifiants commencent par « fictif- ». L'état vit en mémoire le temps de la session.
  */
 const PREFIXE = 'fictif-';

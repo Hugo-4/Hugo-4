@@ -4,7 +4,7 @@ import { ajouterJours, ilYa } from './dates';
 import type { GroupeComparaison, Niveaux, RecordJalon } from './types';
 
 /**
- * Données fictives au format proposé dans docs/manques/progres.md, en attendant les routes serveur.
+ * Données fictives au format proposé dans docs/MANQUES-SERVEUR.md §5, en attendant les routes serveur.
  * Les identifiants commencent par « fictif- ». Les textes simulent ceux du serveur (langue de l'app).
  */
 export const PREFIXE_FICTIF = 'fictif-';

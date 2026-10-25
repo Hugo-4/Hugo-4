@@ -4,6 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
 import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
+import { useNombreNonLues } from '@/features/notifications/useNombreNonLues';
+import { CarteDernierRecord } from '@/features/progres/components/CarteDernierRecord';
 import { useSeanceEnCours } from '@/features/seance/useSeanceEnCours';
 import { spacing } from '@/theme/tokens';
 
@@ -44,12 +46,13 @@ export function AccueilContent({ accueil, checkin }: Props) {
       : null;
   const ouvrirCheckin = () => router.push('/checkin');
   const ouvrirEvenement = useOuvrirEvenement();
+  const nonLues = useNombreNonLues();
 
   return (
     <View style={styles.contenu}>
       <AccueilHeader
         prenom={statut.data?.prenom ?? null}
-        nonLues={0}
+        nonLues={nonLues}
         onNotifications={() => router.push('/notifications')}
         onProfil={() => router.navigate('/profil')}
       />
@@ -83,6 +86,7 @@ export function AccueilContent({ accueil, checkin }: Props) {
         onVoirMois={() => router.navigate('/programme')}
       />
       <NutritionCard />
+      <CarteDernierRecord />
     </View>
   );
 }

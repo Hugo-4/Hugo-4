@@ -1,7 +1,7 @@
 import type { Avis, MessageConversation, PropositionCoach, StatutProposition } from './types';
 
 /**
- * Lecture d'une ligne `messages_coach` (format attendu de la colonne `actions` : docs/manques/coach.md) :
+ * Lecture d'une ligne `messages_coach` (format attendu de la colonne `actions` : docs/MANQUES-SERVEUR.md §3) :
  *   actions = [{ type: 'proposition', id, titre, avant[], apres[], inchange[], statut, annulable_jusqu_au },
  *              { type: 'urgence' }]
  * Une ligne mal formée est ignorée plutôt que de casser l'écran.

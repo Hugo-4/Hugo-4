@@ -1,5 +1,5 @@
 /**
- * Données du Coach, au format des routes demandées au serveur (docs/manques/coach.md) et des tables
+ * Données du Coach, au format des routes demandées au serveur (docs/MANQUES-SERVEUR.md §3) et des tables
  * `conversations_coach` / `messages_coach` (lecture directe, protégée par RLS).
  */
 

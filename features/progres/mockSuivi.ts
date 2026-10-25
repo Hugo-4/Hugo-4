@@ -4,7 +4,7 @@ import { ajouterJours, lundiDe } from './dates';
 import { dansJours, PREFIXE_FICTIF, texteServeur } from './mockProgres';
 import type { ChargeSemaines, LiguesDefis, Regularite, StatutSemaine } from './types';
 
-/** Charge, régularité, ligues et défis fictifs (format de docs/manques/progres.md). */
+/** Charge, régularité, ligues et défis fictifs (format de docs/MANQUES-SERVEUR.md §5). */
 
 const CHARGES = [980, 1120, 1240, 1310, 860, 1290, 1380, 1450, 1010, 1420, 1510, 1180];
 const SEANCES = [3, 4, 4, 4, 3, 4, 4, 4, 3, 4, 4, 2];

@@ -6,7 +6,7 @@ import type { CentreNotifications } from './types';
 /**
  * Centre de notifications avec état « lu ». La route existante GET /notifications ne donne que les rappels
  * planifiés (sans état « lu ») : tant que GET /notifications/centre manque, la liste est fictive (même format).
- * Passer `NOTIFICATIONS_FICTIF` à false quand les routes sont en ligne (docs/manques/profil.md).
+ * Passer `NOTIFICATIONS_FICTIF` à false quand les routes sont en ligne (docs/MANQUES-SERVEUR.md §6).
  */
 export const NOTIFICATIONS_FICTIF = true;
 

@@ -20,7 +20,7 @@ export type EnregistrementEvenement = {
 /**
  * Création / modification par le serveur (`POST /evenements`, `PATCH /evenements/:id`). La catégorie de poids
  * n'est pas acceptée par le serveur (CHAMPS_EVT) : elle est écrite ensuite en direct dans `evenements_athlete`
- * (RLS « evenements_proprietaire »), filtrée sur l'id ET l'athlète connecté. Manque signalé (docs/manques/programme.md).
+ * (RLS « evenements_proprietaire »), filtrée sur l'id ET l'athlète connecté. Manque signalé (docs/MANQUES-SERVEUR.md §4).
  */
 export function useEnregistrerEvenement() {
   const queryClient = useQueryClient();

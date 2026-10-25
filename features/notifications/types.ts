@@ -1,4 +1,4 @@
-/** Centre de notifications (route manquante, docs/manques/profil.md). */
+/** Centre de notifications (route manquante, docs/MANQUES-SERVEUR.md §6). */
 
 export const TYPES_NOTIFICATION = [
   'proposition_coach',

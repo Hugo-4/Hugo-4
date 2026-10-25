@@ -10,7 +10,7 @@ import {
 import type { Credits, ExportDonnees, Offre, PreferencesNutrition } from './types';
 
 /**
- * Routes du Profil qui n'existent pas encore côté serveur (docs/manques/profil.md) : crédits du mois,
+ * Routes du Profil qui n'existent pas encore côté serveur (docs/MANQUES-SERVEUR.md §6) : crédits du mois,
  * export des données, suppression du compte, préférences de nutrition. Tant qu'elles manquent, les
  * données sont fictives (même format) : passer `PARAMETRES_FICTIF` à false quand elles sont en ligne.
  */

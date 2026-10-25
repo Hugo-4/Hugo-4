@@ -5,7 +5,7 @@ import { chargeSemainesFictive, inscrireLigueFictive, liguesFictives, regularite
 import type { ChargeSemaines, LiguesDefis, Niveaux, RecordJalon, Regularite } from './types';
 
 /**
- * Accès au serveur pour ce qui manque encore côté coachia-agents-v6 (docs/manques/progres.md) :
+ * Accès au serveur pour ce qui manque encore côté coachia-agents-v6 (docs/MANQUES-SERVEUR.md §5) :
  * records et jalons, niveaux en percentile, charge par semaine, régularité, ligues et défis.
  * Tant que ces routes n'existent pas, les données sont fictives (même format) :
  * passer `PROGRES_FICTIF` à false quand les routes sont en ligne, rien d'autre ne change.
