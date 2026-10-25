@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
+import { useLangueProfil } from '@/features/langue/useLangueProfil';
 import { colors } from '@/theme/tokens';
 
 import { ErrorState } from './ErrorState';
@@ -22,6 +23,7 @@ type Props = {
 export function RootNavigator({ policesPretes }: Props) {
   const { session, pret, recuperation } = useSession();
   const statut = useStatutCompte(session?.user.id);
+  useLangueProfil(session?.user.id, statut.data);
   const connecte = session !== null;
   const etatConnu = pret && (!connecte || !statut.isPending);
   const toutPret = policesPretes && etatConnu;

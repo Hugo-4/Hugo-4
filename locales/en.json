@@ -58,7 +58,8 @@
       "refaire": "Redo my check-in",
       "checkinTitre": "How are you feeling?",
       "checkinTexte": "Do your check-in so your coach can adapt today's session.",
-      "checkinBouton": "Do my check-in"
+      "checkinBouton": "Do my check-in",
+      "checkinAide": "30 seconds, 7 questions"
     },
     "fatigue": {
       "titre": "Coach suggestion",
@@ -78,14 +79,22 @@
       "demarrer": "Start session",
       "modifier": "Adjust with the coach",
       "repos": "Rest",
-      "reposTexte": "Recover well: that's part of getting better too.",
       "prochaine": "Next session: {{titre}}, {{jour}}",
-      "reprendre": "Resume session"
+      "reprendre": "Resume session",
+      "voirProchaine": "See my next session"
     },
     "evenement": {
       "titre": "Next goal",
       "jours_one": "{{count}} day",
-      "jours_other": "{{count}} days"
+      "jours_other": "{{count}} days",
+      "semaines_one": "in {{count}} week",
+      "semaines_other": "in {{count}} weeks",
+      "ans_one": "{{count}} year",
+      "ans_other": "{{count}} years",
+      "mois_one": "{{count}} month",
+      "mois_other": "{{count}} months",
+      "ansEtMois": "in {{ans}} and {{mois}}",
+      "dansAns": "in {{ans}}"
     },
     "semaine": {
       "titre": "Your week",
@@ -97,8 +106,10 @@
         "aujourdhui": "today",
         "prevu": "planned",
         "manque": "missed",
-        "repos": "rest"
-      }
+        "vide": "nothing planned"
+      },
+      "aVenir": "Week {{numero}} · from {{jour}} {{date}}",
+      "rienDePrevu": "nothing planned"
     },
     "nutrition": {
       "titre": "Today's nutrition",

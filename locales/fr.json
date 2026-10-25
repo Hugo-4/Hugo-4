@@ -58,7 +58,8 @@
       "refaire": "Refaire mon check-in",
       "checkinTitre": "Comment tu te sens ?",
       "checkinTexte": "Fais ton check-in pour que le coach adapte ta séance du jour.",
-      "checkinBouton": "Faire mon check-in"
+      "checkinBouton": "Faire mon check-in",
+      "checkinAide": "30 secondes, 7 questions"
     },
     "fatigue": {
       "titre": "Proposition du coach",
@@ -78,14 +79,22 @@
       "demarrer": "Démarrer la séance",
       "modifier": "Modifier avec le coach",
       "repos": "Repos",
-      "reposTexte": "Récupère bien : c'est aussi comme ça qu'on progresse.",
       "prochaine": "Prochaine séance : {{titre}}, {{jour}}",
-      "reprendre": "Reprendre la séance"
+      "reprendre": "Reprendre la séance",
+      "voirProchaine": "Voir ma prochaine séance"
     },
     "evenement": {
       "titre": "Prochain objectif",
       "jours_one": "J-{{count}}",
-      "jours_other": "J-{{count}}"
+      "jours_other": "J-{{count}}",
+      "semaines_one": "dans {{count}} semaine",
+      "semaines_other": "dans {{count}} semaines",
+      "ans_one": "{{count}} an",
+      "ans_other": "{{count}} ans",
+      "mois_one": "{{count}} mois",
+      "mois_other": "{{count}} mois",
+      "ansEtMois": "dans {{ans}} et {{mois}}",
+      "dansAns": "dans {{ans}}"
     },
     "semaine": {
       "titre": "Ta semaine",
@@ -97,8 +106,10 @@
         "aujourdhui": "aujourd'hui",
         "prevu": "prévu",
         "manque": "manqué",
-        "repos": "repos"
-      }
+        "vide": "rien de prévu"
+      },
+      "aVenir": "Semaine {{numero}} · dès {{jour}} {{date}}",
+      "rienDePrevu": "rien de prévu"
     },
     "nutrition": {
       "titre": "Nutrition du jour",
