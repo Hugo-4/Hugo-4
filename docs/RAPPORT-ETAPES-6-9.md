@@ -96,12 +96,14 @@ Ce qui marche :
 - Aujourd'hui : hors ligne sans données, message « Pas de réseau » + Réessayer (plus de squelette sans fin) ;
   avec des données, bandeau hors ligne ; toucher l'onglet remonte en haut ; « Voir ma prochaine séance » ouvre son
   détail ; jours manqués en pointillés et jour courant souligné.
-- Check-in : la saisie est gardée sur le téléphone (fermer la feuille ne perd rien) ; préremplissage pour le
-  refaire ; « Aucune douleur » ; lien vers le consentement ; hors ligne, l'envoi est désactivé et expliqué.
+- Check-in : la saisie est gardée sur le téléphone, pour ton compte seulement, et effacée à la déconnexion
+  (fermer la feuille ne perd rien) ; « Refaire » reprend tout ce que tu avais envoyé (notes, douleurs, cause, durée,
+  lieu) ; « Aucune douleur » ; lien vers le consentement ; hors ligne, l'envoi est désactivé et expliqué.
 - En séance : le retour de fin envoie le consentement santé ; aucune durée de repos ni RPE inventés (pas de repos
-  après la dernière série) ; un double toucher sur « Valider » n'enregistre qu'une série ; le conseil du serveur
-  n'écrase plus une charge que tu as modifiée ; minuteur aussi dans « Toute la séance » ; boutons 15 / 112 dans
-  la feuille douleur ; lien vers la fiche complète de l'exercice ; bouton retour Android avec confirmation.
+  après la dernière série, le RPE part vide et la cible s'affiche en repère) ; un double toucher sur « Valider »
+  n'enregistre qu'une série ; le conseil du serveur n'écrase plus une charge que tu as modifiée ; minuteur aussi
+  dans « Toute la séance » ; boutons 15 / 112 dans la feuille douleur ; lien vers la fiche complète de l'exercice ;
+  bouton retour Android avec confirmation ; « Fermer » si le démarrage échoue (sans réseau).
 
 À tester :
 1. Ouvre le check-in, réponds à deux questions, ferme la feuille, rouvre : tes réponses sont là.
@@ -122,7 +124,7 @@ Lancées sur le dernier commit, dans le conteneur de travail (Linux ; les mêmes
 | `npx expo-doctor` | 17/20, **identique à avant le travail** : les 3 échecs demandent l'accès à exp.host, coupé dans le conteneur (schéma de `app.json`, annuaire React Native, versions du SDK). Aucun nouveau problème. Chez toi, avec Internet, ces 3 contrôles devraient passer. |
 | `node scripts/verifier-front.mjs` | 0 problème : traductions (mêmes clés FR / EN, aucune clé manquante), design (aucune couleur ni police en dur hors `theme/`), textes (aucun texte affiché en dur), sécurité (aucun `userId` dans un corps de requête, aucune chaîne ressemblant à une clé) |
 | Relecture écran par écran (1er tour, 3 relecteurs qui n'ont pas écrit le code) | 10 écarts bloquants et 82 mineurs. Les 10 bloquants et la grande majorité des mineurs sont corrigés ; ce qui reste est listé en §8 |
-| Relecture du 2e tour | en cours au moment de ce commit (mis à jour dans le commit suivant) |
+| Relecture du 2e tour (relecteur indépendant) | les 10 bloquants sont confirmés corrigés ; il a trouvé 3 régressions réelles dans les corrections (brouillon du check-in partagé entre comptes, « Refaire » le check-in qui effaçait douleurs / durée / lieu, langue remise en français après une confirmation d'email tardive) et 6 autres points (séance sans sortie si le démarrage échoue, 5xx pris pour un refus de suppression, RPE prérempli, double toucher, contexte du Coach perdu en revenant d'un écran ouvert depuis le Coach, rafraîchissement après une adaptation acceptée depuis Aujourd'hui) : **tous corrigés** dans le dernier commit. Un trou fonctionnel reste (voir §8) |
 | Banc d'essai dans un navigateur (serveur et Supabase simulés) | Coach, Programme, Progrès, Profil, check-in, séance complète, hors ligne, Coach depuis une séance, passage en anglais : tout passe |
 
 Ce qui n'a pas pu être fait ici : l'essai sur un vrai téléphone (Expo Go). C'est la liste « À tester » de §2.
@@ -162,8 +164,9 @@ exacte, écran). À traiter en premier : la faille de `POST /api/agent/ask` (§0
   complète du catalogue.
 - **Une seule route de crédits** (`GET /credits`) pour le Coach et le Profil.
 - **Coach depuis une séance** : nouvelle route `coach-seance` en modale, pour que le retour ramène à la séance.
-- **RPE d'une série facultatif** : sans RPE donné ni cible prescrite, la série part sans RPE (l'app n'en invente
-  pas) et le serveur ne propose pas de charge pour la suivante.
+- **RPE d'une série** : il part vide à chaque série et la cible prescrite s'affiche en repère ; si tu ne le donnes
+  pas, la série part sans RPE (l'app n'en invente pas) et le serveur ne propose pas de charge pour la suivante.
+- **Double toucher sur « Valider »** : un second toucher à moins d'une seconde est ignoré.
 - **Recommandation du check-in** écrite en couleur neutre (seul l'anneau suit le score), pour qu'un texte de la
   base ne contredise jamais la couleur.
 - **Données fictives de Progrès** marquées « Exemple ».
@@ -199,9 +202,13 @@ Aucune dépendance ajoutée pendant les étapes 6 à 9.
   (`docs/MANQUES-SERVEUR.md` §2).
 - **Grands textes** : la limite d'agrandissement (`multiplicateurMax`) est posée sur les chiffres et libellés
   serrés (onglets, minuteur, pas-à-pas, Progrès, calendrier), pas sur tous les textes.
-- **Check-in refait** : seules les 5 notes sont préremplies (pas les douleurs, la durée ni le lieu).
 - **En séance** : sans prescription, les répétitions partent de 10 et la durée de 30 s (valeurs de départ du
   pas-à-pas, modifiables).
+- **Remplacement d'un exercice en cours de séance** : quand le coach remplace un exercice (proposition appliquée
+  depuis la séance), la séance déjà chargée sur le téléphone ne se recharge pas ; il faudra décider avec le serveur
+  comment la relire (nouvelle réponse de `/demarrer` ou route dédiée).
+- **Constantes de démonstration** (`…_FICTIF = true`) écrites en dur : à passer à `false` route par route quand le
+  serveur est prêt (on pourra les lier à une variable d'environnement).
 - **Essai sur un vrai téléphone** : pas faisable ici ; à faire avec la liste « À tester » de §2.
 
 ## 9. Commits
@@ -209,6 +216,8 @@ Aucune dépendance ajoutée pendant les étapes 6 à 9.
 Sur la branche `claude/etape-1-setup-jw60p2`, du plus récent au plus ancien. Contrairement au prompt (« rien
 n'est poussé »), **tout est poussé** sur GitHub, avec ton autorisation explicite ; jamais de `--force`.
 
+- `b567aca` Corrections du second tour de relecture
+- `cb30aa9` Rapport des étapes 6 à 9 (docs/RAPPORT-ETAPES-6-9.md)
 - `51d1432` Carte du front : route coach-seance et ouverture du Coach depuis une séance
 - `cde0fab` Corrections après relecture : Programme et Progrès
 - `c0263a5` Séance : le RPE d'une série reste facultatif (aucune valeur inventée, la série part sans)
@@ -222,4 +231,4 @@ n'est poussé »), **tout est poussé** sur GitHub, avec ton autorisation explic
 - `7c6cea7` Aujourd'hui : mise en forme de la carte objectif
 - `9e7d3ef` Finitions d'Aujourd'hui (FRONTEND.md §4.1)
 - `453c634` Fondations des étapes 6 à 9
-- (ce rapport)
+- (mise à jour finale de ce rapport)
