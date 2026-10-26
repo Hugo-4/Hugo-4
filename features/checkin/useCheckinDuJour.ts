@@ -19,7 +19,7 @@ export function useCheckinDuJour() {
       const { data, error } = await supabase
         .from('checkins_forme')
         .select(
-          'id, score_forme, recommandation, recommandation_raison, energie, sommeil_ressenti, courbatures, motivation, stress_ressenti',
+          'id, score_forme, recommandation, recommandation_raison, energie, sommeil_ressenti, courbatures, motivation, stress_ressenti, douleurs, cause_ponctuelle, duree_disponible_min, lieu_id',
         )
         .eq('user_id', userId as string)
         .eq('date_checkin', dateDuJour())

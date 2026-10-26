@@ -1,6 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
+import { effacerTousLesBrouillons } from '@/features/checkin/brouillonCheckin';
 import { queryClient } from '@/lib/queryClient';
 import { supabase } from '@/lib/supabase';
 
@@ -38,7 +39,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setPret(true);
     });
     const { data } = supabase.auth.onAuthStateChange((evenement, nouvelle) => {
-      if (evenement === 'SIGNED_OUT') queryClient.clear();
+      if (evenement === 'SIGNED_OUT') {
+        queryClient.clear();
+        // Le brouillon du check-in (douleurs comprises) ne doit pas rester pour le compte suivant.
+        effacerTousLesBrouillons();
+      }
       setSession(nouvelle);
       setPret(true);
     });

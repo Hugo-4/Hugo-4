@@ -1,16 +1,38 @@
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 
+import type { CheckinDuJour } from '@/features/accueil/types';
+import { useSession } from '@/features/auth/AuthProvider';
+import { ZONES, type Zone } from '@/features/inscription/constantes';
 import { useEnLigne } from '@/lib/useEnLigne';
 
 import { enregistrerBrouillon, lireBrouillon } from './brouillonCheckin';
-import { SEUIL_ENERGIE_BASSE } from './constantes';
+import { CAUSES_PONCTUELLES, type CausePonctuelle, SEUIL_ENERGIE_BASSE } from './constantes';
 import { dateDuJour } from './dateDuJour';
 import { SAISIE_VIDE, type SaisieCheckin, saisieComplete } from './types';
 import { useCheckinDuJour } from './useCheckinDuJour';
 import { useConsentementSante } from './useConsentementSante';
 import { useEnregistrerCheckin } from './useEnregistrerCheckin';
 import { useLieux } from './useLieux';
+
+/** Saisie reprise du check-in déjà fait aujourd'hui : tout est relu, pour qu'un renvoi n'efface rien. */
+function saisieDepuis(fait: CheckinDuJour): SaisieCheckin {
+  return {
+    notes: {
+      energie: fait.energie,
+      sommeil: fait.sommeil_ressenti,
+      courbatures: fait.courbatures,
+      motivation: fait.motivation,
+      stress: fait.stress_ressenti,
+    },
+    douleurs: (fait.douleurs ?? []).filter((z): z is Zone => (ZONES as readonly string[]).includes(z)),
+    causePonctuelle: (CAUSES_PONCTUELLES as readonly string[]).includes(fait.cause_ponctuelle ?? '')
+      ? (fait.cause_ponctuelle as CausePonctuelle)
+      : null,
+    dureeMin: fait.duree_disponible_min,
+    lieuId: fait.lieu_id,
+  };
+}
 
 /** Consentement santé : `inconnu` si on n'a pas pu le lire (hors ligne, erreur) — la question des douleurs reste alors masquée. */
 export type EtatConsentement = 'oui' | 'non' | 'inconnu';
@@ -21,6 +43,8 @@ export type EtatConsentement = 'oui' | 'non' | 'inconnu';
  */
 export function useCheckin() {
   const date = dateDuJour();
+  const { session } = useSession();
+  const userId = session?.user.id ?? '';
   const [saisie, setSaisie] = useState<SaisieCheckin>(SAISIE_VIDE);
   const [brouillon, setBrouillon] = useState<SaisieCheckin | null | undefined>(undefined);
   const initialise = useRef(false);
@@ -34,35 +58,24 @@ export function useCheckin() {
 
   useEffect(() => {
     let actif = true;
-    lireBrouillon(date).then((b) => {
+    lireBrouillon(userId, date).then((b) => {
       if (actif) setBrouillon(b);
     });
     return () => {
       actif = false;
     };
-  }, [date]);
+  }, [userId, date]);
 
   useEffect(() => {
     if (initialise.current || brouillon === undefined || checkinEnChargement) return;
     initialise.current = true;
-    const fait = checkin.data;
     if (brouillon) setSaisie(brouillon);
-    else if (fait)
-      setSaisie((s) => ({
-        ...s,
-        notes: {
-          energie: fait.energie,
-          sommeil: fait.sommeil_ressenti,
-          courbatures: fait.courbatures,
-          motivation: fait.motivation,
-          stress: fait.stress_ressenti,
-        },
-      }));
+    else if (checkin.data) setSaisie(saisieDepuis(checkin.data));
   }, [brouillon, checkin.data, checkinEnChargement]);
 
   useEffect(() => {
-    if (modifie.current) enregistrerBrouillon(date, saisie);
-  }, [date, saisie]);
+    if (modifie.current && userId) enregistrerBrouillon(userId, date, saisie);
+  }, [userId, date, saisie]);
 
   const modifier = (changement: Partial<SaisieCheckin>) => {
     modifie.current = true;

@@ -21,8 +21,11 @@ export async function marquerLangueReglee(userId: string): Promise<void> {
   await AsyncStorage.setItem(cleInitialisee(userId), '1').catch(() => undefined);
 }
 
-function vraiPremierLancement(langueProfil: string, telephone: string, creeLe: string | undefined): boolean {
-  if (langueProfil === telephone || langueProfil !== LANGUE_PAR_DEFAUT || !creeLe) return false;
+function vraiPremierLancement(statut: StatutCompte, telephone: string, creeLe: string | undefined): boolean {
+  if (statut.langue === telephone || statut.langue !== LANGUE_PAR_DEFAUT) return false;
+  // Inscription pas encore terminée (ex. email confirmé longtemps après la création) : c'est encore le premier lancement.
+  if (!statut.onboardingComplete) return true;
+  if (!creeLe) return false;
   // Valeur absolue : une horloge du téléphone un peu en retard ne doit pas tout fausser.
   return Math.abs(Date.now() - new Date(creeLe).getTime()) < DELAI_PREMIER_LANCEMENT_MS;
 }
@@ -31,8 +34,8 @@ function vraiPremierLancement(langueProfil: string, telephone: string, creeLe: s
  * La langue de l'app est un réglage du profil (`users.langue`, FRONTEND.md §1) ; `lib/api.ts` envoie
  * `Accept-Language`. Règle (la base ne dit pas si l'athlète a déjà choisi : colonne NOT NULL, défaut « fr ») :
  * - marqueur local présent (`athlenis.langueInitialisee.<id>`) : la valeur du profil fait foi, on l'applique ;
- * - marqueur absent et vrai premier lancement (profil à « fr » par défaut, compte créé il y a moins de
- *   10 minutes, téléphone dans une autre langue) : on écrit la langue du téléphone, une seule tentative par
+ * - marqueur absent et vrai premier lancement (profil à « fr » par défaut, téléphone dans une autre langue, et
+ *   inscription pas encore terminée ou compte créé il y a moins de 10 minutes) : on écrit la langue du téléphone, une seule tentative par
  *   ouverture de l'app, et seulement si la base vaut encore « fr » ; si l'écriture échoue, on n'insiste pas ;
  * - marqueur absent sinon (réinstallation, nouvel appareil, compte ancien) : on n'écrase RIEN, on applique
  *   la valeur du profil et on pose le marqueur.
@@ -56,7 +59,7 @@ export function useLangueProfil(userId: string | undefined, statut: StatutCompte
       const dejaFait = await AsyncStorage.getItem(cleInitialisee(userId)).catch(() => null);
       if (dejaFait) return appliquerProfil();
       const telephone = langueDuTelephone();
-      if (!vraiPremierLancement(statut.langue, telephone, creeLe)) {
+      if (!vraiPremierLancement(statut, telephone, creeLe)) {
         await marquerLangueReglee(userId);
         return appliquerProfil();
       }

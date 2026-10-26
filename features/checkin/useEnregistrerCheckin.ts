@@ -45,7 +45,7 @@ export function useEnregistrerCheckin() {
     },
     onSuccess: () =>
       Promise.all([
-        effacerBrouillon(),
+        effacerBrouillon(session?.user.id ?? ''),
         queryClient.invalidateQueries({ queryKey: ['checkin'] }),
         queryClient.invalidateQueries({ queryKey: CLE_ACCUEIL }),
         queryClient.invalidateQueries({ queryKey: ['nutrition'] }),

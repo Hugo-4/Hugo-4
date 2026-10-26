@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
 import { ErreurEnregistrement } from '@/features/inscription/components/ErreurEnregistrement';
@@ -24,6 +25,7 @@ export function AucunProgramme() {
 
   return (
     <View style={styles.bloc}>
+      <BandeauHorsLigne />
       <EmptyState
         icon={<CalendarDays color={colors.discret} size={sizes.icone * 2} />}
         titre={t('accueil.videTitre')}

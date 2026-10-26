@@ -34,12 +34,12 @@ export class CompteSupprimeError extends Error {}
 /**
  * Issue d'un échec de suppression, pour ne jamais dire « Ton compte est intact » à tort :
  * - `supprime` : le compte est supprimé, seule la déconnexion a échoué ;
- * - `refusee` : le serveur a répondu par une erreur, rien n'a été supprimé ;
- * - `incertaine` : pas de réponse (réseau, délai dépassé), le serveur a peut-être supprimé le compte.
+ * - `refusee` : le serveur a refusé (erreur 4xx), rien n'a été supprimé ;
+ * - `incertaine` : pas de réponse ou erreur 5xx (réseau, délai, proxy), le serveur a peut-être supprimé le compte.
  */
 export function issueEchecSuppression(erreur: unknown): 'supprime' | 'refusee' | 'incertaine' {
   if (erreur instanceof CompteSupprimeError) return 'supprime';
-  if (erreur instanceof ApiError && erreur.status >= 400) return 'refusee';
+  if (erreur instanceof ApiError && erreur.status >= 400 && erreur.status < 500) return 'refusee';
   return 'incertaine';
 }
 

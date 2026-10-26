@@ -97,4 +97,9 @@ export type CheckinDuJour = {
   courbatures: number | null;
   motivation: number | null;
   stress_ressenti: number | null;
+  /** Relus pour préremplir « Refaire mon check-in » (sinon le renvoi les effacerait). */
+  douleurs: string[] | null;
+  cause_ponctuelle: string | null;
+  duree_disponible_min: number | null;
+  lieu_id: string | null;
 };

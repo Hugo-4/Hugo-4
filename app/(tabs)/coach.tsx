@@ -3,10 +3,16 @@ import { useEffect } from 'react';
 
 import { EcranCoach } from '@/features/coach/components/EcranCoach';
 
+type NavigationOnglet = {
+  addListener: (evenement: 'tabPress', rappel: () => void) => () => void;
+  setParams: (params: { contexte?: string }) => void;
+};
+
 /** Onglet Coach : le chat (la barre d'onglets est masquée, l'en-tête a son bouton retour). */
 export default function CoachScreen() {
-  const navigation = useNavigation();
-  // En quittant l'onglet, le contexte (séance, exercice) est oublié : rouvrir le Coach par l'onglet repart sans contexte.
-  useEffect(() => navigation.addListener('blur', () => navigation.setParams({ contexte: undefined } as never)), [navigation]);
+  const navigation = useNavigation() as unknown as NavigationOnglet;
+  // Ouvert par l'onglet : on repart sans contexte (séance, exercice). Un écran ouvert depuis le Coach
+  // (abonnement…) le garde au retour.
+  useEffect(() => navigation.addListener('tabPress', () => navigation.setParams({ contexte: undefined })), [navigation]);
   return <EcranCoach />;
 }

@@ -888,6 +888,7 @@
       "titre": "Aucun exercice dans cette séance",
       "texte": "Le serveur n'a envoyé aucun exercice pour cette séance. Reviens à l'accueil puis réessaie, ou demande au coach.",
       "fermer": "Revenir à l'accueil"
-    }
+    },
+    "rpeCible": "Cible : RPE {{rpe}}"
   }
 }

@@ -67,7 +67,13 @@ export function VueExercice({ onFiche, onMenu, onTerminer }: Props) {
         />
         <MinuteurRepos />
         {enCours ? (
-          <SaisieSerie saisie={saisie} mesure={mesureDe(exercice)} pasCharge={pasCharge(exercice)} onChange={modifier} />
+          <SaisieSerie
+            saisie={saisie}
+            mesure={mesureDe(exercice)}
+            pasCharge={pasCharge(exercice)}
+            rpeCible={exercice.rpe_cible ?? null}
+            onChange={modifier}
+          />
         ) : (
           <AppText variant="corpsGras">{t(`enSeance.statut.${statut}`)}</AppText>
         )}

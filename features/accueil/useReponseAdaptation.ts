@@ -1,16 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { invaliderSeances } from '@/features/programme/cles';
 import { api } from '@/lib/api';
-
-import { CLE_ACCUEIL } from './useAccueil';
 
 type Reponse = { id: string; choix: 'accepter' | 'refuser' };
 
-/** Accepte ou refuse l'adaptation proposée par le coach (ex. semaine allégée), puis recharge l'accueil. */
+/** Accepte ou refuse l'adaptation proposée par le coach (ex. semaine allégée), puis recharge l'accueil et le programme. */
 export function useReponseAdaptation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, choix }: Reponse) => api.post(`/programme/adaptations/${id}/${choix}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: CLE_ACCUEIL }),
+    // Même rafraîchissement que depuis l'historique : accueil, calendrier, programme (et ses adaptations), Progrès.
+    onSuccess: () => invaliderSeances(queryClient),
   });
 }

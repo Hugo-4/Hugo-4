@@ -888,6 +888,7 @@
       "titre": "No exercises in this session",
       "texte": "The server sent no exercises for this session. Go back to Today and try again, or ask the coach.",
       "fermer": "Back to Today"
-    }
+    },
+    "rpeCible": "Target: RPE {{rpe}}"
   }
 }

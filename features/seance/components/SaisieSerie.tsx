@@ -1,8 +1,10 @@
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { AppText } from '@/components/AppText';
 import { ChoixNote } from '@/components/ChoixNote';
 import { PasAPas } from '@/components/PasAPas';
+import { formatNombre } from '@/lib/format';
 import { spacing } from '@/theme/tokens';
 
 import { type Mesure, type Saisie } from '../saisie';
@@ -13,11 +15,13 @@ type Props = {
   saisie: Saisie;
   mesure: Mesure;
   pasCharge: number;
+  /** RPE prescrit : affiché comme repère tant que l'athlète n'a pas donné le sien. */
+  rpeCible: number | null;
   onChange: (saisie: Saisie) => void;
 };
 
 /** Charge et répétitions (ou durée) préremplies, puis le RPE en un geste. */
-export function SaisieSerie({ saisie, mesure, pasCharge, onChange }: Props) {
+export function SaisieSerie({ saisie, mesure, pasCharge, rpeCible, onChange }: Props) {
   const { t } = useTranslation();
   return (
     <View style={styles.bloc}>
@@ -58,6 +62,9 @@ export function SaisieSerie({ saisie, mesure, pasCharge, onChange }: Props) {
         onChange={(rpe) => onChange({ ...saisie, rpe })}
         a11yValeur={(rpe) => t('enSeance.a11yRpe', { rpe })}
       />
+      {saisie.rpe === null && rpeCible !== null ? (
+        <AppText variant="libelle">{t('enSeance.rpeCible', { rpe: formatNombre(rpeCible, 1) })}</AppText>
+      ) : null}
     </View>
   );
 }
