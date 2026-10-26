@@ -884,7 +884,6 @@
       "suivante": "Your turn: {{nom}}, set {{numero}} / {{total}}",
       "reprendre": "Back to your session"
     },
-    "choisirRpe": "Pick your RPE to log the set.",
     "vide": {
       "titre": "No exercises in this session",
       "texte": "The server sent no exercises for this session. Go back to Today and try again, or ask the coach.",

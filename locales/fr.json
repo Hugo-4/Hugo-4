@@ -884,7 +884,6 @@
       "suivante": "À toi : {{nom}}, série {{numero}} / {{total}}",
       "reprendre": "Reprends ta séance"
     },
-    "choisirRpe": "Choisis ton RPE pour valider la série.",
     "vide": {
       "titre": "Aucun exercice dans cette séance",
       "texte": "Le serveur n'a envoyé aucun exercice pour cette séance. Reviens à l'accueil puis réessaie, ou demande au coach.",

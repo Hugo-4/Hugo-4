@@ -7,7 +7,7 @@ import type { ExerciceSeance } from './types';
  */
 export type Mesure = 'reps' | 'duree';
 
-/** `rpe` : `null` tant que l'athlète ne l'a pas donné et qu'aucune cible n'est prescrite (l'app n'en invente pas). */
+/** `rpe` : `null` si l'athlète ne l'a pas donné et qu'aucune cible n'est prescrite (l'app n'en invente pas, la série part sans). */
 export type Saisie = { charge: number | null; reps: number; duree: number; rpe: number | null };
 
 /** Premier nombre d'une prescription de répétitions (« 8-10 » → 8). */

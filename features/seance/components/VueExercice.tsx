@@ -73,14 +73,8 @@ export function VueExercice({ onFiche, onMenu, onTerminer }: Props) {
         )}
       </ScrollView>
       <View style={styles.bas}>
-        {enCours && saisie.rpe === null ? <AppText variant="libelle">{t('enSeance.choisirRpe')}</AppText> : null}
         {enCours ? (
-          <Button
-            label={t('enSeance.valider')}
-            onPress={() => validerSerie(saisie)}
-            disabled={saisie.rpe === null}
-            style={styles.valider}
-          />
+          <Button label={t('enSeance.valider')} onPress={() => validerSerie(saisie)} style={styles.valider} />
         ) : seanceTerminee(etat) ? (
           <Button label={t('enSeance.terminer')} onPress={onTerminer} style={styles.valider} />
         ) : null}
@@ -92,6 +86,6 @@ export function VueExercice({ onFiche, onMenu, onTerminer }: Props) {
 const styles = StyleSheet.create({
   ecran: { flex: 1 },
   contenu: { padding: spacing.ecran, gap: spacing.xl },
-  bas: { paddingHorizontal: spacing.ecran, paddingBottom: spacing.s, gap: spacing.s },
+  bas: { paddingHorizontal: spacing.ecran, paddingBottom: spacing.s },
   valider: { minHeight: sizes.boutonSeance },
 });
