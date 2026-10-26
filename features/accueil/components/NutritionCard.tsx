@@ -7,9 +7,8 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Skeleton } from '@/components/Skeleton';
 import { dateDuJour } from '@/features/checkin/dateDuJour';
-import { totaux } from '@/features/nutrition/calcul';
 import { formatQuantite } from '@/features/nutrition/format';
-import { useJournal } from '@/features/nutrition/useJournal';
+import { useTotauxJour } from '@/features/nutrition/useJournal';
 import { formatNombre } from '@/lib/format';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
@@ -21,8 +20,8 @@ const plage = ([a, b]: [number, number]) => `${formatNombre(a)}–${formatNombre
 export function NutritionCard() {
   const { t } = useTranslation();
   const requete = useNutritionJour();
-  const journal = useJournal(dateDuJour());
-  const note = journal.data?.length ? totaux(journal.data) : null;
+  const totaux = useTotauxJour(dateDuJour());
+  const note = totaux.data && totaux.data.calories + totaux.data.proteines + totaux.data.glucides > 0 ? totaux.data : null;
 
   return (
     <Card>
@@ -61,7 +60,7 @@ export function NutritionCard() {
       ) : null}
       {note ? (
         <AppText variant="secondaire">
-          {t('nutrition.resumeAccueil', { kcal: formatQuantite(note.calories), p: formatQuantite(note.proteines_g), g: formatQuantite(note.glucides_g) })}
+          {t('nutrition.resumeAccueil', { kcal: formatQuantite(note.calories), p: formatQuantite(note.proteines), g: formatQuantite(note.glucides) })}
         </AppText>
       ) : null}
       <View style={styles.actions}>

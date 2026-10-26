@@ -19,7 +19,7 @@ export function CarteTiming({ plan, groupes }: Props) {
   const note = (moment: MomentRepas) => {
     const groupe = groupes.find((x) => x.moment === moment);
     if (!groupe) return null;
-    return t('nutrition.timing.note', { glucides: formatQuantite(groupe.total.glucides_g), proteines: formatQuantite(groupe.total.proteines_g) });
+    return t('nutrition.timing.note', { glucides: formatQuantite(groupe.total.glucides), proteines: formatQuantite(groupe.total.proteines) });
   };
   const glucidesPendant = (v: number | string | [number, number]) =>
     v === 0 ? t('nutrition.timing.eauSeulement') : Array.isArray(v) ? t('nutrition.timing.glucidesHeure', { valeur: formatCible(v) }) : String(v);
@@ -32,11 +32,11 @@ export function CarteTiming({ plan, groupes }: Props) {
       ) : null}
       {n.avant ? (
         <BlocMoment
-          titre={t('nutrition.moments.avant_seance')}
+          titre={t('nutrition.moments.pre_entrainement')}
           quand={n.avant.quand}
           lignes={[t('nutrition.timing.glucides', { valeur: g(n.avant.glucides_g) })]}
           idee={n.avant.idee}
-          note={note('avant_seance')}
+          note={note('pre_entrainement')}
         />
       ) : null}
       {n.avant?.collation ? (
@@ -49,22 +49,22 @@ export function CarteTiming({ plan, groupes }: Props) {
       ) : null}
       {n.pendant ? (
         <BlocMoment
-          titre={t('nutrition.moments.pendant_seance')}
+          titre={t('nutrition.moments.pendant_entrainement')}
           lignes={[
             glucidesPendant(n.pendant.glucides_g_h),
             t('nutrition.timing.eauHeure', { valeur: formatCible(n.pendant.eau_ml_h) }),
             ...(n.pendant.sodium_mg_h ? [t('nutrition.timing.sodiumHeure', { valeur: formatCible(n.pendant.sodium_mg_h) })] : []),
           ]}
-          note={note('pendant_seance')}
+          note={note('pendant_entrainement')}
         />
       ) : null}
       {n.apres ? (
         <BlocMoment
-          titre={t('nutrition.moments.apres_seance')}
+          titre={t('nutrition.moments.post_entrainement')}
           quand={n.apres.quand}
           lignes={[t('nutrition.timing.glucides', { valeur: g(n.apres.glucides_g) }), t('nutrition.timing.proteines', { valeur: g(n.apres.proteines_g) })]}
           idee={n.apres.note}
-          note={note('apres_seance')}
+          note={note('post_entrainement')}
         />
       ) : null}
       {n.hydratation?.apres ? <AppText variant="libelle">{n.hydratation.apres}</AppText> : null}

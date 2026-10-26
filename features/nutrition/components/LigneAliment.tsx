@@ -7,9 +7,9 @@ import { IconButton } from '@/components/IconButton';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
 import { formatQuantite } from '../format';
-import type { LigneRepas } from '../types';
+import type { EntreeJournal } from '../types';
 
-type Props = { ligne: LigneRepas; onRetirer: () => void; desactive: boolean };
+type Props = { ligne: EntreeJournal; onRetirer: () => void; desactive: boolean };
 
 /** Un aliment noté : nom, quantité, calories et macronutriments, bouton pour le retirer. */
 export function LigneAliment({ ligne, onRetirer, desactive }: Props) {
@@ -24,9 +24,9 @@ export function LigneAliment({ ligne, onRetirer, desactive }: Props) {
           {t('nutrition.repas.detail', {
             quantite: formatQuantite(ligne.quantite_g),
             kcal: formatQuantite(ligne.calories),
-            p: formatQuantite(ligne.proteines_g),
-            g: formatQuantite(ligne.glucides_g),
-            l: formatQuantite(ligne.lipides_g),
+            p: formatQuantite(ligne.proteines),
+            g: formatQuantite(ligne.glucides),
+            l: formatQuantite(ligne.lipides),
           })}
         </AppText>
       </View>

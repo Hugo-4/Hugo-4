@@ -57,7 +57,7 @@ export function EcranAjouterAliment({ params }: { params: { date?: string; momen
                 keyboardType="decimal-pad"
                 erreur={a.erreurs.quantite ? t('nutrition.ajout.erreurQuantite') : undefined}
               />
-              {a.apercu ? <ApercuNutriments nutriments={a.apercu} /> : null}
+              {a.aliment ? <ApercuNutriments aliment={a.aliment} /> : null}
               <GroupePuces titre={t('nutrition.ajout.moment')}>
                 {MOMENTS_REPAS.map((m) => (
                   <Chip key={m} role="radio" label={t(`nutrition.moments.${m}`)} selectionne={a.moment === m} onPress={() => a.setMoment(m)} />

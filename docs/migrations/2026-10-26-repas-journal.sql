@@ -1,3 +1,4 @@
+-- ABANDONNÉE le 26/10/2026 : l'app utilise journal_entrees / journal_nutrition. Table à supprimer par Hugo.
 -- Migration additive (étape 14) : journal alimentaire détaillé, un aliment par ligne. Appliquée le 26/10/2026
 -- (repas_journal_etape_14). Les quantités de nutriments sont calculées à l'enregistrement depuis `aliments`
 -- (valeurs pour 100 g × quantité) et figées : une correction de la base d'aliments ne réécrit pas l'historique.

@@ -8,11 +8,11 @@ import { Card } from '@/components/Card';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
 import { formatQuantite } from '../format';
-import type { LigneRepas, MomentRepas } from '../types';
+import type { EntreeJournal, MomentRepas } from '../types';
 import type { GroupeRepas } from '../useNutrition';
 import { LigneAliment } from './LigneAliment';
 
-type Props = { date: string; groupes: GroupeRepas[]; onRetirer: (ligne: LigneRepas) => void; desactive: boolean };
+type Props = { date: string; groupes: GroupeRepas[]; onRetirer: (ligne: EntreeJournal) => void; desactive: boolean };
 
 const ajouter = (date: string, moment?: MomentRepas) =>
   router.push({ pathname: '/nutrition/ajouter', params: moment ? { date, moment } : { date } });
@@ -31,8 +31,8 @@ export function CarteRepas({ date, groupes, onRetirer, desactive }: Props) {
             <AppText variant="libelle" color={colors.texte2}>
               {t('nutrition.repas.totalMoment', {
                 kcal: formatQuantite(groupe.total.calories),
-                p: formatQuantite(groupe.total.proteines_g),
-                g: formatQuantite(groupe.total.glucides_g),
+                p: formatQuantite(groupe.total.proteines),
+                g: formatQuantite(groupe.total.glucides),
               })}
             </AppText>
           </View>

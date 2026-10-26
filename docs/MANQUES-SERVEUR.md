@@ -24,7 +24,7 @@ passer à `false` est indiquée pour chaque route.
 | 7 | Aucune route : lire les réponses du questionnaire complet (`tests_athlete`, `profil_specifique`, préférences, `signaux_effort`) et ne plus inventer de charge ; `POST /tests` avec charge × répétitions (souhaité) | Questionnaire, toutes les séances | — |
 | 8 | `POST /coach/messages` avec `contexte: { sujet: "objectif" }` : le coach insère des étapes « proposées » dans `sous_objectifs` ; le programme lit les étapes actives | Programme (Mon objectif), Coach | `COACH_FICTIF` (le mode démonstration insère 3 étapes) |
 | 9 | `POST /coach/messages` : réponses rapides `forme_du_jour` et `fatigue` (proposition avant / après), actions sur l'app dans `actions` (`langue`, `ouvrir`) | Coach, Aujourd'hui | `COACH_FICTIF` (le mode démonstration reconnaît quelques mots-clés) |
-| 10 | Aucune route obligatoire : remplir `objectifs_nutritionnels` (calories, lipides, fibres, micronutriments surveillés), lire `repas_journal` (coach, plan du lendemain) ; souhaité : `GET /nutrition/jour?date=`, textes du plan en anglais | Nutrition, Aujourd'hui | — (l'app lit et écrit directement avec la RLS) |
+| 10 | Aucune route obligatoire : remplir `objectifs_nutritionnels` (calories, lipides, fibres, micronutriments surveillés), lire `journal_entrees` et `journal_nutrition` (coach, plan du lendemain) ; souhaité : `GET /nutrition/jour?date=`, textes du plan en anglais | Nutrition, Aujourd'hui | — (l'app lit et écrit directement avec la RLS) |
 
 ## 0. Sécurité à corriger avant tout
 
@@ -1070,29 +1070,26 @@ Le coach peut ajouter à sa réponse des actions que l'app affiche en boutons so
 
 ## 10. Nutrition complète (étape 14)
 
-### Ce que fait l'app
-- Nouvelle table `repas_journal` (migration `repas_journal_etape_14`, `docs/migrations/2026-10-26-repas-journal.sql`) :
-  un aliment par ligne, jour, moment (`petit_dejeuner`, `dejeuner`, `collation`, `diner`, `avant_seance`,
-  `pendant_seance`, `apres_seance`), quantité en grammes, calories, protéines, glucides, lipides, fibres, sucres et
-  micronutriments (`micros` : `fer_mg`, `calcium_mg`, `magnesium_mg`, `potassium_mg`, `zinc_mg`, `sodium_mg`,
-  `vitamine_c_mg`, `vitamine_d_ug`, `vitamine_b12_ug`, `omega3_mg`). RLS : chacun ses lignes.
-- Les valeurs viennent de la table `aliments` (valeurs pour 100 g × quantité, figées à l'enregistrement), ou d'une
-  saisie libre (`source = 'saisie_libre'`, sans micronutriments).
-- L'écran Nutrition affiche ce qui est noté face aux cibles : glucides et protéines de `GET /nutrition/jour`
-  (aujourd'hui), sinon de `objectifs_nutritionnels` ; calories, lipides et fibres de `objectifs_nutritionnels`.
-  Le timing avant / pendant / après la séance reprend le plan du serveur tel quel (textes `quand`, `idee`, `note`).
-  L'équilibre (part de chaque macronutriment dans les calories) et les totaux sont de simples additions.
+### Ce que fait l'app (décisions du 26/10/2026)
+- Journal : **`journal_entrees`** (une ligne par aliment) et **`journal_nutrition`** (totaux du jour). L'app envoie
+  `user_id`, `date_entree`, `moment_journee` (`petit_dejeuner`, `dejeuner`, `diner`, `collation`,
+  `pre_entrainement`, `pendant_entrainement`, `post_entrainement`), `quantite_g`, `heure`, `source_saisie`
+  (`manuel`), et `aliment_id` **ou** `nom_libre`.
+- Aliment de la base : l'app n'envoie aucune valeur ; les triggers `auto_calculate_entree_nutrition`,
+  `ensure_journal_exists` et `recalculate_journal_totals` calculent calories, macronutriments, sodium et `micros`,
+  rattachent l'entrée au journal du jour et mettent à jour `journal_nutrition`. Saisie libre : l'app envoie les
+  valeurs saisies (calories, protéines, glucides, lipides).
+- Totaux du jour lus dans `journal_nutrition` (`user_id`, `date_journal`). Les micronutriments du jour (absents de
+  `journal_nutrition`) et la répartition par moment sont la somme des entrées.
+- `repas_journal` (migration `repas_journal_etape_14`) n'est plus lue ni écrite : à supprimer par Hugo.
+- Le plan avant / pendant / après la séance reprend `GET /nutrition/jour` tel quel (textes `quand`, `idee`, `note`).
 
 ### À faire côté serveur
 1. **Remplir `objectifs_nutritionnels`** (une ligne `actif = true` par athlète) : `calories_cibles`, `proteines_g`,
-   `glucides_g`, `lipides_g`, `fibres_g`, `hydratation_ml_cible`, et `micronutriments_surveilles` avec les clés
-   ci-dessus (`fer_mg`, `vitamine_d_ug`… ; l'app accepte aussi « fer » ou « Vitamine D »). Tant que la ligne
-   n'existe pas, l'app n'affiche pas de cible de calories, lipides ni fibres.
-2. **Lire `repas_journal`** dans le coach (fiche athlète, réponses sur la nutrition, adaptation du plan du lendemain)
-   et, si utile, recopier les totaux du jour dans `journal_nutrition` pour les analyses existantes.
+   `glucides_g`, `lipides_g`, `fibres_g`, `hydratation_ml_cible`, et `micronutriments_surveilles` avec les clés de
+   `journal_entrees.micros` (`fer_mg`, `vitamine_d_µg`… ; l'app accepte aussi « fer » ou « Vitamine D »).
+2. **Lire `journal_entrees` / `journal_nutrition`** dans le coach (fiche athlète, réponses sur la nutrition, plan du
+   lendemain).
 3. Souhaité : `GET /nutrition/jour?date=AAAA-MM-JJ` pour un autre jour (l'app n'affiche le plan et le timing que
-   pour aujourd'hui) ; textes du plan (`quand`, `idee`, `consignes`, `alertes`) aussi en anglais selon
-   `users.langue` (aujourd'hui en français seulement).
-4. Compléter la base `aliments` (55 aliments aujourd'hui) : l'athlète peut saisir à la main ce qui manque ;
-   les saisies libres fréquentes (`repas_journal.source = 'saisie_libre'`, colonne `nom`) indiquent quoi ajouter.
-
+   pour aujourd'hui) ; textes du plan aussi en anglais selon `users.langue`.
+4. Compléter la base `aliments` : les saisies libres fréquentes (`journal_entrees.nom_libre`) indiquent quoi ajouter.

@@ -46,9 +46,9 @@
     "dejeuner": "Lunch",
     "collation": "Snack",
     "diner": "Dinner",
-    "avant_seance": "Before the session",
-    "pendant_seance": "During the session",
-    "apres_seance": "After the session"
+    "pre_entrainement": "Before the session",
+    "pendant_entrainement": "During the session",
+    "post_entrainement": "After the session"
   },
   "repas": {
     "titre": "What I ate",
@@ -79,9 +79,13 @@
       "zinc_mg": "Zinc",
       "sodium_mg": "Sodium",
       "vitamine_c_mg": "Vitamin C",
-      "vitamine_d_ug": "Vitamin D",
-      "vitamine_b12_ug": "Vitamin B12",
-      "omega3_mg": "Omega-3"
+      "vitamine_d_µg": "Vitamin D",
+      "vitamine_b12_µg": "Vitamin B12",
+      "vitamine_b6_mg": "Vitamin B6",
+      "vitamine_a_µg": "Vitamin A",
+      "folates_µg": "Folate (B9)",
+      "omega3_ala_mg": "Omega-3 (ALA)",
+      "omega3_epa_dha_mg": "Omega-3 (EPA + DHA)"
     }
   },
   "ajout": {
@@ -104,6 +108,7 @@
     "portion": "Usual portion: {{g}} g",
     "erreurQuantite": "Enter a quantity between 1 and 3,000 g.",
     "moment": "Meal",
-    "enregistrer": "Save"
+    "enregistrer": "Save",
+    "pour100g": "Values per 100 g (the portion is calculated when you save)"
   }
 }

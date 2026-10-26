@@ -7,13 +7,13 @@ import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
 import type { equilibre } from '../calcul';
 import { formatQuantite } from '../format';
-import type { Nutriments } from '../types';
+import type { TotauxJour } from '../types';
 
-type Props = { total: Nutriments; parts: ReturnType<typeof equilibre> };
+type Props = { total: TotauxJour; parts: ReturnType<typeof equilibre> };
 
 const COULEURS = { glucides: colors.accent, proteines: colors.info, lipides: colors.vigilance } as const;
 
-/** Part des glucides, protéines et lipides dans les calories notées, puis fibres et sucres. */
+/** Part des glucides, protéines et lipides dans les apports du jour (`journal_nutrition`), puis fibres et sucres. */
 export function CarteEquilibre({ total, parts }: Props) {
   const { t } = useTranslation();
   const cles = ['glucides', 'proteines', 'lipides'] as const;
@@ -41,7 +41,7 @@ export function CarteEquilibre({ total, parts }: Props) {
         <AppText variant="secondaire">{t('nutrition.equilibre.vide')}</AppText>
       )}
       <AppText variant="libelle">
-        {t('nutrition.equilibre.fibresSucres', { fibres: formatQuantite(total.fibres_g), sucres: formatQuantite(total.sucres_g) })}
+        {t('nutrition.equilibre.fibresSucres', { fibres: formatQuantite(total.fibres), sucres: formatQuantite(total.sucres) })}
       </AppText>
     </Card>
   );

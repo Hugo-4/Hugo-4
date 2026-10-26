@@ -27,6 +27,7 @@ export function EcranNutrition() {
   const n = useNutrition();
   const rafraichir = () => {
     n.journal.refetch();
+    n.totauxJour.refetch();
     n.objectifs.refetch();
     n.plan?.refetch();
   };
@@ -66,7 +67,7 @@ export function EcranNutrition() {
           {n.actions.supprimer.error ? <ErreurEnregistrement erreur={n.actions.supprimer.error} /> : null}
           <CarteRepas date={n.date} groupes={n.groupes} onRetirer={n.retirer} desactive={!enLigne || n.actions.supprimer.isPending} />
           <CarteEquilibre total={n.total} parts={n.equilibre} />
-          <CarteMicros total={n.total} surveilles={n.objectifs.data?.micronutriments_surveilles ?? null} />
+          <CarteMicros micros={n.micros} surveilles={n.objectifs.data?.micronutriments_surveilles ?? null} />
         </ScrollView>
       </EtatsEcran>
     </Screen>

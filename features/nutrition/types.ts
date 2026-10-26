@@ -1,20 +1,36 @@
-/** Journal alimentaire (table `repas_journal`, migration repas_journal_etape_14) et base `aliments`. */
+/**
+ * Journal alimentaire : `journal_entrees` (une ligne par aliment) et `journal_nutrition` (totaux du jour), base
+ * `aliments`. Quand `aliment_id` est fourni, un trigger de la base calcule calories, macronutriments, sodium et
+ * micronutriments, et met à jour `journal_nutrition` : l'app ne les calcule pas.
+ */
 
-export const MOMENTS_REPAS = ['petit_dejeuner', 'dejeuner', 'collation', 'diner', 'avant_seance', 'pendant_seance', 'apres_seance'] as const;
+export const MOMENTS_REPAS = [
+  'petit_dejeuner',
+  'dejeuner',
+  'collation',
+  'diner',
+  'pre_entrainement',
+  'pendant_entrainement',
+  'post_entrainement',
+] as const;
 export type MomentRepas = (typeof MOMENTS_REPAS)[number];
 
-/** Micronutriments suivis : clé dans `repas_journal.micros` → colonne de `aliments` (pour 100 g) et unité. */
+/** Micronutriments écrits par le trigger dans `journal_entrees.micros` (clé → unité), dans l'ordre d'affichage. */
 export const MICROS = {
-  fer_mg: { colonne: 'fer_mg', unite: 'mg' },
-  calcium_mg: { colonne: 'calcium_mg', unite: 'mg' },
-  magnesium_mg: { colonne: 'magnesium_mg', unite: 'mg' },
-  potassium_mg: { colonne: 'potassium_mg', unite: 'mg' },
-  zinc_mg: { colonne: 'zinc_mg', unite: 'mg' },
-  sodium_mg: { colonne: 'sodium_100g', unite: 'mg' },
-  vitamine_c_mg: { colonne: 'vitamine_c_mg', unite: 'mg' },
-  vitamine_d_ug: { colonne: 'vitamine_d_µg', unite: 'µg' },
-  vitamine_b12_ug: { colonne: 'vitamine_b12_µg', unite: 'µg' },
-  omega3_mg: { colonne: 'omega3_mg', unite: 'mg' },
+  fer_mg: 'mg',
+  calcium_mg: 'mg',
+  magnesium_mg: 'mg',
+  potassium_mg: 'mg',
+  zinc_mg: 'mg',
+  sodium_mg: 'mg',
+  vitamine_c_mg: 'mg',
+  'vitamine_d_µg': 'µg',
+  'vitamine_b12_µg': 'µg',
+  vitamine_b6_mg: 'mg',
+  'vitamine_a_µg': 'µg',
+  'folates_µg': 'µg',
+  omega3_ala_mg: 'mg',
+  omega3_epa_dha_mg: 'mg',
 } as const;
 export type CleMicro = keyof typeof MICROS;
 
@@ -27,34 +43,54 @@ export type Aliment = {
   calories_100g: number | string | null;
   proteines_100g: number | string | null;
   glucides_100g: number | string | null;
-  dont_sucres_100g: number | string | null;
   lipides_100g: number | string | null;
-  fibres_100g: number | string | null;
   portion_standard_g: number | null;
-} & Record<string, unknown>;
+  actif: boolean | null;
+  remplace_par: string | null;
+};
 
 export type Nutriments = {
   calories: number;
-  proteines_g: number;
-  glucides_g: number;
-  lipides_g: number;
-  fibres_g: number;
-  sucres_g: number;
+  proteines: number;
+  glucides: number;
+  lipides: number;
+  fibres: number;
+  sucres: number;
   micros: Partial<Record<CleMicro, number>>;
 };
 
-export type LigneRepas = Nutriments & {
+/** Ligne de `journal_entrees`, nom repris de l'aliment ou de la saisie libre. */
+export type EntreeJournal = Nutriments & {
   id: string;
-  date_repas: string;
-  moment: MomentRepas;
-  heure: string;
+  date_entree: string;
+  moment_journee: MomentRepas;
   aliment_id: string | null;
   nom: string;
   quantite_g: number;
-  source: 'aliment' | 'saisie_libre';
 };
 
-export type NouvelleLigne = Omit<LigneRepas, 'id' | 'heure'>;
+/** Ce que l'app envoie : l'aliment et la quantité, ou, en saisie libre, le nom et les valeurs saisies. */
+export type NouvelleEntree = {
+  date_entree: string;
+  moment_journee: MomentRepas;
+  quantite_g: number;
+  heure: string;
+  source_saisie: 'manuel';
+} & (
+  | { aliment_id: string }
+  | { aliment_id: null; nom_libre: string; calories: number; proteines: number; glucides: number; lipides: number }
+);
+
+/** Totaux du jour (`journal_nutrition`), tenus à jour par la base. */
+export type TotauxJour = {
+  calories: number;
+  proteines: number;
+  glucides: number;
+  lipides: number;
+  fibres: number;
+  sucres: number;
+  sodium_mg: number;
+};
 
 /** `objectifs_nutritionnels` (ligne active), rédigée par le serveur ; l'app l'affiche telle quelle. */
 export type ObjectifsNutritionnels = {

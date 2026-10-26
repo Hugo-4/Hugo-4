@@ -8,20 +8,23 @@ import { colors, spacing } from '@/theme/tokens';
 import { formatQuantite } from '../format';
 import { MICROS, type CleMicro, type Nutriments } from '../types';
 
-type Props = { total: Nutriments; surveilles: string[] | null };
+type Props = { micros: Nutriments['micros']; surveilles: string[] | null };
 
 const normaliser = (s: string) =>
   s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/µ/g, 'u').replace(/[\s-]+/g, '_');
 
 /** Le coach peut écrire « fer », « fer_mg » ou « Vitamine D » : on compare le début de la clé. */
-const estSurveille = (cle: CleMicro, liste: string[]) => liste.map(normaliser).some((s) => s && (cle === s || cle.startsWith(`${s}_`)));
+const estSurveille = (cle: CleMicro, liste: string[]) => {
+  const c = normaliser(cle);
+  return liste.map(normaliser).some((s) => s && (c === s || c.startsWith(`${s}_`)));
+};
 
 /** Micronutriments notés ce jour ; ceux que le coach surveille passent en tête. Aucun seuil calculé par l'app. */
-export function CarteMicros({ total, surveilles }: Props) {
+export function CarteMicros({ micros, surveilles }: Props) {
   const { t } = useTranslation();
   const liste = surveilles ?? [];
   const cles = (Object.keys(MICROS) as CleMicro[])
-    .map((cle) => ({ cle, valeur: total.micros[cle] ?? 0, suivi: estSurveille(cle, liste) }))
+    .map((cle) => ({ cle, valeur: micros[cle] ?? 0, suivi: estSurveille(cle, liste) }))
     .filter((m) => m.valeur > 0 || m.suivi)
     .sort((a, b) => Number(b.suivi) - Number(a.suivi));
 
@@ -35,7 +38,7 @@ export function CarteMicros({ total, surveilles }: Props) {
             <AppText variant="secondaire">{t(`nutrition.micros.noms.${m.cle}`)}</AppText>
             {m.suivi ? <AppText variant="libelle" color={colors.accent}>{t('nutrition.micros.suivi')}</AppText> : null}
           </View>
-          <AppText variant="corpsGras">{t('nutrition.valeurUnite', { valeur: formatQuantite(m.valeur), unite: MICROS[m.cle].unite })}</AppText>
+          <AppText variant="corpsGras">{t('nutrition.valeurUnite', { valeur: formatQuantite(m.valeur), unite: MICROS[m.cle] })}</AppText>
         </View>
       ))}
       <AppText variant="libelle">{t('nutrition.micros.aide')}</AppText>

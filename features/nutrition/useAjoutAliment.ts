@@ -1,11 +1,11 @@
 import { router } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { dateDuJour } from '@/features/checkin/dateDuJour';
 import { lireNombre } from '@/features/questionnaire/saisie';
 
-import { momentParDefaut, nutrimentsPour } from './calcul';
-import { MOMENTS_REPAS, type Aliment, type MomentRepas, type NouvelleLigne, type Nutriments } from './types';
+import { momentParDefaut } from './calcul';
+import { MOMENTS_REPAS, type Aliment, type MomentRepas, type NouvelleEntree } from './types';
 import { useActionsRepas } from './useJournal';
 import { useRechercheAliments } from './useRechercheAliments';
 
@@ -17,7 +17,8 @@ const QUANTITE_MAX = 3000;
 
 /**
  * Noter un aliment : recherche dans la base `aliments`, portion en grammes et moment, ou saisie libre
- * (nom, calories, macronutriments) pour un aliment absent de la base. Enregistré dans `repas_journal`.
+ * (nom, calories, macronutriments) pour un aliment absent de la base. Enregistré dans `journal_entrees` : pour un
+ * aliment de la base, seuls l'aliment et la quantité partent, la base calcule les valeurs.
  */
 export function useAjoutAliment(params: { date?: string; moment?: string }) {
   const date = params.date && /^\d{4}-\d{2}-\d{2}$/.test(params.date) ? params.date : dateDuJour();
@@ -33,10 +34,6 @@ export function useAjoutAliment(params: { date?: string; moment?: string }) {
 
   const grammes = lireNombre(quantite);
   const quantiteValide = grammes !== null && grammes > 0 && grammes <= QUANTITE_MAX;
-  const apercu: Nutriments | null = useMemo(
-    () => (aliment && quantiteValide ? nutrimentsPour(aliment, grammes as number) : null),
-    [aliment, grammes, quantiteValide],
-  );
 
   const choisir = (a: Aliment) => {
     setAliment(a);
@@ -63,27 +60,20 @@ export function useAjoutAliment(params: { date?: string; moment?: string }) {
     valeurs: libre && !(['calories', 'proteines', 'glucides', 'lipides'] as const).every((c) => positif(champs[c])),
   };
 
-  const ligne = (): NouvelleLigne | null => {
+  const ligne = (): NouvelleEntree | null => {
     if (erreurs.quantite || erreurs.nom || erreurs.valeurs) return null;
-    if (aliment && apercu) {
-      return { ...apercu, date_repas: date, moment, aliment_id: aliment.id, nom: aliment.nom, quantite_g: grammes as number, source: 'aliment' };
-    }
+    const commun = { date_entree: date, moment_journee: moment, quantite_g: grammes as number, heure: new Date().toISOString(), source_saisie: 'manuel' as const };
+    if (aliment) return { ...commun, aliment_id: aliment.id };
     if (!libre) return null;
     const n = (v: string) => lireNombre(v) ?? 0;
     return {
-      date_repas: date,
-      moment,
+      ...commun,
       aliment_id: null,
-      nom: champs.nom.trim().slice(0, 120),
-      quantite_g: grammes as number,
-      calories: Math.round(n(champs.calories)),
-      proteines_g: n(champs.proteines),
-      glucides_g: n(champs.glucides),
-      lipides_g: n(champs.lipides),
-      fibres_g: 0,
-      sucres_g: 0,
-      micros: {},
-      source: 'saisie_libre',
+      nom_libre: champs.nom.trim().slice(0, 120),
+      calories: n(champs.calories),
+      proteines: n(champs.proteines),
+      glucides: n(champs.glucides),
+      lipides: n(champs.lipides),
     };
   };
 
@@ -109,7 +99,6 @@ export function useAjoutAliment(params: { date?: string; moment?: string }) {
     setMoment,
     champs,
     modifierChamps: (c: Partial<ChampsLibres>) => setChamps((x) => ({ ...x, ...c })),
-    apercu,
     erreurs: tente ? erreurs : { quantite: false, nom: false, valeurs: false },
     enregistrer,
     enCours: ajouter.isPending,
