@@ -11,6 +11,8 @@ export const REPONSES_RAPIDES: { code: CodeReponseRapide; sante: boolean }[] = [
   { code: 'douleur', sante: true },
 ];
 
-export function reponsesRapidesVisibles(consentementSante: boolean): CodeReponseRapide[] {
+/** Sur l'objectif principal, la seule réponse rapide utile : demander des étapes intermédiaires. */
+export function reponsesRapidesVisibles(consentementSante: boolean, surObjectif = false): CodeReponseRapide[] {
+  if (surObjectif) return ['etapes_objectif'];
   return REPONSES_RAPIDES.filter((r) => consentementSante || !r.sante).map((r) => r.code);
 }

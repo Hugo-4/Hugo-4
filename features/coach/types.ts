@@ -52,13 +52,15 @@ export type CreditsCoach = {
 };
 
 /** Réponses rapides : un code stable pour le serveur, en plus du texte affiché dans la langue de l'app. */
-export type CodeReponseRapide = 'duree_30' | 'sans_salle' | 'decaler_demain' | 'douleur';
+export type CodeReponseRapide = 'duree_30' | 'sans_salle' | 'decaler_demain' | 'douleur' | 'etapes_objectif';
 
-/** Contexte envoyé avec le message quand le Coach est ouvert depuis une séance ou un exercice. */
-export type ContexteMessage = {
-  programme_seance_id: string;
-  exercice_slug?: string;
-};
+/**
+ * Contexte envoyé avec le message : une séance (et un exercice), ou l'objectif principal (`sujet: 'objectif'` :
+ * le coach propose des étapes intermédiaires, enregistrées dans `sous_objectifs` au statut « propose »).
+ */
+export type ContexteMessage =
+  | { programme_seance_id: string; exercice_slug?: string }
+  | { sujet: 'objectif'; evenement_id?: string };
 
 /** Message à envoyer. `id_client` (généré sur le téléphone) part en `Idempotency-Key`, pas dans le corps. */
 export type DemandeMessage = {

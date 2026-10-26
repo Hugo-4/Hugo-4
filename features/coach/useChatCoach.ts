@@ -33,7 +33,7 @@ export function useChatCoach() {
     vide: messages.length === 0 && envoi.enAttente.length === 0 && !envoi.enCours,
     urgence: dernierCoach?.urgence === true,
     credits: credits.data,
-    reponsesRapides: reponsesRapidesVisibles(consentement.data === true),
+    reponsesRapides: reponsesRapidesVisibles(consentement.data === true, contexte?.type === 'objectif'),
     ...envoi,
   };
 }

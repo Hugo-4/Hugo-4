@@ -1,13 +1,13 @@
 import { sport, test } from '../destinations';
 import type { FormatTest, Question, SportSlug } from '../types';
 
-type DefinitionTest = { type: string; exercice?: string; format: FormatTest; unite: string };
+export type DefinitionTest = { type: string; exercice?: string; format: FormatTest; unite: string };
 
 /**
  * Valeurs clés (TC100 à TC103 et blocs de sport) : types de `types_tests`, exercices du catalogue (slug).
  * Une valeur de test est envoyée à `POST /tests` ; le serveur garde la méthode (testée ou déclarée).
  */
-const TESTS: Record<string, DefinitionTest> = {
+export const TESTS: Record<string, DefinitionTest> = {
   '1rm_squat': { type: '1rm', exercice: 'muscu_squat_barre', format: 'charge', unite: 'kg' },
   '1rm_couche': { type: '1rm', exercice: 'muscu_developpe_couche_barre', format: 'charge', unite: 'kg' },
   '1rm_terre': { type: '1rm', exercice: 'muscu_souleve_de_terre', format: 'charge', unite: 'kg' },
@@ -44,7 +44,7 @@ const COURSE = ['temps_5km', 'temps_10km', 'temps_semi', 'temps_marathon', 'vma'
 const COMBAT = ['vma', 'cooper', 'fc_repos', 'fc_max', 'cmj', 'sprint_10m', 't_test', 'gainage_max', 'pompes_max', 'tractions_max'];
 
 /** Valeurs demandées par sport, dans l'ordre (validé le 26/10/2026 : la boxe commence par le cardio). */
-const VALEURS_PAR_SPORT: Record<SportSlug, string[]> = {
+export const VALEURS_PAR_SPORT: Record<SportSlug, string[]> = {
   musculation: ['1rm_squat', '1rm_couche', '1rm_terre', '1rm_militaire', '1rm_rowing', 'tractions_max', 'pompes_max'],
   course_a_pied: COURSE,
   trail: COURSE,

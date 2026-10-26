@@ -15,7 +15,7 @@ export type ReponseFictive = {
   urgence?: boolean;
 };
 
-type CleReponse = 'duree_30' | 'sans_salle' | 'decaler_demain' | 'douleur' | 'urgence' | 'remplacer' | 'defaut';
+type CleReponse = 'duree_30' | 'sans_salle' | 'decaler_demain' | 'douleur' | 'etapes_objectif' | 'urgence' | 'remplacer' | 'defaut';
 
 const REPONSES: Record<CleReponse, ReponseFictive> = {
   urgence: {
@@ -70,6 +70,12 @@ const REPONSES: Record<CleReponse, ReponseFictive> = {
       en: 'I would rather understand before changing your session. Where exactly does it hurt, and how much out of 10? Did it start during exercise or gradually?',
     },
   },
+  etapes_objectif: {
+    texte: {
+      fr: "Je te propose trois étapes, réparties d'ici ta compétition : chacune est un repère mesurable. Tu les retrouves dans Programme : accepte-les, modifie-les ou refuse-les.",
+      en: 'Here are three milestones spread out until your competition, each one measurable. You will find them in Plan: accept, edit or decline them.',
+    },
+  },
   remplacer: {
     texte: {
       fr: 'Je peux remplacer cet exercice par une variante qui travaille les mêmes muscles. Dis-moi ce qui te gêne : matériel occupé, douleur, ou simplement envie de changer ?',
@@ -99,7 +105,9 @@ export function choisirReponse(demande: DemandeMessage): ReponseFictive {
   if (demande.reponse_rapide) return REPONSES[demande.reponse_rapide];
   const trouvee = MOTS.find(([, motif]) => motif.test(demande.texte));
   if (trouvee) return REPONSES[trouvee[0]];
-  return demande.contexte?.exercice_slug ? REPONSES.remplacer : REPONSES.defaut;
+  const contexte = demande.contexte;
+  if (contexte && 'sujet' in contexte) return REPONSES.etapes_objectif;
+  return contexte && 'exercice_slug' in contexte && contexte.exercice_slug ? REPONSES.remplacer : REPONSES.defaut;
 }
 
 /** Messages d'erreur fictifs, au format `{ erreur }` du serveur. */
@@ -109,3 +117,6 @@ export const ERREURS_FICTIVES = {
   dejaTraitee: { fr: 'Cette proposition a déjà reçu une réponse.', en: 'This proposal has already been answered.' },
   delaiPasse: { fr: 'Le délai pour annuler est passé.', en: 'The time to undo has passed.' },
 } satisfies Record<string, Bilingue>;
+
+/** Réponse à « Propose-moi des étapes » : la source fictive enregistre aussi les étapes proposées. */
+export const REPONSE_ETAPES = REPONSES.etapes_objectif;

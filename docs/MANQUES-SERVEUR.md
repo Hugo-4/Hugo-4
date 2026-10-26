@@ -22,6 +22,7 @@ passer à `false` est indiquée pour chaque route.
 | 5 | `GET /progres/records`, `/progres/niveaux`, `/progres/charge`, `/progres/regularite`, `/progres/ligues` (+ rejoindre / quitter) | Progrès | `PROGRES_FICTIF` (features/progres/source.ts) |
 | 6 | `GET /credits` (Coach et Profil), `POST/GET /compte/export`, `POST /compte/suppression`, `GET/PATCH /preferences/nutrition`, `GET /notifications/centre` (+ lu, tout lu), `GET /sante` (facultatif) | Profil, Notifications, Coach | `PARAMETRES_FICTIF` (features/parametres/source.ts), `NOTIFICATIONS_FICTIF` (features/notifications/source.ts) |
 | 7 | Aucune route : lire les réponses du questionnaire complet (`tests_athlete`, `profil_specifique`, préférences, `signaux_effort`) et ne plus inventer de charge ; `POST /tests` avec charge × répétitions (souhaité) | Questionnaire, toutes les séances | — |
+| 8 | `POST /coach/messages` avec `contexte: { sujet: "objectif" }` : le coach insère des étapes « proposées » dans `sous_objectifs` ; le programme lit les étapes actives | Programme (Mon objectif), Coach | `COACH_FICTIF` (le mode démonstration insère 3 étapes) |
 
 ## 0. Sécurité à corriger avant tout
 
@@ -1005,3 +1006,27 @@ connues par `POST /tests` (route existante). Tables et colonnes : migration `que
     `medicaments` (`["traitement_declare"]`), `pathologies_chroniques`, `allergies`.
 - **Recalcul.** Après un bloc terminé (lignes `questions_posees` avec `repondue_le` récent), réajuster les
   séances à venir et le dire à l'athlète (adaptation visible, comme pour le check-in).
+
+## 8. Objectif principal et étapes intermédiaires (étape 12)
+
+Table `sous_objectifs` (migration `sous_objectifs_etape_12`, `docs/migrations/2026-10-26-sous-objectifs.sql`) :
+l'app lit, crée, modifie et supprime les étapes de l'athlète en direct (RLS). Colonnes utiles : `titre`, `type`
+(`competition`, `performance`, `volume`, `technique`, `autre`), `indicateur` (slug de `types_tests`) +
+`exercice_slug`, `valeur_depart`, `valeur_cible`, `unite`, `progression_hebdo_pct`, `date_cible`, `statut`
+(`propose`, `actif`, `atteint`, `abandonne`), `origine` (`athlete`, `coach`), `raison`, `evenement_id` (compétition A).
+
+### `POST /coach/messages` avec le contexte « objectif »
+- L'app envoie `contexte: { "sujet": "objectif", "evenement_id": "uuid" }` (et `reponse_rapide: "etapes_objectif"`
+  quand l'athlète touche « Propose-moi des étapes vers mon objectif »).
+- Le coach construit 2 à 5 étapes datées et mesurables entre aujourd'hui et la date de l'objectif, à partir des
+  tests (`tests_athlete`), du niveau, des disponibilités et de la doctrine (progression réaliste par semaine), puis
+  les **insère** dans `sous_objectifs` avec `statut: "propose"`, `origine: "coach"` et une `raison` courte dans la
+  langue de l'athlète. Réponse : le message habituel (§3) qui les annonce.
+- L'athlète accepte (`statut` → `actif`), modifie ou refuse (ligne supprimée) dans Programme.
+- Demandé aussi : vérifier qu'une étape saisie par l'athlète est réaliste (ex. `progression_hebdo_pct` trop élevé)
+  et le dire dans le chat ou en adaptation, sans la modifier sans accord.
+
+### Génération et adaptation du programme
+- Lire les étapes `actif` : placer une séance de test ou une simulation à l'approche de chaque `date_cible`,
+  orienter les blocs vers l'indicateur suivi.
+- Quand une valeur de test atteint `valeur_cible`, proposer de marquer l'étape `atteint` (notification).

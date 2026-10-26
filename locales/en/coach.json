@@ -31,7 +31,8 @@
     "duree_30": "I only have 30 min",
     "sans_salle": "No gym today",
     "decaler_demain": "Move to tomorrow",
-    "douleur": "Something hurts"
+    "douleur": "Something hurts",
+    "etapes_objectif": "Suggest milestones towards my goal"
   },
   "saisie": {
     "placeholder": "Write to the coach…",

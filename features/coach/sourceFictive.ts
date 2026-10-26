@@ -3,7 +3,8 @@ import { onlineManager } from '@tanstack/react-query';
 import { ApiError } from '@/lib/api';
 import i18n from '@/lib/i18n';
 
-import { choisirReponse, ERREURS_FICTIVES, type Bilingue, type ReponseFictive } from './fictif/reponsesFictives';
+import { proposerEtapesFictives } from './fictif/etapesFictives';
+import { choisirReponse, ERREURS_FICTIVES, REPONSE_ETAPES, type Bilingue, type ReponseFictive } from './fictif/reponsesFictives';
 import type { SourceCoach } from './source';
 import type { CreditsCoach, MessageConversation, PropositionCoach, ReponseMessage, ReponseProposition } from './types';
 
@@ -90,6 +91,8 @@ export const sourceFictive: SourceCoach = {
 
     const reponse = choisirReponse(demande);
     const texte = langue(reponse.texte);
+    // Sur l'objectif : comme le ferait le serveur, des étapes sont enregistrées « proposées par le coach ».
+    if (reponse === REPONSE_ETAPES) await proposerEtapesFictives(demande);
     await attendre(900); // « Le coach réfléchit… »
     if (surFragment) {
       const mots = texte.split(' ');

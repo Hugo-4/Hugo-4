@@ -2,11 +2,13 @@ import { router } from 'expo-router';
 
 /**
  * Contexte transmis au Coach quand on l'ouvre depuis une séance (FRONTEND.md §3.3) :
- * « Modifier avec le coach » (séance du jour) ou « Remplacer » (exercice en séance).
+ * « Modifier avec le coach » (séance du jour), « Remplacer » (exercice en séance) ou les étapes de l'objectif.
  */
 export type ContexteCoach =
   | { type: 'seance'; programmeSeanceId: string; titre: string }
-  | { type: 'exercice'; programmeSeanceId: string; exerciceSlug: string; nom: string };
+  | { type: 'exercice'; programmeSeanceId: string; exerciceSlug: string; nom: string }
+  /** « Construire avec le coach » les étapes vers l'objectif principal (Programme, étape 12). */
+  | { type: 'objectif'; titre: string; evenementId: string | null };
 
 /** Paramètres de route : le contexte voyage en JSON dans `contexte`. */
 export function ouvrirCoach(contexte?: ContexteCoach) {
@@ -22,7 +24,7 @@ export function lireContexte(brut: string | string[] | undefined): ContexteCoach
   if (typeof brut !== 'string') return null;
   try {
     const c = JSON.parse(brut) as ContexteCoach;
-    return c && (c.type === 'seance' || c.type === 'exercice') ? c : null;
+    return c && (c.type === 'seance' || c.type === 'exercice' || c.type === 'objectif') ? c : null;
   } catch {
     return null;
   }

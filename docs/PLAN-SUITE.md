@@ -32,7 +32,7 @@ les allures. Une séance « à RPE 9 » ou « à 80 % » ne veut rien dire sans 
 - Côté base : colonnes existantes de `user_profiles` (à vérifier : `poids_kg`, `taille_cm`…), historique du poids
   si on veut une courbe.
 
-## Étape 12 — Objectif principal et sous-objectifs construits avec le coach
+## Étape 12 — Objectif principal et sous-objectifs construits avec le coach — FAITE (Programme → Mon objectif)
 
 - Un objectif principal (ex. « Jeux olympiques dans 4 ans et 7 mois ») et des étapes intermédiaires datées
   (ex. « marathon en 3 h », « +15 % de charge en 12 semaines »), affichées comme une frise dans Programme.

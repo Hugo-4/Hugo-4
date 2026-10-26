@@ -31,7 +31,8 @@
     "duree_30": "Je n'ai que 30 min",
     "sans_salle": "Pas de salle aujourd'hui",
     "decaler_demain": "Décaler à demain",
-    "douleur": "J'ai mal quelque part"
+    "douleur": "J'ai mal quelque part",
+    "etapes_objectif": "Propose-moi des étapes vers mon objectif"
   },
   "saisie": {
     "placeholder": "Écris au coach…",
