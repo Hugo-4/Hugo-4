@@ -1,5 +1,6 @@
 import en from './en.json';
 import enCoach from './en/coach.json';
+import enCorps from './en/corps.json';
 import enNotifications from './en/notifications.json';
 import enParametres from './en/parametres.json';
 import enProgramme from './en/programme.json';
@@ -7,6 +8,7 @@ import enProgres from './en/progres.json';
 import enQuestionnaire from './en/questionnaire.json';
 import fr from './fr.json';
 import frCoach from './fr/coach.json';
+import frCorps from './fr/corps.json';
 import frNotifications from './fr/notifications.json';
 import frParametres from './fr/parametres.json';
 import frProgramme from './fr/programme.json';
@@ -25,6 +27,7 @@ export const traductionsFr = {
   parametres: frParametres,
   notifications: frNotifications,
   questionnaire: frQuestionnaire,
+  corps: frCorps,
 };
 
 export type Traductions = typeof traductionsFr;
@@ -38,4 +41,5 @@ export const traductionsEn: Traductions = {
   parametres: enParametres,
   notifications: enNotifications,
   questionnaire: enQuestionnaire,
+  corps: enCorps,
 };

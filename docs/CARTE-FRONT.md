@@ -42,6 +42,7 @@ Ajoutées par les fondations (squelettes à remplir) et déclarées dans `compon
 | `progres/[vue]` | détail Progrès (`tests`, `charge`, `records`, `niveaux`, `regularite`) | 8 |
 | `compte/objectifs`, `compte/disponibilites`, `compte/lieux`, `compte/abonnement`, `compte/appareils`, `compte/preferences`, `compte/sante`, `compte/memoire`, `compte/donnees` | sous-pages du Profil (FRONTEND §4.7 ; dossier `compte/` existant plutôt que `profil/` pour ne pas entrer en conflit avec l'onglet `/profil`) | 9 |
 | `notifications` | liste des notifications | finitions |
+| `compte/corps` | Mon corps : taille, poids (`POST /poids`, historique `GET /poids`), quotidien, mesures plus poussées (tests) | 11 |
 | `questionnaire/index`, `questionnaire/[bloc]` | Finir mon inscription : blocs du questionnaire complet ; `[bloc]` = `valeurs-1`… ou une section entière (`corps`, `valeurs`) depuis le Profil | 10 |
 | `coach-seance` | le Coach en modale par-dessus une séance en cours (« Remplacer avec le coach ») : le retour ramène à la séance | corrections |
 

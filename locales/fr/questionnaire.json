@@ -488,7 +488,9 @@
     "gainage_max": "Gainage frontal maximal",
     "grip": "Force de préhension",
     "mobilite_cheville": "Mobilité de cheville (genou au mur)",
-    "sit_and_reach": "Souplesse (sit and reach)"
+    "sit_and_reach": "Souplesse (sit and reach)",
+    "masse_grasse": "Masse grasse",
+    "tour_taille": "Tour de taille"
   },
   "unites": {
     "cm": "cm",

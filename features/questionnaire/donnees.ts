@@ -75,6 +75,8 @@ function lireDestination(d: Destination, donnees: DonneesQuestionnaire): unknown
       return (donnees.sante?.[d.colonne] as Ligne | null | undefined)?.[d.cle];
     case 'sport':
       return donnees.sportProfil?.profil_specifique?.[d.cle];
+    case 'poids':
+      return donnees.profil?.poids_kg;
     case 'test':
       return undefined;
   }

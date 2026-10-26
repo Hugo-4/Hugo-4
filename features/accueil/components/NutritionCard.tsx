@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -27,7 +28,12 @@ export function NutritionCard() {
           <Button label={t('commun.reessayer')} variant="discret" onPress={() => requete.refetch()} />
         </View>
       ) : null}
-      {requete.data === null ? <AppText variant="secondaire">{t('accueil.nutrition.poidsInconnu')}</AppText> : null}
+      {requete.data === null ? (
+        <View style={styles.poids}>
+          <AppText variant="secondaire">{t('accueil.nutrition.poidsInconnu')}</AppText>
+          <Button label={t('corps.renseignerPoids')} variant="secondaire" onPress={() => router.push('/compte/corps')} />
+        </View>
+      ) : null}
       {requete.data ? (
         <>
           <View style={styles.valeurs}>
@@ -62,6 +68,7 @@ function Valeur({ libelle, valeur }: { libelle: string; valeur: string }) {
 
 const styles = StyleSheet.create({
   erreur: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  poids: { gap: spacing.m },
   valeurs: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.s },
   valeur: {
     flexGrow: 1,

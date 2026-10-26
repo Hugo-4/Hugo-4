@@ -29,6 +29,12 @@ export function useRepondre(sportProfilId: string | null) {
         queryClient.invalidateQueries({ queryKey: ['profil'] }),
         queryClient.invalidateQueries({ queryKey: ['parametres'] }),
         question.destination.kind === 'test' ? queryClient.invalidateQueries({ queryKey: ['progres'] }) : null,
+        question.destination.kind === 'poids'
+          ? Promise.all([
+              queryClient.invalidateQueries({ queryKey: ['corps'] }),
+              queryClient.invalidateQueries({ queryKey: ['nutrition'] }),
+            ])
+          : null,
       ]),
   });
 }

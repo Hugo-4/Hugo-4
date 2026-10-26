@@ -57,6 +57,10 @@ export async function ecrireReponse(q: Question, valeur: ValeurReponse, userId: 
   switch (d.kind) {
     case 'test':
       return envoyerTest(d.type, d.exercice, valeur as ReponseTest);
+    case 'poids':
+      // Comme une pesée : l'historique et la tendance restent justes (plan nutrition du jour).
+      await api.post('/poids', { poids_kg: valeur });
+      return;
     case 'profil':
       return verifier(await supabase.from('user_profiles').update({ [d.colonne]: d.versBase ? d.versBase(valeur) : valeur }).eq('user_id', userId));
     case 'profilJson':

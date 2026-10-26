@@ -24,7 +24,7 @@ les allures. Une séance « à RPE 9 » ou « à 80 % » ne veut rien dire sans 
   « avancement du questionnaire » par athlète (bloc fait / pas fait) est à créer. Le générateur de séances doit
   refuser d'inventer une charge sans maximum connu (demander plutôt un test ou une séance de calibration).
 
-## Étape 11 — Profil physique accessible
+## Étape 11 — Profil physique accessible — FAITE (Profil → Mon corps, `app/compte/corps.tsx`)
 
 - Carte « Mon corps » en haut du Profil et accès direct depuis Aujourd'hui : poids, taille (rapide), puis section
   avancée : fréquence cardiaque de repos, sommeil moyen, masse grasse si connue…

@@ -59,6 +59,8 @@ export type Destination =
   | { kind: 'tableJson'; table: 'sante_athlete'; colonne: 'signaux_effort'; cle: string }
   /** Clé de `user_sport_profiles.profil_specifique` du sport principal. */
   | { kind: 'sport'; cle: string }
+  /** Poids : `POST /poids` (historique des pesées + `user_profiles.poids_kg`). */
+  | { kind: 'poids' }
   /** Valeur connue : `POST /tests` (type de `types_tests`, exercice si le test en demande un). */
   | { kind: 'test'; type: string; exercice?: string };
 

@@ -28,7 +28,7 @@ export const CORPS: Question[] = [
     nombre: { min: 30, max: 250, unite: 'kg', decimal: true },
     // Jamais avant 18 ans, sauf sport à catégorie de poids (questionnaire, règle 3).
     si: (c) => c.age !== null && (c.age >= 18 || SPORTS_CATEGORIE_POIDS.includes(c.sport ?? '')),
-    destination: profil('poids_kg'),
+    destination: { kind: 'poids' },
   },
   { id: 'TC11', section: 'corps', type: 'unique', options: ['droitier', 'gaucher', 'ambidextre'], destination: profil('lateralite') },
   {

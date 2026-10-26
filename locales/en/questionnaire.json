@@ -488,7 +488,9 @@
     "gainage_max": "Max front plank",
     "grip": "Grip strength",
     "mobilite_cheville": "Ankle mobility (knee to wall)",
-    "sit_and_reach": "Flexibility (sit and reach)"
+    "sit_and_reach": "Flexibility (sit and reach)",
+    "masse_grasse": "Body fat",
+    "tour_taille": "Waist circumference"
   },
   "unites": {
     "cm": "cm",
