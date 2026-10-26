@@ -8,10 +8,10 @@ import { formatQuantite } from '../format';
 import type { Aliment } from '../types';
 
 /** Valeurs de la base pour 100 g, telles quelles : la base calcule la portion à l'enregistrement. */
-export function ApercuNutriments({ aliment }: { aliment: Aliment }) {
+export function ApercuNutriments({ aliment, calories }: { aliment: Aliment; calories: boolean }) {
   const { t } = useTranslation();
   const valeurs = [
-    { cle: 'calories', libelle: t('nutrition.calories'), valeur: aliment.calories_100g, unite: t('nutrition.kcal') },
+    ...(calories ? [{ cle: 'calories', libelle: t('nutrition.calories'), valeur: aliment.calories_100g, unite: t('nutrition.kcal') }] : []),
     { cle: 'proteines', libelle: t('nutrition.proteines'), valeur: aliment.proteines_100g, unite: t('nutrition.g') },
     { cle: 'glucides', libelle: t('nutrition.glucides'), valeur: aliment.glucides_100g, unite: t('nutrition.g') },
     { cle: 'lipides', libelle: t('nutrition.lipides'), valeur: aliment.lipides_100g, unite: t('nutrition.g') },

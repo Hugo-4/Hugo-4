@@ -19,10 +19,11 @@ type Props = {
   resultats: UseQueryResult<Aliment[]>;
   onChoisir: (aliment: Aliment) => void;
   onSaisirALaMain: () => void;
+  calories: boolean;
 };
 
 /** Recherche dans la base d'aliments ; un aliment absent peut être saisi à la main. */
-export function ListeAliments({ recherche, onRecherche, resultats, onChoisir, onSaisirALaMain }: Props) {
+export function ListeAliments({ recherche, onRecherche, resultats, onChoisir, onSaisirALaMain, calories }: Props) {
   const { t } = useTranslation();
   const liste = resultats.data ?? [];
   return (
@@ -42,7 +43,15 @@ export function ListeAliments({ recherche, onRecherche, resultats, onChoisir, on
         <LigneListe
           key={a.id}
           titre={a.nom}
-          sousTitre={t('nutrition.ajout.pour100', { kcal: formatQuantite(Number(a.calories_100g ?? 0)) })}
+          sousTitre={
+            calories
+              ? t('nutrition.ajout.pour100', { kcal: formatQuantite(Number(a.calories_100g ?? 0)) })
+              : t('nutrition.ajout.pour100SansCalories', {
+                  p: formatQuantite(Number(a.proteines_100g ?? 0)),
+                  g: formatQuantite(Number(a.glucides_100g ?? 0)),
+                  l: formatQuantite(Number(a.lipides_100g ?? 0)),
+                })
+          }
           onPress={() => onChoisir(a)}
         />
       ))}

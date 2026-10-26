@@ -78,7 +78,7 @@ export type NouvelleEntree = {
   source_saisie: 'manuel';
 } & (
   | { aliment_id: string }
-  | { aliment_id: null; nom_libre: string; calories: number; proteines: number; glucides: number; lipides: number }
+  | { aliment_id: null; nom_libre: string; calories?: number; proteines: number; glucides: number; lipides: number }
 );
 
 /** Totaux du jour (`journal_nutrition`), tenus à jour par la base. */

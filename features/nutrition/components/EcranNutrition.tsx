@@ -12,11 +12,13 @@ import { ErreurEnregistrement } from '@/features/inscription/components/ErreurEn
 import { useEnLigne } from '@/lib/useEnLigne';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
+import { useAffichageCalories } from '../useAffichageCalories';
 import { useNutrition } from '../useNutrition';
 import { CarteEquilibre } from './CarteEquilibre';
 import { CarteMicros } from './CarteMicros';
 import { CarteObjectifsJour } from './CarteObjectifsJour';
 import { CarteRepas } from './CarteRepas';
+import { CarteReperesAssiette } from './CarteReperesAssiette';
 import { CarteTiming } from './CarteTiming';
 import { SelecteurJour } from './SelecteurJour';
 
@@ -25,6 +27,8 @@ export function EcranNutrition() {
   const { t } = useTranslation();
   const enLigne = useEnLigne();
   const n = useNutrition();
+  // Avant 18 ans, calories masquées par défaut (Profil > Préférences > Nutrition).
+  const { afficher: calories } = useAffichageCalories();
   const rafraichir = () => {
     n.journal.refetch();
     n.totauxJour.refetch();
@@ -62,11 +66,12 @@ export function EcranNutrition() {
         <ScrollView
           contentContainerStyle={styles.contenu}
           refreshControl={<RefreshControl refreshing={n.journal.isRefetching} onRefresh={rafraichir} tintColor={colors.accent} />}>
-          <CarteObjectifsJour total={n.total} objectifs={n.objectifs.data} plan={n.plan} />
+          <CarteObjectifsJour calories={calories} total={n.total} objectifs={n.objectifs.data} plan={n.plan} />
           {n.plan?.data ? <CarteTiming plan={n.plan.data} groupes={n.groupes} /> : null}
           {n.actions.supprimer.error ? <ErreurEnregistrement erreur={n.actions.supprimer.error} /> : null}
-          <CarteRepas date={n.date} groupes={n.groupes} onRetirer={n.retirer} desactive={!enLigne || n.actions.supprimer.isPending} />
+          <CarteRepas calories={calories} date={n.date} groupes={n.groupes} onRetirer={n.retirer} desactive={!enLigne || n.actions.supprimer.isPending} />
           <CarteEquilibre total={n.total} parts={n.equilibre} />
+          {calories ? null : <CarteReperesAssiette />}
           <CarteMicros micros={n.micros} surveilles={n.objectifs.data?.micronutriments_surveilles ?? null} />
         </ScrollView>
       </EtatsEcran>

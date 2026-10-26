@@ -58,7 +58,9 @@
     "detail": "{{quantite}} g · {{kcal}} kcal · P {{p}} · C {{g}} · F {{l}}",
     "retirer": "Remove {{nom}}",
     "retirerTitre": "Remove this food?",
-    "retirerConfirmer": "Remove"
+    "retirerConfirmer": "Remove",
+    "totalMomentSansCalories": "P {{p}} g · C {{g}} g",
+    "detailSansCalories": "{{quantite}} g · P {{p}} · C {{g}} · F {{l}}"
   },
   "equilibre": {
     "titre": "Balance",
@@ -109,6 +111,15 @@
     "erreurQuantite": "Enter a quantity between 1 and 3,000 g.",
     "moment": "Meal",
     "enregistrer": "Save",
-    "pour100g": "Values per 100 g (the portion is calculated when you save)"
+    "pour100g": "Values per 100 g (the portion is calculated when you save)",
+    "pour100SansCalories": "Per 100 g: P {{p}} g · C {{g}} g · F {{l}} g"
+  },
+  "resumeAccueilSansCalories": "Logged today: protein {{p}} g · carbs {{g}} g",
+  "assiette": {
+    "titre": "Plate guide",
+    "legumes": "Half the plate: vegetables and fruit.",
+    "feculents": "A quarter: starchy foods (pasta, rice, bread, potatoes), a bit more on training days.",
+    "proteines": "A quarter: protein (meat, fish, eggs, pulses, dairy).",
+    "eau": "Water with every meal and around sessions."
   }
 }

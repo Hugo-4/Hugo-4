@@ -58,7 +58,9 @@
     "detail": "{{quantite}} g · {{kcal}} kcal · P {{p}} · G {{g}} · L {{l}}",
     "retirer": "Retirer {{nom}}",
     "retirerTitre": "Retirer cet aliment ?",
-    "retirerConfirmer": "Retirer"
+    "retirerConfirmer": "Retirer",
+    "totalMomentSansCalories": "P {{p}} g · G {{g}} g",
+    "detailSansCalories": "{{quantite}} g · P {{p}} · G {{g}} · L {{l}}"
   },
   "equilibre": {
     "titre": "Équilibre",
@@ -109,6 +111,15 @@
     "erreurQuantite": "Indique une quantité entre 1 et 3 000 g.",
     "moment": "Moment",
     "enregistrer": "Enregistrer",
-    "pour100g": "Valeurs pour 100 g (la portion est calculée à l'enregistrement)"
+    "pour100g": "Valeurs pour 100 g (la portion est calculée à l'enregistrement)",
+    "pour100SansCalories": "Pour 100 g : P {{p}} g · G {{g}} g · L {{l}} g"
+  },
+  "resumeAccueilSansCalories": "Noté aujourd'hui : protéines {{p}} g · glucides {{g}} g",
+  "assiette": {
+    "titre": "Repères d'assiette",
+    "legumes": "La moitié de l'assiette : légumes et fruits.",
+    "feculents": "Un quart : féculents (pâtes, riz, pain, pommes de terre), un peu plus les jours d'entraînement.",
+    "proteines": "Un quart : protéines (viande, poisson, œufs, légumineuses, laitages).",
+    "eau": "De l'eau à chaque repas et autour des séances."
   }
 }

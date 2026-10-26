@@ -18,6 +18,8 @@ const NIVEAUX = ['repos', 'leger', 'modere', 'eleve', 'tres_eleve'] as const;
 type Niveau = (typeof NIVEAUX)[number];
 
 type Props = {
+  /** Calories affichées (masquées par défaut avant 18 ans). */
+  calories: boolean;
   /** Totaux du jour (`journal_nutrition`). */
   total: TotauxJour;
   objectifs: ObjectifsNutritionnels | null | undefined;
@@ -29,7 +31,7 @@ type Props = {
  * Ce qui est noté face aux cibles du coach : glucides et protéines du plan de la séance du jour,
  * sinon des objectifs nutritionnels ; calories, lipides et fibres des objectifs quand le serveur les a fixés.
  */
-export function CarteObjectifsJour({ total, objectifs, plan }: Props) {
+export function CarteObjectifsJour({ calories, total, objectifs, plan }: Props) {
   const { t } = useTranslation();
   const n = plan?.data?.nutrition;
   const aucuneCible = !n && !objectifs;
@@ -39,7 +41,9 @@ export function CarteObjectifsJour({ total, objectifs, plan }: Props) {
     <Card>
       <AppText variant="surTitre">{t('nutrition.objectifs.titre')}</AppText>
       {plan?.isPending ? <Skeleton hauteur={sizes.cibleTactile} /> : null}
-      <LigneObjectif libelle={t('nutrition.calories')} consomme={total.calories} unite={t('nutrition.kcal')} cible={objectifs?.calories_cibles ?? null} />
+      {calories ? (
+        <LigneObjectif libelle={t('nutrition.calories')} consomme={total.calories} unite={t('nutrition.kcal')} cible={objectifs?.calories_cibles ?? null} />
+      ) : null}
       <LigneObjectif libelle={t('nutrition.proteines')} consomme={total.proteines} unite={t('nutrition.g')} cible={n?.proteines_jour_g ?? objectifs?.proteines_g ?? null} />
       <LigneObjectif libelle={t('nutrition.glucides')} consomme={total.glucides} unite={t('nutrition.g')} cible={n?.glucides_jour_g ?? objectifs?.glucides_g ?? null} />
       <LigneObjectif libelle={t('nutrition.lipides')} consomme={total.lipides} unite={t('nutrition.g')} cible={objectifs?.lipides_g ?? null} />

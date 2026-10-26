@@ -5,8 +5,10 @@ import { AppText } from '@/components/AppText';
 import { Bandeau } from '@/components/Bandeau';
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
+import { Interrupteur } from '@/components/Interrupteur';
 import { ErreurEnregistrement } from '@/features/inscription/components/ErreurEnregistrement';
 import { GroupeChoix } from '@/features/inscription/components/GroupeChoix';
+import { useAffichageCalories, useModifierAffichageCalories } from '@/features/nutrition/useAffichageCalories';
 import { SectionProfil } from '@/features/profil/components/SectionProfil';
 
 import { ALLERGIES, REGIMES, REPAS_PAR_JOUR } from '../constantes';
@@ -14,15 +16,30 @@ import { PARAMETRES_FICTIF } from '../source';
 import { useModifierNutrition, useNutrition } from '../useNutrition';
 import { EtatSection } from './EtatSection';
 
-/** Nutrition : alimentation, repas par jour, allergies (données de santé, seulement avec consentement). */
+/**
+ * Nutrition : afficher les calories (`preferences_entrainement.afficher_calories`), alimentation, repas par jour,
+ * allergies (données de santé, seulement avec consentement).
+ */
 export function SectionNutrition() {
   const { t } = useTranslation();
   const { requete, donnees, avecSante } = useNutrition();
   const modification = useModifierNutrition();
   const allergies = donnees?.allergies ?? [];
+  const calories = useAffichageCalories();
+  const modifierCalories = useModifierAffichageCalories();
 
   return (
     <SectionProfil titre={t('parametres.preferences.nutrition')}>
+      {calories.requete.data ? (
+        <Interrupteur
+          libelle={t('parametres.preferences.afficherCalories')}
+          aide={t('parametres.preferences.afficherCaloriesAide')}
+          valeur={calories.afficher}
+          onChange={(v) => modifierCalories.mutate(v)}
+          desactive={modifierCalories.isPending}
+        />
+      ) : null}
+      {modifierCalories.isError ? <ErreurEnregistrement erreur={modifierCalories.error} /> : null}
       {PARAMETRES_FICTIF ? <Bandeau texte={t('parametres.fictif')} /> : null}
       <EtatSection
         chargement={requete.isPending}

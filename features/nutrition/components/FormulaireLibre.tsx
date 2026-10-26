@@ -7,10 +7,10 @@ import { spacing } from '@/theme/tokens';
 
 import type { ChampsLibres } from '../useAjoutAliment';
 
-type Props = { champs: ChampsLibres; onModifier: (c: Partial<ChampsLibres>) => void; erreurs: { nom: boolean; valeurs: boolean } };
+type Props = { calories: boolean; champs: ChampsLibres; onModifier: (c: Partial<ChampsLibres>) => void; erreurs: { nom: boolean; valeurs: boolean } };
 
 /** Aliment absent de la base : nom, calories et macronutriments de la portion (facultatifs). */
-export function FormulaireLibre({ champs, onModifier, erreurs }: Props) {
+export function FormulaireLibre({ calories, champs, onModifier, erreurs }: Props) {
   const { t } = useTranslation();
   const nombre = (cle: 'calories' | 'proteines' | 'glucides' | 'lipides', libelle: string) => (
     <View style={styles.moitie}>
@@ -27,7 +27,7 @@ export function FormulaireLibre({ champs, onModifier, erreurs }: Props) {
         erreur={erreurs.nom ? t('nutrition.ajout.erreurNom') : undefined}
       />
       <View style={styles.grille}>
-        {nombre('calories', t('nutrition.ajout.caloriesPortion'))}
+        {calories ? nombre('calories', t('nutrition.ajout.caloriesPortion')) : null}
         {nombre('proteines', t('nutrition.ajout.proteinesPortion'))}
         {nombre('glucides', t('nutrition.ajout.glucidesPortion'))}
         {nombre('lipides', t('nutrition.ajout.lipidesPortion'))}

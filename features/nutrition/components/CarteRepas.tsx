@@ -12,13 +12,13 @@ import type { EntreeJournal, MomentRepas } from '../types';
 import type { GroupeRepas } from '../useNutrition';
 import { LigneAliment } from './LigneAliment';
 
-type Props = { date: string; groupes: GroupeRepas[]; onRetirer: (ligne: EntreeJournal) => void; desactive: boolean };
+type Props = { calories: boolean; date: string; groupes: GroupeRepas[]; onRetirer: (ligne: EntreeJournal) => void; desactive: boolean };
 
 const ajouter = (date: string, moment?: MomentRepas) =>
   router.push({ pathname: '/nutrition/ajouter', params: moment ? { date, moment } : { date } });
 
 /** Ce qui a été mangé ce jour, par moment, avec le total de chaque moment (répartition des protéines et glucides). */
-export function CarteRepas({ date, groupes, onRetirer, desactive }: Props) {
+export function CarteRepas({ calories, date, groupes, onRetirer, desactive }: Props) {
   const { t } = useTranslation();
   return (
     <Card>
@@ -29,7 +29,7 @@ export function CarteRepas({ date, groupes, onRetirer, desactive }: Props) {
           <View style={styles.entete}>
             <AppText variant="corpsGras">{t(`nutrition.moments.${groupe.moment}`)}</AppText>
             <AppText variant="libelle" color={colors.texte2}>
-              {t('nutrition.repas.totalMoment', {
+              {t(calories ? 'nutrition.repas.totalMoment' : 'nutrition.repas.totalMomentSansCalories', {
                 kcal: formatQuantite(groupe.total.calories),
                 p: formatQuantite(groupe.total.proteines),
                 g: formatQuantite(groupe.total.glucides),
@@ -37,7 +37,7 @@ export function CarteRepas({ date, groupes, onRetirer, desactive }: Props) {
             </AppText>
           </View>
           {groupe.lignes.map((ligne) => (
-            <LigneAliment key={ligne.id} ligne={ligne} onRetirer={() => onRetirer(ligne)} desactive={desactive} />
+            <LigneAliment key={ligne.id} calories={calories} ligne={ligne} onRetirer={() => onRetirer(ligne)} desactive={desactive} />
           ))}
           <Button label={t('nutrition.repas.ajouterIci')} variant="discret" onPress={() => ajouter(date, groupe.moment)} />
         </View>

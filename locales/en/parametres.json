@@ -220,7 +220,9 @@
     "debutCalme": "From",
     "finCalme": "Until",
     "langue": "Language",
-    "langueAide": "The app's and the coach's texts switch to this language."
+    "langueAide": "The app's and the coach's texts switch to this language.",
+    "afficherCalories": "Show calories",
+    "afficherCaloriesAide": "Hidden by default under 18: you then see protein, carbs and fat in grams and a plate guide."
   },
   "sante": {
     "titre": "Health",

@@ -8,6 +8,7 @@ import { Card } from '@/components/Card';
 import { Skeleton } from '@/components/Skeleton';
 import { dateDuJour } from '@/features/checkin/dateDuJour';
 import { formatQuantite } from '@/features/nutrition/format';
+import { useAffichageCalories } from '@/features/nutrition/useAffichageCalories';
 import { useTotauxJour } from '@/features/nutrition/useJournal';
 import { formatNombre } from '@/lib/format';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
@@ -21,6 +22,7 @@ export function NutritionCard() {
   const { t } = useTranslation();
   const requete = useNutritionJour();
   const totaux = useTotauxJour(dateDuJour());
+  const { afficher: calories } = useAffichageCalories();
   const note = totaux.data && totaux.data.calories + totaux.data.proteines + totaux.data.glucides > 0 ? totaux.data : null;
 
   return (
@@ -60,7 +62,7 @@ export function NutritionCard() {
       ) : null}
       {note ? (
         <AppText variant="secondaire">
-          {t('nutrition.resumeAccueil', { kcal: formatQuantite(note.calories), p: formatQuantite(note.proteines), g: formatQuantite(note.glucides) })}
+          {t(calories ? 'nutrition.resumeAccueil' : 'nutrition.resumeAccueilSansCalories', { kcal: formatQuantite(note.calories), p: formatQuantite(note.proteines), g: formatQuantite(note.glucides) })}
         </AppText>
       ) : null}
       <View style={styles.actions}>

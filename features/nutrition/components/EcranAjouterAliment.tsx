@@ -17,6 +17,7 @@ import { useEnLigne } from '@/lib/useEnLigne';
 import { spacing } from '@/theme/tokens';
 
 import { MOMENTS_REPAS } from '../types';
+import { useAffichageCalories } from '../useAffichageCalories';
 import { useAjoutAliment } from '../useAjoutAliment';
 import { ApercuNutriments } from './ApercuNutriments';
 import { FormulaireLibre } from './FormulaireLibre';
@@ -26,7 +27,8 @@ import { ListeAliments } from './ListeAliments';
 export function EcranAjouterAliment({ params }: { params: { date?: string; moment?: string } }) {
   const { t } = useTranslation();
   const enLigne = useEnLigne();
-  const a = useAjoutAliment(params);
+  const { afficher: calories } = useAffichageCalories();
+  const a = useAjoutAliment(params, calories);
   const formulaire = a.aliment !== null || a.libre;
 
   return (
@@ -41,6 +43,7 @@ export function EcranAjouterAliment({ params }: { params: { date?: string; momen
               resultats={a.resultats}
               onChoisir={a.choisir}
               onSaisirALaMain={a.saisirALaMain}
+              calories={calories}
             />
           ) : (
             <>
@@ -48,7 +51,7 @@ export function EcranAjouterAliment({ params }: { params: { date?: string; momen
                 <AppText variant="sousTitre">{a.aliment ? a.aliment.nom : t('nutrition.ajout.alimentLibre')}</AppText>
                 <Button label={t('nutrition.ajout.changer')} variant="discret" onPress={a.changer} />
               </Card>
-              {a.libre ? <FormulaireLibre champs={a.champs} onModifier={a.modifierChamps} erreurs={a.erreurs} /> : null}
+              {a.libre ? <FormulaireLibre calories={calories} champs={a.champs} onModifier={a.modifierChamps} erreurs={a.erreurs} /> : null}
               <TextField
                 label={t('nutrition.ajout.quantite')}
                 aide={a.aliment?.portion_standard_g ? t('nutrition.ajout.portion', { g: a.aliment.portion_standard_g }) : undefined}
@@ -57,7 +60,7 @@ export function EcranAjouterAliment({ params }: { params: { date?: string; momen
                 keyboardType="decimal-pad"
                 erreur={a.erreurs.quantite ? t('nutrition.ajout.erreurQuantite') : undefined}
               />
-              {a.aliment ? <ApercuNutriments aliment={a.aliment} /> : null}
+              {a.aliment ? <ApercuNutriments aliment={a.aliment} calories={calories} /> : null}
               <GroupePuces titre={t('nutrition.ajout.moment')}>
                 {MOMENTS_REPAS.map((m) => (
                   <Chip key={m} role="radio" label={t(`nutrition.moments.${m}`)} selectionne={a.moment === m} onPress={() => a.setMoment(m)} />

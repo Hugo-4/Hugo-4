@@ -1097,3 +1097,6 @@ Le coach peut ajouter à sa réponse des actions que l'app affiche en boutons so
    `user_profiles.poids_kg`) et pour tous les âges (TC10 sans « Je ne sais pas »). Le coach ne doit **jamais
    commenter le poids d'un mineur** (ni évolution, ni objectif, ni catégorie hors demande explicite) : il sert
    seulement au calcul des besoins. L'app ne l'affiche jamais en grand et, avant 18 ans, sans courbe ni moyenne.
+6. Calories et mineurs : l'app masque les calories avant 18 ans sauf choix contraire de l'athlète
+   (`user_profiles.preferences_entrainement.afficher_calories`, `false` par défaut avant 18 ans, `true` après).
+   Le coach doit suivre la même règle dans ses réponses (macronutriments en grammes, repères d'assiette).

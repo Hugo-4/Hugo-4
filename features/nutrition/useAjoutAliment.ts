@@ -20,7 +20,7 @@ const QUANTITE_MAX = 3000;
  * (nom, calories, macronutriments) pour un aliment absent de la base. Enregistré dans `journal_entrees` : pour un
  * aliment de la base, seuls l'aliment et la quantité partent, la base calcule les valeurs.
  */
-export function useAjoutAliment(params: { date?: string; moment?: string }) {
+export function useAjoutAliment(params: { date?: string; moment?: string }, calories: boolean) {
   const date = params.date && /^\d{4}-\d{2}-\d{2}$/.test(params.date) ? params.date : dateDuJour();
   const [recherche, setRecherche] = useState('');
   const [aliment, setAliment] = useState<Aliment | null>(null);
@@ -70,7 +70,8 @@ export function useAjoutAliment(params: { date?: string; moment?: string }) {
       ...commun,
       aliment_id: null,
       nom_libre: champs.nom.trim().slice(0, 120),
-      calories: n(champs.calories),
+      // Calories masquées (mineur) : le champ n'est pas proposé, la base garde sa valeur par défaut.
+      ...(calories ? { calories: n(champs.calories) } : {}),
       proteines: n(champs.proteines),
       glucides: n(champs.glucides),
       lipides: n(champs.lipides),
