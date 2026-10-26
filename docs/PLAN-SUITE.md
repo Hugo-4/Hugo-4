@@ -49,7 +49,7 @@ les allures. Une séance « à RPE 9 » ou « à 80 % » ne veut rien dire sans 
 - Côté serveur : brancher la vraie route `POST /coach/messages` (`docs/MANQUES-SERVEUR.md` §3), puis passer
   `COACH_FICTIF` à `false`.
 
-## Étape 14 — Nutrition du jour complète
+## Étape 14 — Nutrition du jour complète — FAITE (Aujourd'hui → Nutrition, `app/nutrition/`, serveur : docs/MANQUES-SERVEUR.md §10)
 
 - Saisir ce qu'on a mangé (repas, aliments, quantités), voir l'écart avec les objectifs : calories, protéines,
   glucides, lipides, micronutriments principaux, équilibre, et le moment conseillé des glucides et protéines

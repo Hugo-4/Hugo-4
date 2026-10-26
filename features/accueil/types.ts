@@ -1,3 +1,5 @@
+import type { PlanNutrition } from '@/features/nutrition/types';
+
 /**
  * Réponses du serveur coachia-agents-v6 utilisées par l'écran Aujourd'hui.
  * Source : agents/programme/sortiesProgramme.js (accueil, detailSeance),
@@ -73,17 +75,9 @@ export type Accueil = {
   apercus_en_preparation: number;
 };
 
-type Intervalle = [number, number];
-
 export type NutritionJour = {
   seance: { type: string; creneau: string; duree_min: number } | null;
-  nutrition: {
-    niveau_charge: string;
-    glucides_jour_g: Intervalle;
-    proteines_jour_g: Intervalle;
-    hydratation: { avant_ml: Intervalle; pendant_ml_h: Intervalle } | null;
-    alertes: string[];
-  };
+  nutrition: PlanNutrition;
 };
 
 /** Check-in du jour (table `checkins_forme`) : score et recommandation calculés par la base. */

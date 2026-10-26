@@ -1,0 +1,109 @@
+{
+  "titre": "Nutrition",
+  "aujourdhui": "Today",
+  "jourPrecedent": "Previous day",
+  "jourSuivant": "Next day",
+  "surCible": "{{consomme}} / {{cible}} {{unite}}",
+  "valeurUnite": "{{valeur}} {{unite}}",
+  "calories": "Calories",
+  "proteines": "Protein",
+  "glucides": "Carbs",
+  "lipides": "Fat",
+  "fibres": "Fibre",
+  "kcal": "kcal",
+  "g": "g",
+  "noterAliment": "Log a food",
+  "voirJournal": "My food log",
+  "horsLigne": "Offline: reconnect to save this food.",
+  "resumeAccueil": "Logged today: {{kcal}} kcal · P {{p}} g · C {{g}} g",
+  "charge": {
+    "repos": "rest",
+    "leger": "light",
+    "modere": "moderate",
+    "eleve": "high",
+    "tres_eleve": "very high"
+  },
+  "objectifs": {
+    "titre": "Today's targets",
+    "source": "Coach targets for a {{niveau}} load today.",
+    "poidsInconnu": "Add your weight: the coach needs it to work out today's carbs and protein.",
+    "aucune": "The coach hasn't set targets for this day yet: you only see what you logged."
+  },
+  "timing": {
+    "titre": "Around your session",
+    "sansSeance": "No session planned today: no specific timing around training.",
+    "glucides": "Carbs: {{valeur}}",
+    "proteines": "Protein: {{valeur}}",
+    "collation": "Pre-session snack",
+    "eauSeulement": "Carbs: water only",
+    "glucidesHeure": "Carbs: {{valeur}} g/h",
+    "eauHeure": "Water: {{valeur}} ml/h",
+    "sodiumHeure": "Sodium: {{valeur}} mg/h",
+    "note": "Logged: carbs {{glucides}} g · protein {{proteines}} g"
+  },
+  "moments": {
+    "petit_dejeuner": "Breakfast",
+    "dejeuner": "Lunch",
+    "collation": "Snack",
+    "diner": "Dinner",
+    "avant_seance": "Before the session",
+    "pendant_seance": "During the session",
+    "apres_seance": "After the session"
+  },
+  "repas": {
+    "titre": "What I ate",
+    "aucun": "Nothing logged for this day.",
+    "totalMoment": "{{kcal}} kcal · P {{p}} g · C {{g}} g",
+    "ajouterIci": "Add to this meal",
+    "detail": "{{quantite}} g · {{kcal}} kcal · P {{p}} · C {{g}} · F {{l}}",
+    "retirer": "Remove {{nom}}",
+    "retirerTitre": "Remove this food?",
+    "retirerConfirmer": "Remove"
+  },
+  "equilibre": {
+    "titre": "Balance",
+    "part": "{{nom}} {{pct}}%",
+    "vide": "Log a meal to see the share of carbs, protein and fat.",
+    "fibresSucres": "Fibre {{fibres}} g · of which sugars {{sucres}} g"
+  },
+  "micros": {
+    "titre": "Micronutrients",
+    "vide": "No micronutrients logged for this day.",
+    "suivi": "Tracked by the coach",
+    "aide": "Calculated from the food database; a food entered by hand doesn't add any.",
+    "noms": {
+      "fer_mg": "Iron",
+      "calcium_mg": "Calcium",
+      "magnesium_mg": "Magnesium",
+      "potassium_mg": "Potassium",
+      "zinc_mg": "Zinc",
+      "sodium_mg": "Sodium",
+      "vitamine_c_mg": "Vitamin C",
+      "vitamine_d_ug": "Vitamin D",
+      "vitamine_b12_ug": "Vitamin B12",
+      "omega3_mg": "Omega-3"
+    }
+  },
+  "ajout": {
+    "titre": "Log a food",
+    "rechercher": "Search for a food",
+    "rechercherExemple": "rice, banana, chicken…",
+    "aucunResultat": "No food found in the database.",
+    "pour100": "{{kcal}} kcal per 100 g",
+    "saisirALaMain": "Enter by hand",
+    "alimentLibre": "Food entered by hand",
+    "changer": "Change food",
+    "nom": "Food or dish name",
+    "erreurNom": "Enter a name.",
+    "caloriesPortion": "Calories (kcal)",
+    "proteinesPortion": "Protein (g)",
+    "glucidesPortion": "Carbs (g)",
+    "lipidesPortion": "Fat (g)",
+    "erreurValeurs": "Values must be positive numbers.",
+    "quantite": "Quantity (g)",
+    "portion": "Usual portion: {{g}} g",
+    "erreurQuantite": "Enter a quantity between 1 and 3,000 g.",
+    "moment": "Meal",
+    "enregistrer": "Save"
+  }
+}

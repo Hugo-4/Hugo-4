@@ -1,0 +1,109 @@
+{
+  "titre": "Nutrition",
+  "aujourdhui": "Aujourd'hui",
+  "jourPrecedent": "Jour précédent",
+  "jourSuivant": "Jour suivant",
+  "surCible": "{{consomme}} / {{cible}} {{unite}}",
+  "valeurUnite": "{{valeur}} {{unite}}",
+  "calories": "Calories",
+  "proteines": "Protéines",
+  "glucides": "Glucides",
+  "lipides": "Lipides",
+  "fibres": "Fibres",
+  "kcal": "kcal",
+  "g": "g",
+  "noterAliment": "Noter un aliment",
+  "voirJournal": "Mon journal",
+  "horsLigne": "Hors ligne : reconnecte-toi pour enregistrer cet aliment.",
+  "resumeAccueil": "Noté aujourd'hui : {{kcal}} kcal · P {{p}} g · G {{g}} g",
+  "charge": {
+    "repos": "repos",
+    "leger": "légère",
+    "modere": "modérée",
+    "eleve": "élevée",
+    "tres_eleve": "très élevée"
+  },
+  "objectifs": {
+    "titre": "Objectifs du jour",
+    "source": "Cibles du coach pour une charge {{niveau}} aujourd'hui.",
+    "poidsInconnu": "Renseigne ton poids : le coach en a besoin pour calculer tes glucides et tes protéines du jour.",
+    "aucune": "Le coach n'a pas encore fixé d'objectifs pour ce jour : tu vois seulement ce que tu as noté."
+  },
+  "timing": {
+    "titre": "Autour de la séance",
+    "sansSeance": "Pas de séance prévue aujourd'hui : pas de timing particulier autour de l'entraînement.",
+    "glucides": "Glucides : {{valeur}}",
+    "proteines": "Protéines : {{valeur}}",
+    "collation": "Collation avant la séance",
+    "eauSeulement": "Glucides : eau seulement",
+    "glucidesHeure": "Glucides : {{valeur}} g/h",
+    "eauHeure": "Eau : {{valeur}} ml/h",
+    "sodiumHeure": "Sodium : {{valeur}} mg/h",
+    "note": "Noté : glucides {{glucides}} g · protéines {{proteines}} g"
+  },
+  "moments": {
+    "petit_dejeuner": "Petit-déjeuner",
+    "dejeuner": "Déjeuner",
+    "collation": "Collation",
+    "diner": "Dîner",
+    "avant_seance": "Avant la séance",
+    "pendant_seance": "Pendant la séance",
+    "apres_seance": "Après la séance"
+  },
+  "repas": {
+    "titre": "Ce que j'ai mangé",
+    "aucun": "Rien de noté pour ce jour.",
+    "totalMoment": "{{kcal}} kcal · P {{p}} g · G {{g}} g",
+    "ajouterIci": "Ajouter à ce repas",
+    "detail": "{{quantite}} g · {{kcal}} kcal · P {{p}} · G {{g}} · L {{l}}",
+    "retirer": "Retirer {{nom}}",
+    "retirerTitre": "Retirer cet aliment ?",
+    "retirerConfirmer": "Retirer"
+  },
+  "equilibre": {
+    "titre": "Équilibre",
+    "part": "{{nom}} {{pct}} %",
+    "vide": "Note un repas pour voir la part des glucides, protéines et lipides.",
+    "fibresSucres": "Fibres {{fibres}} g · dont sucres {{sucres}} g"
+  },
+  "micros": {
+    "titre": "Micronutriments",
+    "vide": "Aucun micronutriment noté pour ce jour.",
+    "suivi": "Suivi par le coach",
+    "aide": "Calculés depuis la base d'aliments ; un aliment saisi à la main n'en apporte pas.",
+    "noms": {
+      "fer_mg": "Fer",
+      "calcium_mg": "Calcium",
+      "magnesium_mg": "Magnésium",
+      "potassium_mg": "Potassium",
+      "zinc_mg": "Zinc",
+      "sodium_mg": "Sodium",
+      "vitamine_c_mg": "Vitamine C",
+      "vitamine_d_ug": "Vitamine D",
+      "vitamine_b12_ug": "Vitamine B12",
+      "omega3_mg": "Oméga-3"
+    }
+  },
+  "ajout": {
+    "titre": "Noter un aliment",
+    "rechercher": "Rechercher un aliment",
+    "rechercherExemple": "riz, banane, poulet…",
+    "aucunResultat": "Aucun aliment trouvé dans la base.",
+    "pour100": "{{kcal}} kcal pour 100 g",
+    "saisirALaMain": "Saisir à la main",
+    "alimentLibre": "Aliment saisi à la main",
+    "changer": "Changer d'aliment",
+    "nom": "Nom de l'aliment ou du plat",
+    "erreurNom": "Indique un nom.",
+    "caloriesPortion": "Calories (kcal)",
+    "proteinesPortion": "Protéines (g)",
+    "glucidesPortion": "Glucides (g)",
+    "lipidesPortion": "Lipides (g)",
+    "erreurValeurs": "Les valeurs doivent être des nombres positifs.",
+    "quantite": "Quantité (g)",
+    "portion": "Portion habituelle : {{g}} g",
+    "erreurQuantite": "Indique une quantité entre 1 et 3 000 g.",
+    "moment": "Moment",
+    "enregistrer": "Enregistrer"
+  }
+}

@@ -6,6 +6,10 @@ import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Skeleton } from '@/components/Skeleton';
+import { dateDuJour } from '@/features/checkin/dateDuJour';
+import { totaux } from '@/features/nutrition/calcul';
+import { formatQuantite } from '@/features/nutrition/format';
+import { useJournal } from '@/features/nutrition/useJournal';
 import { formatNombre } from '@/lib/format';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
@@ -13,10 +17,12 @@ import { useNutritionJour } from '../useNutritionJour';
 
 const plage = ([a, b]: [number, number]) => `${formatNombre(a)}–${formatNombre(b)}`;
 
-/** Plan nutrition du jour (`GET /nutrition/jour`), selon la séance prévue. */
+/** Plan nutrition du jour (`GET /nutrition/jour`), selon la séance prévue, et ce qui est déjà noté (étape 14). */
 export function NutritionCard() {
   const { t } = useTranslation();
   const requete = useNutritionJour();
+  const journal = useJournal(dateDuJour());
+  const note = journal.data?.length ? totaux(journal.data) : null;
 
   return (
     <Card>
@@ -53,6 +59,15 @@ export function NutritionCard() {
           ))}
         </>
       ) : null}
+      {note ? (
+        <AppText variant="secondaire">
+          {t('nutrition.resumeAccueil', { kcal: formatQuantite(note.calories), p: formatQuantite(note.proteines_g), g: formatQuantite(note.glucides_g) })}
+        </AppText>
+      ) : null}
+      <View style={styles.actions}>
+        <Button label={t('nutrition.noterAliment')} variant="secondaire" onPress={() => router.push('/nutrition/ajouter')} />
+        <Button label={t('nutrition.voirJournal')} variant="discret" onPress={() => router.push('/nutrition')} />
+      </View>
     </Card>
   );
 }
@@ -69,6 +84,7 @@ function Valeur({ libelle, valeur }: { libelle: string; valeur: string }) {
 const styles = StyleSheet.create({
   erreur: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   poids: { gap: spacing.m },
+  actions: { gap: spacing.s },
   valeurs: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.s },
   valeur: {
     flexGrow: 1,

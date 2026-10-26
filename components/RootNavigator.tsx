@@ -85,6 +85,8 @@ export function RootNavigator({ policesPretes }: Props) {
         <Stack.Screen name="programme/objectifs" />
         <Stack.Screen name="programme/etape/[id]" />
         <Stack.Screen name="progres/[vue]" />
+        <Stack.Screen name="nutrition/index" />
+        <Stack.Screen name="nutrition/ajouter" />
         <Stack.Screen
           name="exercice/[slug]"
           options={{
