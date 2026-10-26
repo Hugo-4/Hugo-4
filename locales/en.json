@@ -237,6 +237,10 @@
         "titre": "Let's get to know you",
         "sousTitre": "Your first name and date of birth."
       },
+      "poids": {
+        "titre": "Your weight",
+        "sousTitre": "To work out your daily nutrition plan."
+      },
       "profilPhysique": {
         "titre": "Your body profile",
         "sousTitre": "To calculate your loads and needs."
@@ -317,7 +321,9 @@
         "femme": "Female"
       },
       "taille": "Height (cm)",
-      "poids": "Weight (kg)"
+      "poids": "Weight (kg)",
+      "poidsAide": "In kilograms. It's only used to calculate your needs.",
+      "poidsErreur": "Enter a weight between {{min}} and {{max}} kg."
     },
     "niveau": {
       "debutant": {

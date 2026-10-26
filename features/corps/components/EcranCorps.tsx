@@ -57,7 +57,7 @@ export function EcranCorps() {
           }>
           <CarteMensurations
             taille={taille}
-            poidsAutorise={c.poidsAutorise}
+            poidsCommente={c.poidsCommente}
             poidsProfil={poidsProfil}
             historique={c.poids.data}
             onTaille={() => setFeuille('taille')}

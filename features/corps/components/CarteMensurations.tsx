@@ -14,7 +14,8 @@ import type { HistoriquePoids } from '../types';
 
 type Props = {
   taille: number | null;
-  poidsAutorise: boolean;
+  /** Adulte : courbe et moyenne. Avant 18 ans, le poids est affiché seul (jamais commenté). */
+  poidsCommente: boolean;
   /** Poids du profil (même sans historique de pesées). */
   poidsProfil: number | null;
   historique: HistoriquePoids | undefined;
@@ -25,10 +26,10 @@ type Props = {
 const icone = { color: colors.texte2, size: sizes.icone };
 
 /**
- * Taille et poids. Le poids est une donnée neutre (jamais un objectif, pas d'IMC affiché) : il sert au plan
- * nutrition du jour. Courbe des 60 derniers jours dès deux pesées.
+ * Taille et poids. Le poids est une donnée neutre (jamais un objectif, pas d'IMC, jamais en grand) : il sert au
+ * plan nutrition du jour. Courbe des 60 derniers jours dès deux pesées, à partir de 18 ans seulement.
  */
-export function CarteMensurations({ taille, poidsAutorise, poidsProfil, historique, onTaille, onPoids }: Props) {
+export function CarteMensurations({ taille, poidsCommente, poidsProfil, historique, onTaille, onPoids }: Props) {
   const { t } = useTranslation();
   const kg = (v: number) => t('corps.kg', { valeur: formatNombre(v, 1) });
   const mesures = historique?.mesures ?? [];
@@ -44,36 +45,30 @@ export function CarteMensurations({ taille, poidsAutorise, poidsProfil, historiq
         valeur={taille !== null ? t('corps.cm', { valeur: formatNombre(taille) }) : t('corps.aRenseigner')}
         onPress={onTaille}
       />
-      {poidsAutorise ? (
-        <>
-          <LigneListe
-            icon={<Scale {...icone} />}
-            titre={t('corps.poids.titre')}
-            sousTitre={derniere ? t('corps.poids.derniere', { date: formatDateJour(derniere.date) }) : t('corps.poids.ajouter')}
-            valeur={poids !== null ? kg(poids) : t('corps.aRenseigner')}
-            onPress={onPoids}
+      <LigneListe
+        icon={<Scale {...icone} />}
+        titre={t('corps.poids.titre')}
+        sousTitre={derniere ? t('corps.poids.derniere', { date: formatDateJour(derniere.date) }) : t('corps.poids.ajouter')}
+        valeur={poids !== null ? kg(poids) : t('corps.aRenseigner')}
+        onPress={onPoids}
+      />
+      {poidsCommente && mesures.length >= 2 ? (
+        <View style={styles.courbe}>
+          <GraphiqueCourbe
+            points={mesures.map((m) => ({ libelle: formatDateJour(m.date_mesure), valeur: m.poids_kg }))}
+            formatValeur={kg}
+            resume={t('corps.poids.resume', {
+              nombre: mesures.length,
+              premiere: kg(mesures[0].poids_kg),
+              derniere: kg(mesures[mesures.length - 1].poids_kg),
+            })}
           />
-          {mesures.length >= 2 ? (
-            <View style={styles.courbe}>
-              <GraphiqueCourbe
-                points={mesures.map((m) => ({ libelle: formatDateJour(m.date_mesure), valeur: m.poids_kg }))}
-                formatValeur={kg}
-                resume={t('corps.poids.resume', {
-                  nombre: mesures.length,
-                  premiere: kg(mesures[0].poids_kg),
-                  derniere: kg(mesures[mesures.length - 1].poids_kg),
-                })}
-              />
-              {historique?.tendance.moyenne_7j != null ? (
-                <AppText variant="secondaire">{t('corps.poids.moyenne', { valeur: kg(historique.tendance.moyenne_7j) })}</AppText>
-              ) : null}
-            </View>
+          {historique?.tendance.moyenne_7j != null ? (
+            <AppText variant="secondaire">{t('corps.poids.moyenne', { valeur: kg(historique.tendance.moyenne_7j) })}</AppText>
           ) : null}
-          <AppText variant="libelle">{t('corps.poids.aide')}</AppText>
-        </>
-      ) : (
-        <AppText variant="libelle">{t('corps.poids.nonDemande')}</AppText>
-      )}
+        </View>
+      ) : null}
+      <AppText variant="libelle">{t('corps.poids.aide')}</AppText>
     </Card>
   );
 }

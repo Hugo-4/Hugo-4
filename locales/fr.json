@@ -237,6 +237,10 @@
         "titre": "Faisons connaissance",
         "sousTitre": "Ton prénom et ta date de naissance."
       },
+      "poids": {
+        "titre": "Ton poids",
+        "sousTitre": "Pour calculer ton plan nutrition du jour."
+      },
       "profilPhysique": {
         "titre": "Ton profil physique",
         "sousTitre": "Pour calculer tes charges et tes besoins."
@@ -317,7 +321,9 @@
         "femme": "Femme"
       },
       "taille": "Taille (cm)",
-      "poids": "Poids (kg)"
+      "poids": "Poids (kg)",
+      "poidsAide": "En kilos. Il sert seulement au calcul de tes besoins.",
+      "poidsErreur": "Indique un poids entre {{min}} et {{max}} kg."
     },
     "niveau": {
       "debutant": {

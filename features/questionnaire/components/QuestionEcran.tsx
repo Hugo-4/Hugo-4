@@ -53,7 +53,9 @@ export function QuestionEcran(p: Props) {
         {enLigne ? null : <Bandeau texte={t('questionnaire.question.horsLigne')} />}
         {p.erreur ? <ErreurEnregistrement erreur={p.erreur} /> : null}
         <Button label={t('questionnaire.question.suivant')} onPress={() => valeur !== null && p.onValider(valeur)} disabled={valeur === null || bloque} />
-        <Button label={t('questionnaire.question.passer')} variant="discret" onPress={p.onPasser} disabled={bloque} />
+        {p.question.obligatoire ? null : (
+          <Button label={t('questionnaire.question.passer')} variant="discret" onPress={p.onPasser} disabled={bloque} />
+        )}
       </View>
     </KeyboardAvoidingView>
   );

@@ -24,8 +24,7 @@
     "ajouter": "Ajouter une pesée",
     "moyenne": "Moyenne sur 7 jours : {{valeur}}",
     "resume": "Poids sur {{nombre}} pesées : de {{premiere}} à {{derniere}}.",
-    "aide": "Ton poids sert à calculer ton plan nutrition du jour (glucides, protéines, eau). Ce n'est pas un objectif.",
-    "nonDemande": "Le poids n'est pas demandé avant 18 ans."
+    "aide": "Ton poids sert à calculer ton plan nutrition du jour (glucides, protéines, eau). Ce n'est pas un objectif."
   },
   "cm": "{{valeur}} cm",
   "kg": "{{valeur}} kg",

@@ -1093,3 +1093,7 @@ Le coach peut ajouter à sa réponse des actions que l'app affiche en boutons so
 3. Souhaité : `GET /nutrition/jour?date=AAAA-MM-JJ` pour un autre jour (l'app n'affiche le plan et le timing que
    pour aujourd'hui) ; textes du plan aussi en anglais selon `users.langue`.
 4. Compléter la base `aliments` : les saisies libres fréquentes (`journal_entrees.nom_libre`) indiquent quoi ajouter.
+5. Poids : désormais obligatoire dès l'inscription (parcours Rapide compris, 30 à 250 kg, écrit dans
+   `user_profiles.poids_kg`) et pour tous les âges (TC10 sans « Je ne sais pas »). Le coach ne doit **jamais
+   commenter le poids d'un mineur** (ni évolution, ni objectif, ni catégorie hors demande explicite) : il sert
+   seulement au calcul des besoins. L'app ne l'affiche jamais en grand et, avant 18 ans, sans courbe ni moyenne.

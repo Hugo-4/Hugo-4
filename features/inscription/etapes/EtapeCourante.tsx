@@ -14,6 +14,7 @@ import { EtapeNiveau } from './EtapeNiveau';
 import { EtapeObjectifSport } from './EtapeObjectifSport';
 import { EtapeObjectifsSecondaires } from './EtapeObjectifsSecondaires';
 import { EtapePays } from './EtapePays';
+import { EtapePoids } from './EtapePoids';
 import { EtapePratique } from './EtapePratique';
 import { EtapeProfilPhysique } from './EtapeProfilPhysique';
 import { EtapeRecommandation } from './EtapeRecommandation';
@@ -23,6 +24,7 @@ import { EtapeSportsSecondaires } from './EtapeSportsSecondaires';
 const COMPOSANTS: Record<EtapeId, ComponentType> = {
   identite: EtapeIdentite,
   pays: EtapePays,
+  poids: EtapePoids,
   profilPhysique: EtapeProfilPhysique,
   pratique: EtapePratique,
   sport: EtapeSport,

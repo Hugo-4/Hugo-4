@@ -16,9 +16,7 @@ import {
 } from '../destinations';
 import type { Question } from '../types';
 
-const SPORTS_CATEGORIE_POIDS = ['boxe_anglaise', 'mma'];
-
-/** Mon corps : taille, poids (règles d'âge du questionnaire), latéralité, journée, sommeil, stress. */
+/** Mon corps : taille, poids (obligatoire), latéralité, journée, sommeil, stress. */
 export const CORPS: Question[] = [
   { id: 'TC09', section: 'corps', type: 'nombre', nombre: { min: 100, max: 230, unite: 'cm' }, destination: profil('taille_cm') },
   {
@@ -26,8 +24,8 @@ export const CORPS: Question[] = [
     section: 'corps',
     type: 'nombre',
     nombre: { min: 30, max: 250, unite: 'kg', decimal: true },
-    // Jamais avant 18 ans, sauf sport à catégorie de poids (questionnaire, règle 3).
-    si: (c) => c.age !== null && (c.age >= 18 || SPORTS_CATEGORIE_POIDS.includes(c.sport ?? '')),
+    // Obligatoire pour tous dès l'inscription (décision du 26/10/2026) : jamais commenté chez un mineur.
+    obligatoire: true,
     destination: { kind: 'poids' },
   },
   { id: 'TC11', section: 'corps', type: 'unique', options: ['droitier', 'gaucher', 'ambidextre'], destination: profil('lateralite') },

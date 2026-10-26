@@ -91,6 +91,8 @@ export type Question = {
   sante?: boolean;
   /** Condition d'affichage. */
   si?: (c: Contexte) => boolean;
+  /** Réponse exigée : pas de « Je ne sais pas ». */
+  obligatoire?: boolean;
   destination: Destination;
 };
 
