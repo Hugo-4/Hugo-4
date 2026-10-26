@@ -54,6 +54,11 @@ export type RetourSeance = {
   niveau_fatigue_apres?: number;
   douleurs?: string[];
   commentaire?: string;
+  /**
+   * Consentement « données de santé » : le serveur ne tire de souvenir de santé du commentaire que s'il n'est pas `false`
+   * (`routes/athlete.js`, `autoriserSante`). On l'envoie toujours explicitement (docs/MANQUES-SERVEUR.md §1).
+   */
+  consentement_sante: boolean;
 };
 
 export type DouleurSignalee = { zone: string; intensite: number; exercice: string | null };

@@ -10,8 +10,14 @@ import type { EtatConsentement } from '../types';
 import { useChangerConsentement } from '../useModifierProfil';
 import { SectionProfil } from './SectionProfil';
 
+type Props = {
+  etat: EtatConsentement | undefined;
+  /** Les CGU manquent aussi : leur acceptation est l'action principale, « Donner mon accord » passe en secondaire. */
+  cguManquantes?: boolean;
+};
+
 /** Consentement « données de santé » : l'athlète peut l'accorder ou le retirer à tout moment. */
-export function ConsentementSante({ etat }: { etat: EtatConsentement | undefined }) {
+export function ConsentementSante({ etat, cguManquantes = false }: Props) {
   const { t } = useTranslation();
   const changement = useChangerConsentement();
   const accorde = etat?.accorde === true;
@@ -30,7 +36,7 @@ export function ConsentementSante({ etat }: { etat: EtatConsentement | undefined
       {changement.isError ? <ErreurEnregistrement erreur={changement.error} /> : null}
       <Button
         label={t(accorde ? 'profil.consentements.retirer' : 'profil.consentements.accorder')}
-        variant={accorde ? 'secondaire' : 'principal'}
+        variant={accorde || cguManquantes ? 'secondaire' : 'principal'}
         disabled={changement.isPending}
         onPress={() => changement.mutate({ type: 'donnees_sante', accorde: !accorde })}
       />

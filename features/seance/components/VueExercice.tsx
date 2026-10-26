@@ -29,13 +29,25 @@ export function VueExercice({ onFiche, onMenu, onTerminer }: Props) {
   const cle = exercice ? cleExercice(exercice) : '';
   const faites = etat.series[cle]?.length ?? 0;
   const [saisie, setSaisie] = useState<Saisie | null>(null);
+  const [modifiee, setModifiee] = useState(false);
 
   // Nouvelle série ou nouvel exercice : on repart des valeurs préremplies (conseil du serveur compris).
   const suggestion = etat.suggestions[cle];
   useEffect(() => {
     if (exercice) setSaisie(saisieInitiale(etat, exercice));
+    setModifiee(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cle, faites, suggestion]);
+  }, [cle, faites]);
+  // Le conseil du serveur arrive après coup : il ne remplace la charge que si l'athlète n'a encore rien touché.
+  useEffect(() => {
+    const conseillee = suggestion?.charge_kg;
+    if (conseillee != null && !modifiee) setSaisie((s) => (s ? { ...s, charge: conseillee } : s));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suggestion]);
+  const modifier = (nouvelle: Saisie) => {
+    setModifiee(true);
+    setSaisie(nouvelle);
+  };
 
   if (!exercice || !saisie) return null;
   const statut = statutExercice(etat, exercice, etat.index);
@@ -55,7 +67,13 @@ export function VueExercice({ onFiche, onMenu, onTerminer }: Props) {
         />
         <MinuteurRepos />
         {enCours ? (
-          <SaisieSerie saisie={saisie} mesure={mesureDe(exercice)} pasCharge={pasCharge(exercice)} onChange={setSaisie} />
+          <SaisieSerie
+            saisie={saisie}
+            mesure={mesureDe(exercice)}
+            pasCharge={pasCharge(exercice)}
+            rpeCible={exercice.rpe_cible ?? null}
+            onChange={modifier}
+          />
         ) : (
           <AppText variant="corpsGras">{t(`enSeance.statut.${statut}`)}</AppText>
         )}

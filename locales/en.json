@@ -1,7 +1,7 @@
 {
   "onglets": {
     "aujourdhui": "Today",
-    "programme": "Program",
+    "programme": "Plan",
     "coach": "Coach",
     "progres": "Progress",
     "profil": "Profile"
@@ -31,7 +31,35 @@
     },
     "moins": "Minus {{pas}}: {{libelle}}",
     "plus": "Plus {{pas}}: {{libelle}}",
-    "annuler": "Cancel"
+    "annuler": "Cancel",
+    "compteARebours": {
+      "jours_one": "{{count}} day",
+      "jours_other": "{{count}} days",
+      "semaines_one": "in {{count}} week",
+      "semaines_other": "in {{count}} weeks",
+      "ans_one": "{{count}} year",
+      "ans_other": "{{count}} years",
+      "mois_one": "{{count}} month",
+      "mois_other": "{{count}} months",
+      "ansEtMois": "in {{ans}} and {{mois}}",
+      "dansAns": "in {{ans}}"
+    },
+    "horsLigne": "Offline · latest data received",
+    "horsLigneTitre": "No connection",
+    "horsLigneTexte": "This information hasn't been loaded on this phone yet. It will appear as soon as you're back online.",
+    "bientotDisponible": "Coming soon",
+    "modification": {
+      "avant": "Before",
+      "apres": "After",
+      "inchange": "What stays the same",
+      "appliquer": "Apply",
+      "garder": "Keep the original",
+      "appliquee": "Applied",
+      "gardee": "Original kept",
+      "annuler": "Undo ({{secondes}} s)",
+      "a11yAvant": "Before: {{liste}}"
+    },
+    "appelerNumero": "Call {{numero}}"
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
@@ -81,20 +109,14 @@
       "repos": "Rest",
       "prochaine": "Next session: {{titre}}, {{jour}}",
       "reprendre": "Resume session",
-      "voirProchaine": "See my next session"
+      "voirProchaine": "See my next session",
+      "faite": "Session done",
+      "voirDetail": "See details",
+      "a11yOuvrir": "Open session details"
     },
     "evenement": {
       "titre": "Next goal",
-      "jours_one": "{{count}} day",
-      "jours_other": "{{count}} days",
-      "semaines_one": "in {{count}} week",
-      "semaines_other": "in {{count}} weeks",
-      "ans_one": "{{count}} year",
-      "ans_other": "{{count}} years",
-      "mois_one": "{{count}} month",
-      "mois_other": "{{count}} months",
-      "ansEtMois": "in {{ans}} and {{mois}}",
-      "dansAns": "in {{ans}}"
+      "a11yOuvrir": "Open the competition"
     },
     "semaine": {
       "titre": "Your week",
@@ -119,7 +141,11 @@
       "grammes": "{{plage}} g",
       "mlParHeure": "{{plage}} ml/h",
       "poidsInconnu": "Add your weight in your profile to get today's nutrition plan."
-    }
+    },
+    "genererProgramme": "Generate my program",
+    "generationEnCours": "Generating: about one minute.",
+    "a11yNotificationsNonLues_one": "Notifications, {{count}} unread",
+    "a11yNotificationsNonLues_other": "Notifications, {{count}} unread"
   },
   "auth": {
     "connexion": {
@@ -657,10 +683,14 @@
     },
     "douleurs": "Pain",
     "douleursAide": "Tap the areas that hurt today.",
-    "douleursSansConsentement": "Pain: you haven't allowed the use of your health data. You can turn it on in your profile.",
+    "douleursSansConsentement": "Pain: you haven't allowed the use of your health data, so this question isn't asked.",
     "duree": "Time available today",
     "lieu": "Place",
-    "facultatif": "Optional"
+    "facultatif": "Optional",
+    "douleursConsentementInconnu": "Pain: we can't check your health-data consent right now, so this question isn't asked.",
+    "activerConsentement": "Allow in my profile",
+    "aucuneDouleur": "No pain",
+    "horsLigne": "No connection: your check-in is kept on this phone. You can send it as soon as you're back online."
   },
   "seance": {
     "types": {
@@ -810,7 +840,8 @@
     "fiche": {
       "muscles": "Muscles",
       "consignes": "Key points",
-      "vide": "The guide for this exercise is coming soon."
+      "vide": "The guide for this exercise is coming soon.",
+      "complete": "See the full exercise sheet"
     },
     "douleur": {
       "titre": "Report pain",
@@ -852,6 +883,12 @@
       "titre": "Rest is over",
       "suivante": "Your turn: {{nom}}, set {{numero}} / {{total}}",
       "reprendre": "Back to your session"
-    }
+    },
+    "vide": {
+      "titre": "No exercises in this session",
+      "texte": "The server sent no exercises for this session. Go back to Today and try again, or ask the coach.",
+      "fermer": "Back to Today"
+    },
+    "rpeCible": "Target: RPE {{rpe}}"
   }
 }

@@ -1,7 +1,9 @@
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
+import { Button } from '@/components/Button';
 import { Feuille } from '@/components/Feuille';
 import { spacing } from '@/theme/tokens';
 
@@ -33,6 +35,17 @@ export function FicheExercice({ exercice, onFermer }: Props) {
       ) : null}
       {!fiche?.muscles.length && !fiche?.consignes.length ? (
         <AppText variant="secondaire">{t('enSeance.fiche.vide')}</AppText>
+      ) : null}
+      {fiche ? (
+        <Button
+          label={t('enSeance.fiche.complete')}
+          variant="discret"
+          onPress={() => {
+            // La fiche complète du catalogue s'ouvre en feuille par-dessus la séance (elle demande le réseau).
+            onFermer();
+            router.push({ pathname: '/exercice/[slug]', params: { slug: fiche.slug } });
+          }}
+        />
       ) : null}
     </Feuille>
   );

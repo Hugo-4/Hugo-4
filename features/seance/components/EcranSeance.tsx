@@ -1,6 +1,6 @@
-import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert, BackHandler, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Segmente } from '@/components/Segmente';
@@ -15,6 +15,7 @@ import { useNotificationRepos } from '../useNotificationRepos';
 import { BandeauEnvoi } from './BandeauEnvoi';
 import { BoutonDouleur } from './BoutonDouleur';
 import { EnteteSeance } from './EnteteSeance';
+import { SeanceVide } from './SeanceVide';
 import { FeuillesExercice } from './FeuillesExercice';
 import { VueExercice } from './VueExercice';
 import { VueListe } from './VueListe';
@@ -40,7 +41,7 @@ export function EcranSeance() {
     sauverVue(v).catch(() => undefined);
   };
 
-  const quitter = () => {
+  const quitter = useCallback(() => {
     const commencee = Object.values(etat.series).some((s) => s.length > 0);
     if (!commencee) {
       abandonner().then(() => router.back());
@@ -51,7 +52,23 @@ export function EcranSeance() {
       { text: t('enSeance.abandonner'), style: 'destructive', onPress: () => abandonner().then(() => router.back()) },
       { text: t('commun.annuler'), style: 'cancel' },
     ]);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [etat.series, abandonner, t]);
+
+  // Bouton retour d'Android : même confirmation que la croix (la modale ne se ferme pas d'un geste).
+  useFocusEffect(
+    useCallback(() => {
+      const abonnement = BackHandler.addEventListener('hardwareBackPress', () => {
+        quitter();
+        return true;
+      });
+      return () => abonnement.remove();
+    }, [quitter]),
+  );
+
+  if (exercicesDe(etat.seance).length === 0) {
+    return <SeanceVide onFermer={() => abandonner().then(() => router.back())} />;
+  }
 
   return (
     <View style={styles.ecran}>

@@ -74,6 +74,22 @@ export function RootNavigator({ policesPretes }: Props) {
         />
         <Stack.Screen name="seance/[id]" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="compte" />
+        <Stack.Screen name="notifications" />
+        <Stack.Screen name="coach-seance" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="programme/seance/[id]" />
+        <Stack.Screen name="programme/evenement/nouveau" />
+        <Stack.Screen name="programme/evenement/[id]" />
+        <Stack.Screen name="programme/adaptations" />
+        <Stack.Screen name="progres/[vue]" />
+        <Stack.Screen
+          name="exercice/[slug]"
+          options={{
+            presentation: 'formSheet',
+            sheetAllowedDetents: [0.6, 0.92],
+            sheetGrabberVisible: true,
+            sheetCornerRadius: radius.carte,
+          }}
+        />
       </Stack.Protected>
     </Stack>
   );

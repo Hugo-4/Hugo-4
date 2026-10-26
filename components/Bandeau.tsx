@@ -5,22 +5,30 @@ import { colors, radius, sizes, spacing } from '@/theme/tokens';
 
 import { AppText } from './AppText';
 
+type Ton = 'info' | 'alerte' | 'urgence';
+
 type Props = {
   texte: string;
   icon?: ReactNode;
-  /** `info` : discret (hors ligne) ; `alerte` : orange. */
-  ton?: 'info' | 'alerte';
+  /** `info` : discret (hors ligne) ; `alerte` : orange ; `urgence` : rouge (15 / 112). */
+  ton?: Ton;
+  /** Bouton à droite (ex. « Appeler le 15 »). */
+  action?: ReactNode;
 };
 
-/** Bandeau d'une ligne (hors ligne, alerte). Ne bloque jamais l'écran. */
-export function Bandeau({ texte, icon, ton = 'info' }: Props) {
-  const couleur = ton === 'alerte' ? colors.alerte : colors.texte2;
+const couleurs: Record<Ton, string> = { info: colors.texte2, alerte: colors.alerte, urgence: colors.danger };
+
+/** Bandeau d'une ligne (hors ligne, alerte, urgence). Ne bloque jamais l'écran. */
+export function Bandeau({ texte, icon, ton = 'info', action }: Props) {
   return (
-    <View style={[styles.bandeau, ton === 'alerte' && styles.alerte]} accessibilityRole="alert">
+    <View
+      style={[styles.bandeau, ton !== 'info' && { borderWidth: sizes.bordure, borderColor: couleurs[ton] }]}
+      accessibilityRole="alert">
       {icon}
-      <AppText variant="secondaire" color={couleur} style={styles.texte}>
+      <AppText variant="secondaire" color={couleurs[ton]} style={styles.texte}>
         {texte}
       </AppText>
+      {action}
     </View>
   );
 }
@@ -35,6 +43,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.petit,
     backgroundColor: colors.carte2,
   },
-  alerte: { borderWidth: sizes.bordure, borderColor: colors.alerte },
   texte: { flex: 1 },
 });

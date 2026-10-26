@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { Chip } from '@/components/Chip';
 import { DateField } from '@/components/DateField';
 import { TextField } from '@/components/TextField';
@@ -47,6 +48,7 @@ export function FormulaireIdentite({ initiale }: { initiale: Identite }) {
           <ErreurEnregistrement erreur={modification.error} />
         ) : null
       }>
+      <BandeauHorsLigne />
       <TextField label={t('inscription.identite.prenom')} value={prenom} onChangeText={setPrenom} autoCapitalize="words" />
       <DateField
         label={t('inscription.identite.naissance')}

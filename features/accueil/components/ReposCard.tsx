@@ -10,7 +10,7 @@ import { colors, sizes, spacing } from '@/theme/tokens';
 
 type Props = {
   /** Prochaine séance (demain d'après `GET /accueil`, sinon `GET /programme`). */
-  prochaine: { titre: string; date: string } | null;
+  prochaine: { id: string; titre: string; date: string } | null;
   onVoirProchaine: () => void;
 };
 

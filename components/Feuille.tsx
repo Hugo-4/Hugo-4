@@ -1,6 +1,6 @@
 import { X } from 'lucide-react-native';
 import type { ReactNode } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
@@ -16,13 +16,13 @@ type Props = {
   children: ReactNode;
 };
 
-/** Feuille qui monte du bas de l'écran (Modal natif, sans dépendance). */
+/** Feuille qui monte du bas de l'écran (Modal natif, sans dépendance) ; elle remonte au-dessus du clavier. */
 export function Feuille({ visible, titre, onFermer, children }: Props) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onFermer} statusBarTranslucent>
-      <View style={styles.fond}>
+      <KeyboardAvoidingView style={styles.fond} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Pressable style={styles.voile} onPress={onFermer} accessibilityLabel={t('commun.fermer')} />
         <View style={[styles.feuille, { paddingBottom: insets.bottom + spacing.l }]}>
           <View style={styles.entete}>
@@ -37,7 +37,7 @@ export function Feuille({ visible, titre, onFermer, children }: Props) {
             {children}
           </ScrollView>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }

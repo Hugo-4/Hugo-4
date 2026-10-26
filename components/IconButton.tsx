@@ -8,16 +8,19 @@ type Props = {
   accessibilityLabel: string;
   onPress: () => void;
   children: ReactNode;
+  disabled?: boolean;
 };
 
-export function IconButton({ accessibilityLabel, onPress, children }: Props) {
+export function IconButton({ accessibilityLabel, onPress, children, disabled }: Props) {
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onPress={onPress}
       hitSlop={4}
-      style={({ pressed }) => [styles.bouton, pressed && styles.presse]}>
+      style={({ pressed }) => [styles.bouton, pressed && styles.presse, disabled && styles.desactive]}>
       {children}
     </Pressable>
   );
@@ -35,4 +38,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   presse: { opacity: opacity.presse },
+  desactive: { opacity: opacity.desactive },
 });

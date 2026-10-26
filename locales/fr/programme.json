@@ -1,0 +1,278 @@
+{
+  "titre": "Programme",
+  "erreurEnregistrement": "L'enregistrement n'a pas abouti. Vérifie ta connexion puis réessaie.",
+  "horsLigneEnvoi": "Pas de réseau : rien ne peut être enregistré pour l'instant. Reconnecte-toi pour valider.",
+  "vide": {
+    "titre": "Pas encore de programme",
+    "texte": "Ton calendrier, tes blocs et tes compétitions apparaîtront ici dès que ton programme sera prêt.",
+    "action": "Aller à Aujourd'hui"
+  },
+  "objectif": {
+    "surTitre": "Objectif A",
+    "a11y": "Objectif A : {{nom}}, {{compte}}, le {{date}}. Ouvre la compétition.",
+    "aucun": "Pas encore d'objectif A : ajoute ta compétition principale, le programme se construira autour d'elle."
+  },
+  "blocs": {
+    "titre": "Tes blocs",
+    "statuts": {
+      "en_cours": "En cours",
+      "a_venir": "À venir",
+      "termine": "Terminé"
+    },
+    "dates": "{{debut}} – {{fin}}",
+    "allegee": "Semaine {{numero}} allégée",
+    "semaines_one": "{{count}} semaine",
+    "semaines_other": "{{count}} semaines"
+  },
+  "phases": {
+    "preparation_generale": "Préparation générale",
+    "preparation_specifique": "Préparation spécifique",
+    "competition": "Compétition",
+    "affutage": "Affûtage",
+    "veille": "Veille de compétition",
+    "jour_j": "Jour J",
+    "transition": "Transition",
+    "recuperation_post": "Récupération"
+  },
+  "calendrier": {
+    "moisPrecedent": "Mois précédent",
+    "moisSuivant": "Mois suivant",
+    "aujourdhui": "aujourd'hui",
+    "a11ySeance": "{{titre}}, {{statut}}, intensité {{niveau}} sur 5 : {{intensite}}",
+    "a11yCompetition": "compétition : {{nom}}, priorité {{priorite}}",
+    "a11yOuvrir": "Ouvre le détail du jour",
+    "rienDePrevu": "rien de prévu",
+    "erreur": "Impossible de charger ce mois.",
+    "horsLigne": "Hors ligne : ce mois n'a pas encore été chargé. Il s'affichera au retour du réseau.",
+    "legende": "Légende",
+    "horsProgramme": "Hors programme · {{details}}"
+  },
+  "intensite": {
+    "niveaux": {
+      "1": "Récupération",
+      "2": "Facile",
+      "3": "Modérée",
+      "4": "Difficile",
+      "5": "Très difficile"
+    },
+    "court": "Intensité {{niveau}}/5 ({{libelle}})",
+    "a11y": "Intensité {{niveau}} sur 5 : {{libelle}}"
+  },
+  "statutsSeance": {
+    "a_venir": "prévue",
+    "prete": "prête",
+    "en_cours": "en cours",
+    "faite": "faite",
+    "manquee": "manquée",
+    "reportee": "reportée",
+    "annulee": "annulée"
+  },
+  "badges": {
+    "cle": "Séance clé",
+    "allegee": "Semaine allégée",
+    "modifiee": "Adaptée",
+    "deplacee": "Déplacée",
+    "lourde_jambes": "Bas du corps chargé"
+  },
+  "stats": {
+    "titre": "Ce mois-ci",
+    "prevues": "Séances prévues",
+    "faites": "Faites",
+    "assiduite": "Assiduité",
+    "pourcent": "{{valeur}} %",
+    "inconnue": "–",
+    "assiduiteAide": "L'assiduité se calcule dès qu'une séance du mois est passée.",
+    "a11y": "{{libelle}} : {{valeur}}"
+  },
+  "competitions": {
+    "titre": "Compétitions à venir",
+    "ajouter": "+ Compétition",
+    "priorite": "Priorité {{priorite}}",
+    "erreur": "Impossible de charger tes compétitions.",
+    "horsLigne": "Hors ligne : tes compétitions s'afficheront au retour du réseau."
+  },
+  "legende": {
+    "titre": "Légende",
+    "fait": "Pastille pleine et coche : séance faite",
+    "prevu": "Contour : séance prévue",
+    "manque": "Contour orange et croix : séance manquée",
+    "competition": "Trophée : compétition",
+    "aujourdhui": "Contour épais et numéro souligné : aujourd'hui",
+    "types": "Type de séance (icône sous le numéro)",
+    "intensite": "Intensité (points pleins)",
+    "niveau": "{{niveau}} sur 5 : {{libelle}}",
+    "niveauRpe": "{{niveau}} sur 5 : {{libelle}} (RPE {{rpe}})"
+  },
+  "adaptations": {
+    "lien": "Historique des adaptations",
+    "titre": "Historique des adaptations",
+    "periode": "Les changements de ton programme sur les 30 derniers jours.",
+    "videTitre": "Aucune adaptation",
+    "videTexte": "Ton programme n'a pas été modifié ces 30 derniers jours.",
+    "voirProgramme": "Voir mon programme",
+    "accepter": "Accepter",
+    "refuser": "Garder mon programme",
+    "santeMasquee": "Motif masqué",
+    "santeMasqueeAide": "Ce motif concerne ta santé : autorise les données de santé dans Profil › Consentements pour le voir.",
+    "seances_one": "{{count}} séance modifiée",
+    "seances_other": "{{count}} séances modifiées",
+    "portees": {
+      "seance": "Une séance",
+      "quelques_seances": "Quelques séances",
+      "programme": "Bloc réorganisé",
+      "aucune": "Aucun changement"
+    },
+    "statuts": {
+      "appliquee": "Appliquée",
+      "proposee": "En attente de ta réponse",
+      "refusee": "Refusée"
+    },
+    "declencheurs": {
+      "athlete": "à ta demande",
+      "agent": "proposée par le coach",
+      "checkin": "après ton check-in"
+    }
+  },
+  "categories": {
+    "agenda": "Agenda",
+    "lieu": "Lieu",
+    "materiel": "Matériel",
+    "meteo": "Météo",
+    "duree": "Durée",
+    "envie": "Envie",
+    "voyage": "Voyage",
+    "deplacer": "Séance déplacée",
+    "fatigue": "Fatigue",
+    "courbatures": "Courbatures",
+    "sommeil": "Sommeil",
+    "stress": "Stress",
+    "blessure": "Blessure",
+    "surentrainement": "Surentraînement",
+    "fatigue_persistante": "Fatigue persistante",
+    "douleur": "Douleur",
+    "maladie": "Maladie"
+  },
+  "seance": {
+    "titreEcran": "Séance prévue",
+    "bloc": "{{bloc}} · {{phase}}",
+    "duree": "{{minutes}} min",
+    "rpe": "RPE {{rpe}}",
+    "completion": "{{valeur}} % réalisé",
+    "adaptee": "Adaptée : {{raison}}",
+    "realiseeTitre": "Séance réalisée",
+    "objectif": "Objectif",
+    "consignes": "Consignes",
+    "structure": "Déroulé",
+    "a11yFiche": "Ouvre la fiche technique",
+    "enPreparation": "Le détail de la séance est en préparation. Il s'affichera dans quelques secondes.",
+    "indisponible": "Le détail de cette séance n'est pas disponible pour le moment.",
+    "a11yBadges": "Étiquettes : {{liste}}",
+    "introuvableTitre": "Séance introuvable",
+    "introuvableTexte": "Cette séance n'existe plus dans ton programme : elle a peut-être été déplacée ou remplacée.",
+    "sansExercices": "Aucun exercice détaillé pour cette séance.",
+    "deplacer": "Déplacer",
+    "coach": "Modifier avec le coach",
+    "manquee": "Séance manquée",
+    "demarrer": "Démarrer",
+    "reprendre": "Reprendre la séance"
+  },
+  "deplacer": {
+    "titre": "Déplacer la séance",
+    "aide": "Prévue le {{date}}. Choisis un jour du {{debut}} au {{fin}} (6 jours au plus avant ou après, jamais dans le passé) : le coach vérifie que la récupération reste bonne.",
+    "aucuneDate": "Prévue le {{date}} : elle ne peut plus être déplacée (6 jours au plus après la date prévue). Tu peux la déclarer manquée ou en parler au coach.",
+    "jours": "Jours possibles",
+    "autreDate": "Ou une autre date",
+    "dateInvalide": "Choisis une date du {{debut}} au {{fin}}, autre que le jour prévu.",
+    "choisir": "Choisis un jour",
+    "confirmer": "Déplacer au {{date}}",
+    "refus": "Déplacement impossible : {{raison}}",
+    "ok": "Séance déplacée au {{date}}."
+  },
+  "manquee": {
+    "titre": "Séance manquée",
+    "pourquoi": "Qu'est-ce qui s'est passé ?",
+    "categories": {
+      "fatigue": "Fatigue",
+      "douleur": "Douleur",
+      "maladie": "Maladie",
+      "travail": "Travail",
+      "famille": "Famille",
+      "motivation": "Motivation",
+      "meteo": "Météo",
+      "voyage": "Voyage",
+      "oubli": "Oubli",
+      "autre": "Autre"
+    },
+    "sansConsentement": "Douleur ou maladie : autorise d'abord les données de santé dans ton profil (Consentements).",
+    "raison": "Précise si tu veux (facultatif)",
+    "reporter": "Essayer de la replacer cette semaine",
+    "reporterAide": "Le coach cherche un autre jour sans trop charger ta semaine.",
+    "envoyer": "Enregistrer",
+    "ok": "Séance marquée comme manquée.",
+    "okReporter": "C'est noté : le coach essaie de la replacer cette semaine."
+  },
+  "exercice": {
+    "titre": "Fiche exercice",
+    "muscles": "Muscles : {{liste}}",
+    "consignes": "Consignes clés",
+    "etapes": "Étapes",
+    "conseils": "Conseils d'exécution",
+    "erreurs": "Erreurs fréquentes",
+    "a11yImage": "Illustration de l'exercice {{nom}}",
+    "vide": "La fiche de cet exercice n'est pas encore rédigée.",
+    "introuvableTitre": "Fiche introuvable",
+    "introuvableTexte": "Cet exercice n'est pas dans le catalogue."
+  },
+  "evenement": {
+    "titreNouveau": "Nouvelle compétition",
+    "titreModifier": "Compétition",
+    "nom": "Nom de la compétition",
+    "date": "Date",
+    "sport": "Sport",
+    "type": "Type",
+    "types": {
+      "competition": "Compétition",
+      "combat": "Combat",
+      "match": "Match",
+      "course": "Course",
+      "test": "Test",
+      "objectif_perso": "Objectif perso",
+      "stage": "Stage"
+    },
+    "precision": {
+      "distance": "Distance",
+      "categorie_poids": "Catégorie de poids (kg)",
+      "poste": "Poste"
+    },
+    "precisionAide": {
+      "distance": "Par exemple : 10 km, semi-marathon, 1 500 m.",
+      "categorie_poids": "Ta catégorie pour ce combat, en kilos.",
+      "poste": "Ton poste pour ce match (milieu, ailier…)."
+    },
+    "priorite": "Priorité",
+    "prioriteAide": {
+      "A": "A : objectif principal, le programme se construit autour.",
+      "B": "B : compétition importante, préparée sans tout arrêter.",
+      "C": "C : compétition de préparation, intégrée à l'entraînement."
+    },
+    "lieu": "Lieu (facultatif)",
+    "notes": "Notes (facultatif)",
+    "ajouter": "Ajouter la compétition",
+    "enregistrer": "Enregistrer",
+    "supprimer": "Supprimer la compétition",
+    "erreurs": {
+      "nomVide": "Donne un nom à la compétition.",
+      "dateInvalide": "Cette date n'existe pas.",
+      "datePassee": "Choisis une date à venir.",
+      "poids": "Indique une catégorie entre {{min}} et {{max}} kg."
+    },
+    "conflitTitre": "Un seul objectif A par sport",
+    "conflitTexte": "Tu as déjà « {{nom}} » en objectif A. La passer en B ?",
+    "conflitConfirmer": "Passer en B",
+    "supprimerTitre": "Supprimer « {{nom}} » ?",
+    "supprimerTexte": "Elle sera marquée comme annulée et le programme ne se construira plus autour d'elle.",
+    "introuvableTitre": "Compétition introuvable",
+    "introuvableTexte": "Elle a peut-être été supprimée.",
+    "retourProgramme": "Retour au programme"
+  }
+}

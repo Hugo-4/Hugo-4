@@ -1,15 +1,19 @@
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
+import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
+import { useNombreNonLues } from '@/features/notifications/useNombreNonLues';
+import { CarteDernierRecord } from '@/features/progres/components/CarteDernierRecord';
 import { useSeanceEnCours } from '@/features/seance/useSeanceEnCours';
-import { bientot } from '@/lib/bientot';
 import { spacing } from '@/theme/tokens';
 
 import { libelleType } from '../presentation';
 import { premiereSemaineAVenir, prochaineSeance } from '../semaineProgramme';
 import type { Accueil, CheckinDuJour } from '../types';
+import { useOuvrirEvenement } from '../useOuvrirEvenement';
 import { useProgrammeActif } from '../useProgrammeActif';
 import { AccueilHeader } from './AccueilHeader';
 import { CheckinCard } from './CheckinCard';
@@ -37,23 +41,36 @@ export function AccueilContent({ accueil, checkin }: Props) {
   const programme = useProgrammeActif(besoinProgramme);
   const suivante = prochaineSeance(programme.data, accueil.date);
   const prochaine = demain.seances[0]
-    ? { titre: demain.seances[0].titre, date: demain.seances[0].date }
+    ? { id: demain.seances[0].id, titre: demain.seances[0].titre, date: demain.seances[0].date }
     : suivante
-      ? { titre: suivante.focus ?? libelleType({ code: suivante.type_seance, libelle: suivante.type_seance }), date: suivante.date_prevue }
+      ? {
+          id: suivante.id,
+          titre: suivante.focus ?? libelleType({ code: suivante.type_seance, libelle: suivante.type_seance }),
+          date: suivante.date_prevue,
+        }
       : null;
   const ouvrirCheckin = () => router.push('/checkin');
+  const ouvrirEvenement = useOuvrirEvenement();
+  const nonLues = useNombreNonLues();
 
   return (
     <View style={styles.contenu}>
       <AccueilHeader
         prenom={statut.data?.prenom ?? null}
-        onNotifications={bientot}
+        nonLues={nonLues}
+        onNotifications={() => router.push('/notifications')}
         onProfil={() => router.navigate('/profil')}
       />
+      <BandeauHorsLigne />
       {checkin ? <FormeCard checkin={checkin} onRefaire={ouvrirCheckin} /> : <CheckinCard onCheckin={ouvrirCheckin} />}
       {accueil.adaptation_proposee ? <FatigueCard adaptation={accueil.adaptation_proposee} /> : null}
       {aujourdhui.repos ? (
-        <ReposCard prochaine={prochaine} onVoirProchaine={() => router.navigate('/programme')} />
+        <ReposCard
+          prochaine={prochaine}
+          onVoirProchaine={() =>
+            prochaine && router.push({ pathname: '/programme/seance/[id]', params: { id: prochaine.id } })
+          }
+        />
       ) : (
         aujourdhui.seances.map((seance) => (
           <SeanceCard
@@ -62,17 +79,25 @@ export function AccueilContent({ accueil, checkin }: Props) {
             bloc={accueil.bloc}
             enCours={enCours.data?.programmeSeanceId === seance.id}
             onDemarrer={() => router.push(`/seance/${seance.id}`)}
-            onModifier={() => router.navigate('/coach')}
+            onModifier={() => ouvrirCoach({ type: 'seance', programmeSeanceId: seance.id, titre: seance.titre })}
+            onOuvrir={() => router.push({ pathname: '/programme/seance/[id]', params: { id: seance.id } })}
           />
         ))
       )}
-      {accueil.prochain_evenement ? <EvenementCard evenement={accueil.prochain_evenement} aujourdhui={accueil.date} /> : null}
+      {accueil.prochain_evenement ? (
+        <EvenementCard
+          evenement={accueil.prochain_evenement}
+          aujourdhui={accueil.date}
+          onPress={() => accueil.prochain_evenement && ouvrirEvenement(accueil.prochain_evenement)}
+        />
+      ) : null}
       <SemaineCard
         semaine={accueil.semaine}
         aVenir={premiereSemaineAVenir(programme.data, accueil.date)}
         onVoirMois={() => router.navigate('/programme')}
       />
       <NutritionCard />
+      <CarteDernierRecord />
     </View>
   );
 }

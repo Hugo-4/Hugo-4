@@ -7,7 +7,8 @@ import type { ExerciceSeance } from './types';
  */
 export type Mesure = 'reps' | 'duree';
 
-export type Saisie = { charge: number | null; reps: number; duree: number; rpe: number };
+/** `rpe` : `null` tant que l'athlète ne l'a pas donné (ni cible ni série précédente recopiée : la série part sans). */
+export type Saisie = { charge: number | null; reps: number; duree: number; rpe: number | null };
 
 /** Premier nombre d'une prescription de répétitions (« 8-10 » → 8). */
 export function repsCible(reps: ExerciceSeance['reps']): number | null {
@@ -34,6 +35,6 @@ export function saisieInitiale(etat: EtatSeance, e: ExerciceSeance): Saisie {
     charge,
     reps: precedente?.reps ?? repsCible(e.reps) ?? 10,
     duree: precedente?.duree_sec ?? e.duree_s ?? 30,
-    rpe: Math.round(precedente?.rpe ?? e.rpe_cible ?? 8),
+    rpe: null,
   };
 }

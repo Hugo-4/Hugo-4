@@ -1,0 +1,278 @@
+{
+  "titre": "Plan",
+  "erreurEnregistrement": "Saving didn't go through. Check your connection and try again.",
+  "horsLigneEnvoi": "No network: nothing can be saved right now. Reconnect to confirm.",
+  "vide": {
+    "titre": "No plan yet",
+    "texte": "Your calendar, blocks and competitions will show up here as soon as your plan is ready.",
+    "action": "Go to Today"
+  },
+  "objectif": {
+    "surTitre": "A goal",
+    "a11y": "A goal: {{nom}}, {{compte}}, on {{date}}. Opens the competition.",
+    "aucun": "No A goal yet: add your main competition and your plan will be built around it."
+  },
+  "blocs": {
+    "titre": "Your blocks",
+    "statuts": {
+      "en_cours": "Current",
+      "a_venir": "Upcoming",
+      "termine": "Done"
+    },
+    "dates": "{{debut}} – {{fin}}",
+    "allegee": "Week {{numero}} is a deload week",
+    "semaines_one": "{{count}} week",
+    "semaines_other": "{{count}} weeks"
+  },
+  "phases": {
+    "preparation_generale": "General preparation",
+    "preparation_specifique": "Specific preparation",
+    "competition": "Competition",
+    "affutage": "Taper",
+    "veille": "Competition eve",
+    "jour_j": "Race day",
+    "transition": "Transition",
+    "recuperation_post": "Recovery"
+  },
+  "calendrier": {
+    "moisPrecedent": "Previous month",
+    "moisSuivant": "Next month",
+    "aujourdhui": "today",
+    "a11ySeance": "{{titre}}, {{statut}}, intensity {{niveau}} out of 5: {{intensite}}",
+    "a11yCompetition": "competition: {{nom}}, priority {{priorite}}",
+    "a11yOuvrir": "Opens the day's details",
+    "rienDePrevu": "nothing planned",
+    "erreur": "Couldn't load this month.",
+    "horsLigne": "Offline: this month hasn't been loaded yet. It will show up when you're back online.",
+    "legende": "Legend",
+    "horsProgramme": "Outside the plan · {{details}}"
+  },
+  "intensite": {
+    "niveaux": {
+      "1": "Recovery",
+      "2": "Easy",
+      "3": "Moderate",
+      "4": "Hard",
+      "5": "Very hard"
+    },
+    "court": "Intensity {{niveau}}/5 ({{libelle}})",
+    "a11y": "Intensity {{niveau}} out of 5: {{libelle}}"
+  },
+  "statutsSeance": {
+    "a_venir": "planned",
+    "prete": "ready",
+    "en_cours": "in progress",
+    "faite": "done",
+    "manquee": "missed",
+    "reportee": "postponed",
+    "annulee": "cancelled"
+  },
+  "badges": {
+    "cle": "Key session",
+    "allegee": "Deload week",
+    "modifiee": "Adapted",
+    "deplacee": "Moved",
+    "lourde_jambes": "Heavy lower body"
+  },
+  "stats": {
+    "titre": "This month",
+    "prevues": "Planned sessions",
+    "faites": "Done",
+    "assiduite": "Attendance",
+    "pourcent": "{{valeur}}%",
+    "inconnue": "–",
+    "assiduiteAide": "Attendance is calculated once a session this month is in the past.",
+    "a11y": "{{libelle}}: {{valeur}}"
+  },
+  "competitions": {
+    "titre": "Upcoming competitions",
+    "ajouter": "+ Competition",
+    "priorite": "Priority {{priorite}}",
+    "erreur": "Couldn't load your competitions.",
+    "horsLigne": "Offline: your competitions will show up once you're back online."
+  },
+  "legende": {
+    "titre": "Legend",
+    "fait": "Filled dot and check mark: session done",
+    "prevu": "Outline: session planned",
+    "manque": "Orange outline and cross: session missed",
+    "competition": "Trophy: competition",
+    "aujourdhui": "Thick outline and underlined number: today",
+    "types": "Session type (icon under the number)",
+    "intensite": "Intensity (filled dots)",
+    "niveau": "{{niveau}} out of 5: {{libelle}}",
+    "niveauRpe": "{{niveau}} out of 5: {{libelle}} (RPE {{rpe}})"
+  },
+  "adaptations": {
+    "lien": "Adaptation history",
+    "titre": "Adaptation history",
+    "periode": "Changes to your plan over the last 30 days.",
+    "videTitre": "No adaptations",
+    "videTexte": "Your plan hasn't changed over the last 30 days.",
+    "voirProgramme": "See my plan",
+    "accepter": "Accept",
+    "refuser": "Keep my plan",
+    "santeMasquee": "Reason hidden",
+    "santeMasqueeAide": "This reason is about your health: allow health data in Profile › Consents to see it.",
+    "seances_one": "{{count}} session changed",
+    "seances_other": "{{count}} sessions changed",
+    "portees": {
+      "seance": "One session",
+      "quelques_seances": "A few sessions",
+      "programme": "Block reorganised",
+      "aucune": "No change"
+    },
+    "statuts": {
+      "appliquee": "Applied",
+      "proposee": "Waiting for your answer",
+      "refusee": "Declined"
+    },
+    "declencheurs": {
+      "athlete": "at your request",
+      "agent": "suggested by the coach",
+      "checkin": "after your check-in"
+    }
+  },
+  "categories": {
+    "agenda": "Schedule",
+    "lieu": "Location",
+    "materiel": "Equipment",
+    "meteo": "Weather",
+    "duree": "Duration",
+    "envie": "Mood",
+    "voyage": "Travel",
+    "deplacer": "Session moved",
+    "fatigue": "Fatigue",
+    "courbatures": "Soreness",
+    "sommeil": "Sleep",
+    "stress": "Stress",
+    "blessure": "Injury",
+    "surentrainement": "Overtraining",
+    "fatigue_persistante": "Lasting fatigue",
+    "douleur": "Pain",
+    "maladie": "Illness"
+  },
+  "seance": {
+    "titreEcran": "Planned session",
+    "bloc": "{{bloc}} · {{phase}}",
+    "duree": "{{minutes}} min",
+    "rpe": "RPE {{rpe}}",
+    "completion": "{{valeur}}% completed",
+    "adaptee": "Adapted: {{raison}}",
+    "realiseeTitre": "Session completed",
+    "objectif": "Goal",
+    "consignes": "Instructions",
+    "structure": "Structure",
+    "a11yFiche": "Opens the exercise guide",
+    "enPreparation": "The session details are being prepared. They will show up in a few seconds.",
+    "indisponible": "The details of this session aren't available right now.",
+    "a11yBadges": "Tags: {{liste}}",
+    "introuvableTitre": "Session not found",
+    "introuvableTexte": "This session is no longer in your plan: it may have been moved or replaced.",
+    "sansExercices": "No detailed exercises for this session.",
+    "deplacer": "Move",
+    "coach": "Change with the coach",
+    "manquee": "Missed session",
+    "demarrer": "Start",
+    "reprendre": "Resume the session"
+  },
+  "deplacer": {
+    "titre": "Move the session",
+    "aide": "Planned on {{date}}. Pick a day from {{debut}} to {{fin}} (up to 6 days before or after, never in the past): the coach checks that recovery stays right.",
+    "aucuneDate": "Planned on {{date}}: it can no longer be moved (up to 6 days after the planned date). You can mark it as missed or talk to the coach.",
+    "jours": "Available days",
+    "autreDate": "Or another date",
+    "dateInvalide": "Pick a date from {{debut}} to {{fin}}, other than the planned day.",
+    "choisir": "Pick a day",
+    "confirmer": "Move to {{date}}",
+    "refus": "Can't move it: {{raison}}",
+    "ok": "Session moved to {{date}}."
+  },
+  "manquee": {
+    "titre": "Missed session",
+    "pourquoi": "What happened?",
+    "categories": {
+      "fatigue": "Fatigue",
+      "douleur": "Pain",
+      "maladie": "Illness",
+      "travail": "Work",
+      "famille": "Family",
+      "motivation": "Motivation",
+      "meteo": "Weather",
+      "voyage": "Travel",
+      "oubli": "Forgot",
+      "autre": "Other"
+    },
+    "sansConsentement": "Pain or illness: first allow health data in your profile (Consents).",
+    "raison": "Add details if you like (optional)",
+    "reporter": "Try to fit it in this week",
+    "reporterAide": "The coach looks for another day without overloading your week.",
+    "envoyer": "Save",
+    "ok": "Session marked as missed.",
+    "okReporter": "Noted: the coach is trying to fit it in this week."
+  },
+  "exercice": {
+    "titre": "Exercise guide",
+    "muscles": "Muscles: {{liste}}",
+    "consignes": "Key cues",
+    "etapes": "Steps",
+    "conseils": "Technique tips",
+    "erreurs": "Common mistakes",
+    "a11yImage": "Illustration of the exercise {{nom}}",
+    "vide": "The guide for this exercise hasn't been written yet.",
+    "introuvableTitre": "Guide not found",
+    "introuvableTexte": "This exercise isn't in the catalogue."
+  },
+  "evenement": {
+    "titreNouveau": "New competition",
+    "titreModifier": "Competition",
+    "nom": "Competition name",
+    "date": "Date",
+    "sport": "Sport",
+    "type": "Type",
+    "types": {
+      "competition": "Competition",
+      "combat": "Fight",
+      "match": "Match",
+      "course": "Race",
+      "test": "Test",
+      "objectif_perso": "Personal goal",
+      "stage": "Camp"
+    },
+    "precision": {
+      "distance": "Distance",
+      "categorie_poids": "Weight class (kg)",
+      "poste": "Position"
+    },
+    "precisionAide": {
+      "distance": "For example: 10 km, half marathon, 1,500 m.",
+      "categorie_poids": "Your weight class for this fight, in kilos.",
+      "poste": "Your position for this match (midfielder, winger…)."
+    },
+    "priorite": "Priority",
+    "prioriteAide": {
+      "A": "A: main goal, your plan is built around it.",
+      "B": "B: important competition, prepared without stopping everything.",
+      "C": "C: tune-up competition, part of your training."
+    },
+    "lieu": "Location (optional)",
+    "notes": "Notes (optional)",
+    "ajouter": "Add the competition",
+    "enregistrer": "Save",
+    "supprimer": "Delete the competition",
+    "erreurs": {
+      "nomVide": "Give the competition a name.",
+      "dateInvalide": "This date doesn't exist.",
+      "datePassee": "Pick an upcoming date.",
+      "poids": "Enter a weight class between {{min}} and {{max}} kg."
+    },
+    "conflitTitre": "One A goal per sport",
+    "conflitTexte": "\"{{nom}}\" is already your A goal. Move it to B?",
+    "conflitConfirmer": "Move to B",
+    "supprimerTitre": "Delete \"{{nom}}\"?",
+    "supprimerTexte": "It will be marked as cancelled and your plan will no longer be built around it.",
+    "introuvableTitre": "Competition not found",
+    "introuvableTexte": "It may have been deleted.",
+    "retourProgramme": "Back to my plan"
+  }
+}

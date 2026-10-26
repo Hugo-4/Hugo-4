@@ -32,8 +32,17 @@ export function JourPastille({ jour }: { jour: Jour }) {
         type: type || t('accueil.semaine.rienDePrevu'),
         statut: t(`accueil.semaine.statut.${statut}`),
       })}>
-      <View style={[styles.pastille, { backgroundColor: apparence.fond, borderColor: apparence.bordure }]}>
-        <AppText variant="corpsGras" color={apparence.texte} style={styles.initiale}>
+      {/* Pas seulement la couleur : manqué en pointillés, aujourd'hui souligné, fait plein. */}
+      <View
+        style={[
+          styles.pastille,
+          { backgroundColor: apparence.fond, borderColor: apparence.bordure },
+          statut === 'manque' && styles.pointilles,
+        ]}>
+        <AppText
+          variant="corpsGras"
+          color={apparence.texte}
+          style={[styles.initiale, statut === 'aujourdhui' && styles.souligne]}>
           {formatJourCourt(date)}
         </AppText>
       </View>
@@ -55,4 +64,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   initiale: { textTransform: 'uppercase' },
+  pointilles: { borderStyle: 'dashed' },
+  souligne: { textDecorationLine: 'underline' },
 });

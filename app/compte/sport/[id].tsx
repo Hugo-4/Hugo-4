@@ -1,6 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Skeleton } from '@/components/Skeleton';
@@ -17,8 +18,9 @@ export default function SportScreen() {
   if (sport) return <FormulaireSport sport={sport} />;
   return (
     <EcranEdition titre={t('profil.sports.titre')}>
+      <BandeauHorsLigne />
       {sports.isPending ? <Skeleton hauteur={sizes.anneauForme * 2} /> : null}
-      {sports.isError ? <ErrorState onRetry={sports.refetch} /> : null}
+      {sports.isError ? <ErrorState onRetry={sports.refetch} erreur={sports.error} /> : null}
       {sports.data && !sport ? <EmptyState titre={t('profil.sports.introuvable')} /> : null}
     </EcranEdition>
   );

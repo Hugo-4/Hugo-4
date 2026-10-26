@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { Chip } from '@/components/Chip';
 import { ChoixCadre } from '@/features/inscription/components/ChoixCadre';
 import { ErreurEnregistrement } from '@/features/inscription/components/ErreurEnregistrement';
@@ -46,6 +47,7 @@ export function FormulaireSport({ sport }: { sport: SportAthlete }) {
       enregistrementActif={valide && !modification.isPending}
       onEnregistrer={enregistrer}
       bandeau={modification.isError ? <ErreurEnregistrement erreur={modification.error} /> : null}>
+      <BandeauHorsLigne />
       <GroupeChoix titre={t('inscription.etapes.niveau.titre')} radio>
         {NIVEAUX.map((n) => (
           <Chip key={n} role="radio" label={t(`inscription.niveau.${n}.titre`)} selectionne={niveau === n} onPress={() => setNiveau(n)} />

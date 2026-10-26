@@ -1,6 +1,5 @@
 import i18n from '@/lib/i18n';
-
-import { dateLocale } from '@/lib/format';
+import { colors } from '@/theme/tokens';
 
 import type { DetailSeance, ExercicePresente, ResumeSeance } from './types';
 
@@ -52,19 +51,12 @@ export function prescription(e: ExercicePresente): string {
 }
 
 /**
- * Compte à rebours lisible (FRONTEND.md §1) : plus d'un an → « dans 4 ans et 7 mois »,
- * de 60 à 365 jours → « dans 23 semaines », moins de 60 jours → « J-45 ».
+ * Couleur de la forme du jour (score sur 10, FRONTEND.md §4.1) : bonne ≥ 6,7, moyenne de 3,4 à 6,6, basse ≤ 3,3.
+ * Toujours accompagnée d'un libellé : la couleur ne porte jamais seule l'information.
  */
-export function compteARebours(jours: number, dateEvenement: string, aujourdhui: string): string {
-  if (jours < 60) return String(i18n.t('accueil.evenement.jours', { count: Math.max(0, jours) }));
-  if (jours <= 365) return String(i18n.t('accueil.evenement.semaines', { count: Math.floor(jours / 7) }));
-  const debut = dateLocale(aujourdhui);
-  const fin = dateLocale(dateEvenement);
-  const mois =
-    (fin.getFullYear() - debut.getFullYear()) * 12 + fin.getMonth() - debut.getMonth() - (fin.getDate() < debut.getDate() ? 1 : 0);
-  const ans = String(i18n.t('accueil.evenement.ans', { count: Math.floor(mois / 12) }));
-  const reste = mois % 12;
-  return reste
-    ? String(i18n.t('accueil.evenement.ansEtMois', { ans, mois: i18n.t('accueil.evenement.mois', { count: reste }) }))
-    : String(i18n.t('accueil.evenement.dansAns', { ans }));
+export function couleurForme(score: number | null): string {
+  if (score === null) return colors.discret;
+  if (score >= 6.7) return colors.accent;
+  if (score > 3.3) return colors.vigilance;
+  return colors.danger;
 }

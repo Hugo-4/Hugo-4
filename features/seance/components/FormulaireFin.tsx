@@ -27,6 +27,8 @@ export function FormulaireFin({ dureeMin, onValider }: { dureeMin: number; onVal
   const [fatigue, setFatigue] = useState<number | null>(null);
   const [commentaire, setCommentaire] = useState('');
   const douleurs = douleursPourServeur(etat);
+  const consentementSante = consentement.data === true;
+  const douleursLisibles = etat.douleurs.map((d) => `${t(`inscription.zones.${d.zone}`, { defaultValue: d.zone })} ${d.intensite}/10`);
 
   const valider = () => {
     if (rpe === null) return;
@@ -35,8 +37,9 @@ export function FormulaireFin({ dureeMin, onValider }: { dureeMin: number; onVal
       duree_reelle_min: duree,
       ...(fatigue !== null ? { niveau_fatigue_apres: fatigue } : {}),
       // Données de santé : envoyées seulement avec le consentement.
-      ...(consentement.data && douleurs.length ? { douleurs } : {}),
+      ...(consentementSante && douleurs.length ? { douleurs } : {}),
       ...(commentaire.trim() ? { commentaire: commentaire.trim() } : {}),
+      consentement_sante: consentementSante,
     });
   };
 
@@ -61,8 +64,8 @@ export function FormulaireFin({ dureeMin, onValider }: { dureeMin: number; onVal
           onChange={setFatigue}
           a11yValeur={(v) => t('enSeance.fin.a11yFatigue', { valeur: v })}
         />
-        {douleurs.length ? (
-          <AppText variant="secondaire">{t('enSeance.fin.douleurs', { liste: douleurs.join(', ') })}</AppText>
+        {consentementSante && douleursLisibles.length ? (
+          <AppText variant="secondaire">{t('enSeance.fin.douleurs', { liste: douleursLisibles.join(', ') })}</AppText>
         ) : null}
         <TextField
           label={t('enSeance.fin.commentaire')}

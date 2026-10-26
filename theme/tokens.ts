@@ -18,6 +18,10 @@ export const colors = {
   vigilance: '#FFC94D',
   /** Forme basse, erreur, urgence. */
   danger: '#FF6B6B',
+  /** Information neutre, liens dans le chat. */
+  info: '#5EC8FF',
+  /** Contour d'un bouton secondaire ou d'un champ (contraste ≥ 3:1 sur le fond). */
+  bordureChamp: '#6A736E',
 } as const;
 
 export const radius = {
@@ -66,11 +70,13 @@ export const fontSizes = {
 } as const;
 
 export const sizes = {
-  /** Cible tactile minimale. */
-  cibleTactile: 44,
+  /** Cible tactile minimale (FRONTEND.md §5.3 : 48 × 48). */
+  cibleTactile: 48,
+  /** Hauteur du bouton principal (FRONTEND.md §5.3). */
+  boutonPrincipal: 56,
   icone: 20,
   iconePetite: 16,
-  avatar: 44,
+  avatar: 48,
   anneauForme: 112,
   epaisseurAnneau: 10,
   pastilleJour: 36,
@@ -84,6 +90,15 @@ export const sizes = {
   /** En séance : boutons − / + et gros bouton de validation (FRONTEND.md §4.3). */
   pasAPas: 48,
   boutonSeance: 60,
+  /** Graphiques de Progrès (react-native-svg). */
+  graphique: 160,
+  traitCourbe: 2,
+  pointCourbe: 4,
+  /** Pastille d'un jour du calendrier du mois. */
+  jourCalendrier: 44,
+  /** Pastille de badge (point orange sur un onglet, compteur de la cloche). */
+  badge: 8,
+  compteur: 18,
 } as const;
 
 export const opacity = {
@@ -91,6 +106,8 @@ export const opacity = {
   desactive: 0.4,
   /** Voile derrière une feuille modale. */
   voile: 0.7,
+  /** Fond de la zone optimale d'un graphique. */
+  zone: 0.18,
 } as const;
 
 export const tokens = { colors, radius, spacing, fonts, fontSizes, sizes, opacity };
