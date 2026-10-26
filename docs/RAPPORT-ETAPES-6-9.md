@@ -106,7 +106,8 @@ Ce qui marche :
   bouton retour Android avec confirmation ; « Fermer » si le démarrage échoue (sans réseau).
 
 À tester :
-1. Ouvre le check-in, réponds à deux questions, ferme la feuille, rouvre : tes réponses sont là.
+1. Ouvre le check-in, réponds à deux questions, ferme la feuille, rouvre : tes réponses sont là. Envoie-le, puis
+   « Refaire mon check-in » : tout ce que tu avais envoyé est déjà rempli.
 2. Mode avion, puis ouvre une rubrique du Profil jamais ouverte : « Pas de réseau » ; coupe le mode avion :
    la page se charge seule.
 3. Démarre une séance, valide une série en touchant deux fois très vite : une seule série est comptée.
@@ -124,7 +125,7 @@ Lancées sur le dernier commit, dans le conteneur de travail (Linux ; les mêmes
 | `npx expo-doctor` | 17/20, **identique à avant le travail** : les 3 échecs demandent l'accès à exp.host, coupé dans le conteneur (schéma de `app.json`, annuaire React Native, versions du SDK). Aucun nouveau problème. Chez toi, avec Internet, ces 3 contrôles devraient passer. |
 | `node scripts/verifier-front.mjs` | 0 problème : traductions (mêmes clés FR / EN, aucune clé manquante), design (aucune couleur ni police en dur hors `theme/`), textes (aucun texte affiché en dur), sécurité (aucun `userId` dans un corps de requête, aucune chaîne ressemblant à une clé) |
 | Relecture écran par écran (1er tour, 3 relecteurs qui n'ont pas écrit le code) | 10 écarts bloquants et 82 mineurs. Les 10 bloquants et la grande majorité des mineurs sont corrigés ; ce qui reste est listé en §8 |
-| Relecture du 2e tour (relecteur indépendant) | les 10 bloquants sont confirmés corrigés ; il a trouvé 3 régressions réelles dans les corrections (brouillon du check-in partagé entre comptes, « Refaire » le check-in qui effaçait douleurs / durée / lieu, langue remise en français après une confirmation d'email tardive) et 6 autres points (séance sans sortie si le démarrage échoue, 5xx pris pour un refus de suppression, RPE prérempli, double toucher, contexte du Coach perdu en revenant d'un écran ouvert depuis le Coach, rafraîchissement après une adaptation acceptée depuis Aujourd'hui) : **tous corrigés** dans le dernier commit. Un trou fonctionnel reste (voir §8) |
+| Relecture du 2e tour (relecteur indépendant) | les 10 bloquants sont confirmés corrigés ; il a trouvé 3 régressions réelles dans les corrections (brouillon du check-in partagé entre comptes, « Refaire » le check-in qui effaçait douleurs / durée / lieu, langue remise en français après une confirmation d'email tardive) et 6 autres points (séance sans sortie si le démarrage échoue, 5xx pris pour un refus de suppression, RPE prérempli, double toucher, contexte du Coach perdu en revenant d'un écran ouvert depuis le Coach, rafraîchissement après une adaptation acceptée depuis Aujourd'hui) : **tous corrigés** (commits `b567aca` et `474da11`), revérifiés au banc d'essai. Un trou fonctionnel reste (voir §8) |
 | Banc d'essai dans un navigateur (serveur et Supabase simulés) | Coach, Programme, Progrès, Profil, check-in, séance complète, hors ligne, Coach depuis une séance, passage en anglais : tout passe |
 
 Ce qui n'a pas pu être fait ici : l'essai sur un vrai téléphone (Expo Go). C'est la liste « À tester » de §2.
@@ -216,6 +217,8 @@ Aucune dépendance ajoutée pendant les étapes 6 à 9.
 Sur la branche `claude/etape-1-setup-jw60p2`, du plus récent au plus ancien. Contrairement au prompt (« rien
 n'est poussé »), **tout est poussé** sur GitHub, avec ton autorisation explicite ; jamais de `--force`.
 
+- `474da11` Coach : contexte oublié quand on change d'onglet, gardé au retour d'un écran ouvert depuis le Coach
+- `3782f43` Rapport des étapes 6 à 9 : résultat du second tour et écarts restants
 - `b567aca` Corrections du second tour de relecture
 - `cb30aa9` Rapport des étapes 6 à 9 (docs/RAPPORT-ETAPES-6-9.md)
 - `51d1432` Carte du front : route coach-seance et ouverture du Coach depuis une séance
