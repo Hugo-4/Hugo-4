@@ -1,9 +1,10 @@
+import { type ActionApp, lireActionApp } from './actionsApp';
 import type { Avis, MessageConversation, PropositionCoach, StatutProposition } from './types';
 
 /**
  * Lecture d'une ligne `messages_coach` (format attendu de la colonne `actions` : docs/MANQUES-SERVEUR.md §3) :
  *   actions = [{ type: 'proposition', id, titre, avant[], apres[], inchange[], statut, annulable_jusqu_au },
- *              { type: 'urgence' }]
+ *              { type: 'urgence' }, { type: 'langue', langue: 'en' }, { type: 'ouvrir', ecran: 'abonnement' }]
  * Une ligne mal formée est ignorée plutôt que de casser l'écran.
  */
 
@@ -52,5 +53,6 @@ export function versMessage(ligne: Ligne): MessageConversation | null {
     avis,
     proposition: brute ? lireProposition(brute) : null,
     urgence: actions.some((a) => a.type === 'urgence'),
+    actionsApp: actions.map(lireActionApp).filter((a): a is ActionApp => a !== null),
   };
 }

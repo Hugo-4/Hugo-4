@@ -23,6 +23,7 @@ passer à `false` est indiquée pour chaque route.
 | 6 | `GET /credits` (Coach et Profil), `POST/GET /compte/export`, `POST /compte/suppression`, `GET/PATCH /preferences/nutrition`, `GET /notifications/centre` (+ lu, tout lu), `GET /sante` (facultatif) | Profil, Notifications, Coach | `PARAMETRES_FICTIF` (features/parametres/source.ts), `NOTIFICATIONS_FICTIF` (features/notifications/source.ts) |
 | 7 | Aucune route : lire les réponses du questionnaire complet (`tests_athlete`, `profil_specifique`, préférences, `signaux_effort`) et ne plus inventer de charge ; `POST /tests` avec charge × répétitions (souhaité) | Questionnaire, toutes les séances | — |
 | 8 | `POST /coach/messages` avec `contexte: { sujet: "objectif" }` : le coach insère des étapes « proposées » dans `sous_objectifs` ; le programme lit les étapes actives | Programme (Mon objectif), Coach | `COACH_FICTIF` (le mode démonstration insère 3 étapes) |
+| 9 | `POST /coach/messages` : réponses rapides `forme_du_jour` et `fatigue` (proposition avant / après), actions sur l'app dans `actions` (`langue`, `ouvrir`) | Coach, Aujourd'hui | `COACH_FICTIF` (le mode démonstration reconnaît quelques mots-clés) |
 
 ## 0. Sécurité à corriger avant tout
 
@@ -1030,3 +1031,38 @@ l'app lit, crée, modifie et supprime les étapes de l'athlète en direct (RLS).
 - Lire les étapes `actif` : placer une séance de test ou une simulation à l'approche de chaque `date_cible`,
   orienter les blocs vers l'indicateur suivi.
 - Quand une valeur de test atteint `valeur_cible`, proposer de marquer l'étape `atteint` (notification).
+
+## 9. Coach plus précis et plus général (étape 13)
+
+Toujours via `POST /coach/messages` (§3) ; rien de nouveau côté route, mais le superviseur doit savoir :
+
+### Adapter la séance du jour (forme, fatigue, blessure, temps)
+- Nouvelles réponses rapides envoyées en `reponse_rapide` : `forme_du_jour` (« Adapte ma séance à ma forme »,
+  proposée en premier quand `checkins_forme.recommandation` du jour vaut `alleger`, `recuperation_active` ou
+  `repos_complet`) et `fatigue` (« Je suis fatigué aujourd'hui »). Le coach lit le check-in du jour, les douleurs
+  (avec consentement), le temps disponible, et répond par une **proposition** avant / après (§3), jamais une
+  modification sans accord.
+- La carte Forme d'Aujourd'hui ouvre le coach sur la séance du jour (`contexte.programme_seance_id`).
+
+### Questions générales sur l'app → actions exécutées par l'app
+Le coach peut ajouter à sa réponse des actions que l'app affiche en boutons sous le message. À écrire dans
+`messages_coach.actions` (et dans `message` de la réponse de `POST /coach/messages`, champ `actions_app` ou dans
+`actions`, au même format) :
+```json
+[
+  { "type": "langue", "langue": "en" },
+  { "type": "ouvrir", "ecran": "abonnement" }
+]
+```
+- `langue` : `fr` ou `en`. L'app demande confirmation puis enregistre `users.langue` elle-même.
+- `ouvrir` : `abonnement`, `preferences`, `disponibilites`, `lieux`, `objectifs`, `mon_objectif`, `corps`,
+  `questionnaire`, `consentements`, `notifications`, `memoire`, `donnees`, `progres`, `programme`, `checkin`.
+- Une action inconnue est ignorée par l'app (pas d'erreur). Le coach ne modifie jamais lui-même un réglage.
+
+### Plus précis
+- Utiliser les réponses du questionnaire complet (§7), les étapes actives (§8), l'historique des séances et des
+  tests pour chaque réponse ; ne jamais redemander une information déjà connue.
+
+### Crédits (décision produit)
+- Aujourd'hui 50 crédits par mois (offre gratuite dans les données fictives). À revoir côté serveur et
+  abonnements ; l'app affiche simplement ce que renvoie `GET /credits` (§6.1).

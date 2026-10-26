@@ -104,7 +104,7 @@ export const sourceFictive: SourceCoach = {
 
     memoire.conversationId ??= nouvelId('conversation');
     const maintenant = new Date().toISOString();
-    const commun = { created_at: maintenant, avis: null, urgence: false, proposition: null };
+    const commun = { created_at: maintenant, avis: null, urgence: false, proposition: null, actionsApp: [] };
     const message_athlete: MessageConversation = { ...commun, id: nouvelId('message'), role: 'athlete', contenu: demande.texte };
     const message: MessageConversation = {
       ...commun,
@@ -113,6 +113,7 @@ export const sourceFictive: SourceCoach = {
       contenu: texte,
       urgence: reponse.urgence === true,
       proposition: versProposition(reponse),
+      actionsApp: reponse.actionsApp ?? [],
     };
     memoire.messages = [...memoire.messages, message_athlete, message];
     memoire.credits = { ...memoire.credits, restant: memoire.credits.restant - 1 };

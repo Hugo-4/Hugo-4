@@ -20,7 +20,7 @@
   },
   "vide": {
     "titre": "What do you want to change?",
-    "texte": "Duration, place, day, pain: just write it. The coach shows you what changes before you accept."
+    "texte": "Your session (duration, place, day, fatigue, pain), the milestones towards your goal, or the app itself (language, plan, reminders): just write it. The coach shows you what changes before you accept."
   },
   "horsLigne": {
     "titre": "You are offline",
@@ -28,11 +28,13 @@
   },
   "reponsesRapides": {
     "a11y": "Quick replies",
+    "forme_du_jour": "Adapt my session to how I feel",
     "duree_30": "I only have 30 min",
     "sans_salle": "No gym today",
     "decaler_demain": "Move to tomorrow",
     "douleur": "Something hurts",
-    "etapes_objectif": "Suggest milestones towards my goal"
+    "etapes_objectif": "Suggest milestones towards my goal",
+    "fatigue": "I'm tired today"
   },
   "saisie": {
     "placeholder": "Write to the coach…",
@@ -58,5 +60,32 @@
   },
   "proposition": {
     "erreur": "The change could not be saved. Try again."
+  },
+  "actionsApp": {
+    "langue": "Switch the app to {{langue}}",
+    "langues": {
+      "fr": "French",
+      "en": "English"
+    },
+    "langueTitre": "Switch the app to {{langue}}?",
+    "langueTexte": "Screens and the coach's answers change language. You can switch back in Profile → Preferences.",
+    "confirmer": "Confirm",
+    "ecrans": {
+      "abonnement": "Open: plan and credits",
+      "preferences": "Open: preferences",
+      "disponibilites": "Open: availability",
+      "lieux": "Open: places",
+      "objectifs": "Open: goals and competitions",
+      "mon_objectif": "Open: my goal",
+      "corps": "Open: my body",
+      "questionnaire": "Finish signing up",
+      "consentements": "Open: consents",
+      "notifications": "Open: notifications",
+      "memoire": "Open: what the coach remembers",
+      "donnees": "Open: my data",
+      "progres": "Open: progress",
+      "programme": "Open: plan",
+      "checkin": "Do my check-in"
+    }
   }
 }

@@ -87,7 +87,8 @@
       "checkinTitre": "How are you feeling?",
       "checkinTexte": "Do your check-in so your coach can adapt today's session.",
       "checkinBouton": "Do my check-in",
-      "checkinAide": "30 seconds, 7 questions"
+      "checkinAide": "30 seconds, 7 questions",
+      "adapter": "Adapt my session with the coach"
     },
     "fatigue": {
       "titre": "Coach suggestion",

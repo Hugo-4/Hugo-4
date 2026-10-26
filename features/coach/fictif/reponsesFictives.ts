@@ -1,3 +1,4 @@
+import type { ActionApp } from '../actionsApp';
 import type { DemandeMessage } from '../types';
 
 /**
@@ -13,9 +14,25 @@ export type ReponseFictive = {
   texte: Bilingue;
   proposition?: { titre: Bilingue; avant: ListeBilingue; apres: ListeBilingue; inchange: ListeBilingue };
   urgence?: boolean;
+  actionsApp?: ActionApp[];
 };
 
-type CleReponse = 'duree_30' | 'sans_salle' | 'decaler_demain' | 'douleur' | 'etapes_objectif' | 'urgence' | 'remplacer' | 'defaut';
+type CleReponse =
+  | 'duree_30'
+  | 'fatigue'
+  | 'sans_salle'
+  | 'decaler_demain'
+  | 'douleur'
+  | 'etapes_objectif'
+  | 'langue_en'
+  | 'langue_fr'
+  | 'abonnement'
+  | 'notifications'
+  | 'poids'
+  | 'questionnaire'
+  | 'urgence'
+  | 'remplacer'
+  | 'defaut';
 
 const REPONSES: Record<CleReponse, ReponseFictive> = {
   urgence: {
@@ -39,6 +56,60 @@ const REPONSES: Record<CleReponse, ReponseFictive> = {
         en: ['Back squat: 4 × 5 at 80 kg', 'Romanian deadlift: 3 × 8 at 70 kg', "Today's goal: lower-body strength"],
       },
     },
+  },
+  fatigue: {
+    texte: {
+      fr: "Merci de me le dire. Je garde la séance mais je baisse le volume d'environ un tiers et l'intensité d'un cran : tu travailles la technique sans creuser la fatigue.",
+      en: 'Thanks for telling me. I keep the session but cut the volume by about a third and lower the intensity a notch: you work on technique without digging deeper into fatigue.',
+    },
+    proposition: {
+      titre: { fr: 'Séance du jour allégée', en: "Today's session, lighter" },
+      avant: { fr: ['6 exercices · RPE 8', '4 × 5 au squat'], en: ['6 exercises · RPE 8', '4 × 5 back squat'] },
+      apres: { fr: ['4 exercices · RPE 6-7', '3 × 5 au squat, même charge'], en: ['4 exercises · RPE 6-7', '3 × 5 back squat, same load'] },
+      inchange: { fr: ['Objectif du jour : force · bas du corps', 'Échauffement complet'], en: ["Today's goal: lower-body strength", 'Full warm-up'] },
+    },
+  },
+  langue_en: {
+    texte: {
+      fr: "Je peux passer l'app en anglais. Confirme avec le bouton ci-dessous : tu pourras revenir au français dans Profil → Préférences.",
+      en: 'I can switch the app to English. Confirm with the button below: you can switch back in Profile → Preferences.',
+    },
+    actionsApp: [{ type: 'langue', langue: 'en' }],
+  },
+  langue_fr: {
+    texte: {
+      fr: "Je peux passer l'app en français. Confirme avec le bouton ci-dessous.",
+      en: 'I can switch the app to French. Confirm with the button below.',
+    },
+    actionsApp: [{ type: 'langue', langue: 'fr' }],
+  },
+  abonnement: {
+    texte: {
+      fr: 'Ton abonnement et ton solde de crédits sont dans Profil → Abonnement et crédits. Je te l\'ouvre :',
+      en: 'Your plan and credit balance are in Profile → Plan and credits. Here it is:',
+    },
+    actionsApp: [{ type: 'ouvrir', ecran: 'abonnement' }],
+  },
+  notifications: {
+    texte: {
+      fr: 'Les rappels de séance, le check-in du matin et les heures calmes se règlent dans tes préférences :',
+      en: 'Session reminders, the morning check-in and quiet hours are set in your preferences:',
+    },
+    actionsApp: [{ type: 'ouvrir', ecran: 'preferences' }, { type: 'ouvrir', ecran: 'notifications' }],
+  },
+  poids: {
+    texte: {
+      fr: 'Ta taille, ton poids et tes mesures sont dans Profil → Mon corps. Ton poids sert au plan nutrition du jour :',
+      en: 'Your height, weight and measurements are in Profile → My body. Your weight is used for the daily nutrition plan:',
+    },
+    actionsApp: [{ type: 'ouvrir', ecran: 'corps' }],
+  },
+  questionnaire: {
+    texte: {
+      fr: "Plus j'en sais sur toi, plus tes séances sont précises : tes charges, tes temps, ton historique. Tu peux finir ton questionnaire par petits blocs :",
+      en: 'The more I know about you, the more precise your sessions: your loads, times, history. You can finish your questionnaire in small blocks:',
+    },
+    actionsApp: [{ type: 'ouvrir', ecran: 'questionnaire' }],
   },
   sans_salle: {
     texte: {
@@ -92,7 +163,17 @@ const REPONSES: Record<CleReponse, ReponseFictive> = {
 
 /** Mots qui déclenchent la réponse d'urgence (le vrai serveur a ses propres garde-fous, plus complets). */
 const URGENCE = /poitrine|malaise|essouffl|chest|faint|breathless|short of breath/i;
+/** Questions sur l'app (le vrai serveur les reconnaît lui-même ; ici, quelques mots-clés). */
+const MOTS_APP: [CleReponse, RegExp][] = [
+  ['langue_en', /anglais|english/i],
+  ['langue_fr', /français|francais|french/i],
+  ['abonnement', /abonnement|crédit|credit|subscription|plan\b/i],
+  ['notifications', /notif|rappel|reminder/i],
+  ['poids', /\bpoids\b|taille|weight|height/i],
+  ['questionnaire', /questionnaire|inscription|charges? max|1rm|vma/i],
+];
 const MOTS: [CleReponse, RegExp][] = [
+  ['fatigue', /fatigu|crevé|creve|épuisé|epuise|tired|exhausted/i],
   ['duree_30', /\b30\s?min/i],
   ['sans_salle', /salle|gym|maison|home/i],
   ['decaler_demain', /demain|décaler|decaler|tomorrow/i],
@@ -102,8 +183,10 @@ const MOTS: [CleReponse, RegExp][] = [
 /** Réponse fictive : urgence d'abord, puis réponse rapide, mots-clés, contexte d'exercice, réponse par défaut. */
 export function choisirReponse(demande: DemandeMessage): ReponseFictive {
   if (URGENCE.test(demande.texte)) return REPONSES.urgence;
+  // « Adapte ma séance à ma forme » : le vrai serveur lit le check-in ; ici, la même séance allégée que « fatigué ».
+  if (demande.reponse_rapide === 'forme_du_jour') return REPONSES.fatigue;
   if (demande.reponse_rapide) return REPONSES[demande.reponse_rapide];
-  const trouvee = MOTS.find(([, motif]) => motif.test(demande.texte));
+  const trouvee = [...MOTS_APP, ...MOTS].find(([, motif]) => motif.test(demande.texte));
   if (trouvee) return REPONSES[trouvee[0]];
   const contexte = demande.contexte;
   if (contexte && 'sujet' in contexte) return REPONSES.etapes_objectif;

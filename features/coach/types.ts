@@ -3,6 +3,8 @@
  * `conversations_coach` / `messages_coach` (lecture directe, protégée par RLS).
  */
 
+import type { ActionApp } from './actionsApp';
+
 export type RoleMessage = 'athlete' | 'coach';
 
 /** Colonne `messages_coach.avis` : 1 (👍), -1 (👎) ou rien. */
@@ -36,6 +38,8 @@ export type MessageConversation = {
   proposition: PropositionCoach | null;
   /** Signes d'alerte repérés par le serveur : bandeau « Appelle le 15 ou le 112 ». */
   urgence: boolean;
+  /** Actions sur l'app proposées par le coach (changer la langue, ouvrir un écran). */
+  actionsApp: ActionApp[];
 };
 
 /** Conversation courante (canal « coach ») ; `id` vaut `null` tant que l'athlète n'a rien envoyé. */
@@ -52,7 +56,7 @@ export type CreditsCoach = {
 };
 
 /** Réponses rapides : un code stable pour le serveur, en plus du texte affiché dans la langue de l'app. */
-export type CodeReponseRapide = 'duree_30' | 'sans_salle' | 'decaler_demain' | 'douleur' | 'etapes_objectif';
+export type CodeReponseRapide = 'forme_du_jour' | 'duree_30' | 'fatigue' | 'sans_salle' | 'decaler_demain' | 'douleur' | 'etapes_objectif';
 
 /**
  * Contexte envoyé avec le message : une séance (et un exercice), ou l'objectif principal (`sujet: 'objectif'` :

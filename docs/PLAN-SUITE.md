@@ -39,7 +39,7 @@ les allures. Une séance « à RPE 9 » ou « à 80 % » ne veut rien dire sans 
 - Construites ensemble dans le Coach : il propose les étapes, l'athlète les accepte, les modifie ou les refuse.
 - Côté serveur / base : table des sous-objectifs (à créer, migration à montrer), route de proposition par le coach.
 
-## Étape 13 — Coach plus précis et plus général
+## Étape 13 — Coach plus précis et plus général — FAITE côté app (le vrai coach : docs/MANQUES-SERVEUR.md §9)
 
 - Adapter la séance du jour selon la forme, une blessure, le temps disponible (le serveur le fait en partie :
   propositions avant / après déjà en place côté app).

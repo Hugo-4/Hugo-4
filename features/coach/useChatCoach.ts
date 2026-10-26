@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
 
+import { useCheckinDuJour } from '@/features/checkin/useCheckinDuJour';
 import { useConsentementSante } from '@/features/checkin/useConsentementSante';
 
 import { versContexteMessage } from './contexte';
@@ -16,6 +17,8 @@ export function useChatCoach() {
   const conversation = useConversation();
   const credits = useCredits();
   const consentement = useConsentementSante();
+  const checkin = useCheckinDuJour();
+  const formeBasse = ['alleger', 'recuperation_active', 'repos_complet'].includes(checkin.data?.recommandation ?? '');
   const envoi = useEnvoyerMessage(conversation.data?.id ?? null, versContexteMessage(contexte));
 
   const messages = conversation.data?.messages ?? [];
@@ -33,7 +36,7 @@ export function useChatCoach() {
     vide: messages.length === 0 && envoi.enAttente.length === 0 && !envoi.enCours,
     urgence: dernierCoach?.urgence === true,
     credits: credits.data,
-    reponsesRapides: reponsesRapidesVisibles(consentement.data === true, contexte?.type === 'objectif'),
+    reponsesRapides: reponsesRapidesVisibles(consentement.data === true, contexte?.type === 'objectif', formeBasse),
     ...envoi,
   };
 }
