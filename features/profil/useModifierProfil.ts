@@ -8,6 +8,7 @@ import type { ObjectifSport } from '@/features/inscription/useReferentiels';
 import { CLES } from '@/features/parametres/constantes';
 import { supabase } from '@/lib/supabase';
 
+import { appliquerRetraitSante, restaurerAvantRetrait, supprimerDonneesSante } from './retraitSante';
 import type { TypeConsentement } from './types';
 
 function useActualiser() {
@@ -75,8 +76,9 @@ export function useModifierSport() {
 
 /**
  * Accorde ou retire un consentement : ajoute une ligne horodatée au journal (rien n'est écrasé).
- * Données de santé : le nouvel état s'applique tout de suite à toute l'app (sans attendre la relecture) ;
- * après un retrait, les données de santé déjà en cache sont supprimées (rubrique Santé, etc.).
+ * Retrait du consentement santé : appliqué avant même la réponse (consentement à faux, données de santé
+ * effacées du cache, souvenirs de santé retirés), avec retour en arrière si l'enregistrement échoue.
+ * Accord : appliqué quand la base l'a enregistré.
  */
 export function useChangerConsentement() {
   const userId = useUserId();
@@ -93,10 +95,15 @@ export function useChangerConsentement() {
           source: 'parametres',
         }),
       ),
+    onMutate: ({ type, accorde }) =>
+      type === 'donnees_sante' && !accorde ? appliquerRetraitSante(queryClient, userId) : undefined,
+    onError: (_erreur, _variables, avant) => {
+      if (avant) restaurerAvantRetrait(queryClient, avant);
+    },
     onSuccess: (_resultat, { type, accorde }) => {
       if (type === 'donnees_sante') {
         queryClient.setQueryData(['consentement', 'donnees_sante', userId], accorde);
-        if (!accorde) queryClient.removeQueries({ queryKey: CLES.sante });
+        if (!accorde) supprimerDonneesSante(queryClient);
         queryClient.invalidateQueries({ queryKey: CLES.memoire });
         queryClient.invalidateQueries({ queryKey: CLES.nutrition });
       }

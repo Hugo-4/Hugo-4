@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { Button } from '@/components/Button';
 import { TextField } from '@/components/TextField';
 import { ErreurEnregistrement } from '@/features/inscription/components/ErreurEnregistrement';
@@ -36,6 +37,7 @@ export function FormulaireSouvenir({ souvenir }: { souvenir: Souvenir }) {
         )
       }
       bandeau={erreur ? <ErreurEnregistrement erreur={erreur} /> : null}>
+      <BandeauHorsLigne />
       <TextField
         label={t('parametres.memoire.texte')}
         aide={t('parametres.memoire.texteAide', { nombre: contenu.length, max: LONGUEUR_SOUVENIR })}

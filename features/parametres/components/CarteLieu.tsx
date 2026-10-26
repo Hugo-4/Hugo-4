@@ -58,7 +58,7 @@ export function CarteLieu({ lieu, onModifier, onParDefaut, onSupprimer, enCours 
         ) : (
           <View />
         )}
-        <IconButton accessibilityLabel={`${t('parametres.lieux.supprimer')} : ${lieu.nom}`} onPress={onSupprimer}>
+        <IconButton accessibilityLabel={t('parametres.lieux.a11ySupprimer', { nom: lieu.nom })} onPress={onSupprimer}>
           <Trash2 color={colors.texte2} size={sizes.icone} />
         </IconButton>
       </View>

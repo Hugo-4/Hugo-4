@@ -10,7 +10,8 @@ import { sizes } from '@/theme/tokens';
 
 /**
  * Consentements : CGU (date d'acceptation, ou acceptation si elles manquent) et données de santé
- * (accorder / retirer : le retrait masque tout de suite les écrans de santé).
+ * (accorder / retirer : le retrait masque tout de suite les écrans de santé). Une seule action principale :
+ * si les CGU manquent, leur acceptation passe avant l'accord santé (bouton secondaire).
  */
 export default function ConsentementsScreen() {
   const { t } = useTranslation();
@@ -27,7 +28,10 @@ export default function ConsentementsScreen() {
         onReessayer={consentements.refetch}
         squelette={<Skeleton hauteur={sizes.anneauForme * 2} />}>
         <ConsentementCgu etat={consentements.data?.cgu} />
-        <ConsentementSante etat={consentements.data?.donnees_sante} />
+        <ConsentementSante
+          etat={consentements.data?.donnees_sante}
+          cguManquantes={consentements.data !== undefined && consentements.data.cgu?.accorde !== true}
+        />
       </EtatsEcran>
     </EcranEdition>
   );

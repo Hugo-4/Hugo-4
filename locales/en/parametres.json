@@ -69,7 +69,8 @@
   "disponibilites": {
     "titre": "Availability and places",
     "aide": "Tap a time of day to add or remove it, then tap the slot to set its duration and place.",
-    "aucune": "No slot saved: by default the coach plans Monday, Tuesday, Thursday and Saturday evenings.",
+    "aucune": "No slot: the coach will pick default days.",
+    "lieuxRetires": "A deleted place was removed from your slots (“Anywhere”): save to confirm.",
     "mesLieux": "My places",
     "lieux_one": "{{count}} place",
     "lieux_other": "{{count}} places",
@@ -105,6 +106,7 @@
     "salleComplete": "Fully equipped gym",
     "salleCompleteAide": "Barbells, dumbbells, machines and cardio.",
     "supprimer": "Delete this place",
+    "a11ySupprimer": "Delete the place {{nom}}",
     "confirmerTitre": "Delete “{{nom}}”?",
     "confirmerTexte": "This place won't be suggested anymore. Your past sessions don't change.",
     "confirmer": "Delete",
@@ -241,6 +243,7 @@
     "santeMasquee": "Items about your health are hidden until you give your consent for health data.",
     "videTitre": "Nothing yet",
     "videTexte": "Through your chats and sessions, the coach will remember your preferences, constraints and goals.",
+    "parlerCoach": "Talk to the coach",
     "confirme": "Confirmed",
     "desactive": "Disabled",
     "a11ySouvenir": "{{contenu}}. {{etat}}",
@@ -293,7 +296,10 @@
     "etape2Texte": "Your account will be permanently deleted and you'll be signed out.",
     "supprimerDefinitivement": "Delete permanently",
     "fictif": "Demo mode: your account won't really be deleted, you'll only be signed out.",
-    "erreurSuppression": "Deletion failed. Your account is intact: try again."
+    "erreurSuppression": "Deletion failed. Your account is intact: try again.",
+    "erreurSuppressionIncertaine": "No response from the server: the deletion couldn't be confirmed. Try again; if your account is already deleted, you'll simply be signed out.",
+    "supprimeSansDeconnexion": "Your account is deleted, but signing out failed on this phone. Tap “Sign me out”.",
+    "seDeconnecter": "Sign me out"
   },
   "aide": {
     "titre": "Help"

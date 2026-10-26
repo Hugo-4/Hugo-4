@@ -11,6 +11,7 @@
   "a11yLigne": "{{etat}}. {{type}}. {{titre}}. {{corps}}. {{moment}}",
   "videTitre": "Aucune notification",
   "videTexte": "Les propositions du coach, les adaptations de ta semaine, les rappels et tes records apparaîtront ici.",
+  "regler": "Régler mes notifications",
   "fictif": "Données de démonstration : le centre de notifications n'est pas encore relié au serveur.",
   "erreurMarquage": "Impossible de marquer comme lu. Réessaie.",
   "types": {

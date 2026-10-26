@@ -1,4 +1,3 @@
-import { Bell } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -8,9 +7,12 @@ import { Screen } from '@/components/Screen';
 import { Skeleton } from '@/components/Skeleton';
 import { ListeNotifications } from '@/features/notifications/components/ListeNotifications';
 import { useCentreNotifications } from '@/features/notifications/useNotifications';
-import { colors, radius, sizes, spacing } from '@/theme/tokens';
+import { radius, sizes, spacing } from '@/theme/tokens';
 
-/** Notifications (FRONTEND.md §4.8) : lues / non lues, chaque ligne ouvre l'écran concerné. */
+/**
+ * Notifications (FRONTEND.md §4.8) : lues / non lues, chaque ligne ouvre l'écran concerné.
+ * L'état vide (« Régler mes notifications ») est rendu dans la liste : tirer pour rafraîchir y reste possible.
+ */
 export default function NotificationsScreen() {
   const { t } = useTranslation();
   const centre = useCentreNotifications();
@@ -24,7 +26,6 @@ export default function NotificationsScreen() {
           chargement={centre.isPending}
           erreur={centre.error}
           aDesDonnees={centre.data !== undefined}
-          vide={notifications.length === 0}
           onReessayer={centre.refetch}
           squelette={
             <View style={styles.squelette}>
@@ -32,12 +33,7 @@ export default function NotificationsScreen() {
                 <Skeleton key={i} hauteur={sizes.anneauForme * 0.8} arrondi={radius.petit} />
               ))}
             </View>
-          }
-          etatVide={{
-            icon: <Bell color={colors.discret} size={sizes.icone * 2} />,
-            titre: t('notifications.videTitre'),
-            texte: t('notifications.videTexte'),
-          }}>
+          }>
           <ListeNotifications
             notifications={notifications}
             rafraichissement={centre.isRefetching}

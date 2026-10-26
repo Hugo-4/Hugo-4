@@ -11,6 +11,7 @@
   "a11yLigne": "{{etat}}. {{type}}. {{titre}}. {{corps}}. {{moment}}",
   "videTitre": "No notifications",
   "videTexte": "The coach's proposals, your week's adjustments, reminders and your records will show up here.",
+  "regler": "Set up my notifications",
   "fictif": "Demo data: the notification center isn't connected to the server yet.",
   "erreurMarquage": "Couldn't mark as read. Try again.",
   "types": {

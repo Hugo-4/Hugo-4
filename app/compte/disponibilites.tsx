@@ -21,14 +21,15 @@ export default function DisponibilitesScreen() {
     },
   };
 
-  // Les lieux ne servent qu'à nommer les créneaux : sans eux, l'écran reste utilisable.
-  if (disponibilites.data && !lieux.isPending) {
-    return <EditeurDisponibilites initiales={disponibilites.data} lieux={lieux.data ?? []} rafraichir={rafraichir} />;
+  // Les lieux ne servent qu'à nommer les créneaux : sans eux (hors ligne, erreur), l'écran reste utilisable.
+  // `isLoading` et non `isPending` : une requête en pause hors ligne ne bloque pas l'écran.
+  if (disponibilites.data && !lieux.isLoading) {
+    return <EditeurDisponibilites initiales={disponibilites.data} lieux={lieux.data} rafraichir={rafraichir} />;
   }
   return (
     <EcranEdition titre={t('parametres.disponibilites.titre')}>
       <EtatsEcran
-        chargement={disponibilites.isPending || lieux.isPending}
+        chargement={disponibilites.isPending || lieux.isLoading}
         erreur={disponibilites.error}
         aDesDonnees={false}
         onReessayer={disponibilites.refetch}

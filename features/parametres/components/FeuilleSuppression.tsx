@@ -8,16 +8,27 @@ import { Feuille } from '@/components/Feuille';
 import { MessageErreur } from '@/features/auth/components/MessageErreur';
 
 import { PARAMETRES_FICTIF } from '../source';
-import { useSupprimerCompte } from '../useDonnees';
+import { issueEchecSuppression, useSupprimerCompte, useTerminerDeconnexion } from '../useDonnees';
+
+const MESSAGES = {
+  refusee: 'parametres.donnees.erreurSuppression',
+  incertaine: 'parametres.donnees.erreurSuppressionIncertaine',
+  supprime: 'parametres.donnees.supprimeSansDeconnexion',
+} as const;
 
 /**
  * Double confirmation avant la suppression du compte : 1) ce qui est effacé (et ce qui ne l'est pas),
  * 2) dernière confirmation, seul bouton rouge. Puis suppression et déconnexion.
+ * « Ton compte est intact » n'est affiché que si le serveur a répondu par une erreur ; si le compte est
+ * supprimé mais la déconnexion échoue, seul « Me déconnecter » reste proposé.
  */
 export function FeuilleSuppression({ onFermer }: { onFermer: () => void }) {
   const { t } = useTranslation();
   const [etape, setEtape] = useState<1 | 2>(1);
   const suppression = useSupprimerCompte();
+  const deconnexion = useTerminerDeconnexion();
+  const issue = suppression.isError ? issueEchecSuppression(suppression.error) : null;
+  const occupe = suppression.isPending || deconnexion.isPending;
 
   return (
     <Feuille
@@ -33,22 +44,26 @@ export function FeuilleSuppression({ onFermer }: { onFermer: () => void }) {
           <Button label={t('parametres.donnees.garder')} onPress={onFermer} />
           <Button label={t('parametres.donnees.continuer')} variant="secondaire" onPress={() => setEtape(2)} />
         </>
+      ) : issue === 'supprime' ? (
+        <>
+          <MessageErreur texte={t(MESSAGES.supprime)} />
+          <Button
+            label={t('parametres.donnees.seDeconnecter')}
+            disabled={occupe}
+            onPress={() => deconnexion.mutate()}
+          />
+        </>
       ) : (
         <>
           <AppText variant="corps">{t('parametres.donnees.etape2Texte')}</AppText>
-          {suppression.isError ? <MessageErreur texte={t('parametres.donnees.erreurSuppression')} /> : null}
+          {issue ? <MessageErreur texte={t(MESSAGES[issue])} /> : null}
           <Button
             label={t('parametres.donnees.supprimerDefinitivement')}
             variant="danger"
-            disabled={suppression.isPending}
+            disabled={occupe}
             onPress={() => suppression.mutate()}
           />
-          <Button
-            label={t('parametres.donnees.garder')}
-            variant="secondaire"
-            disabled={suppression.isPending}
-            onPress={onFermer}
-          />
+          <Button label={t('parametres.donnees.garder')} variant="secondaire" disabled={occupe} onPress={onFermer} />
         </>
       )}
     </Feuille>

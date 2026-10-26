@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { Chip } from '@/components/Chip';
 import { Interrupteur } from '@/components/Interrupteur';
 import { TextField } from '@/components/TextField';
@@ -36,6 +37,7 @@ export function FormulaireLieu({ initial }: { initial: Lieu | null }) {
       enregistrementActif={saisie.nom.trim().length > 0 && !enregistrement.isPending}
       onEnregistrer={() => enregistrement.mutate({ saisie, initial }, { onSuccess: () => router.back() })}
       bandeau={enregistrement.isError ? <ErreurEnregistrement erreur={enregistrement.error} /> : null}>
+      <BandeauHorsLigne />
       <TextField
         label={t('parametres.lieux.nom')}
         placeholder={t('parametres.lieux.nomExemple')}

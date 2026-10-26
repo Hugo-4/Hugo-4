@@ -7,6 +7,7 @@ import { Bandeau } from '@/components/Bandeau';
 import { Button } from '@/components/Button';
 import { EtatsEcran } from '@/components/EtatsEcran';
 import { Skeleton } from '@/components/Skeleton';
+import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
 import { EcranEdition } from '@/features/profil/components/EcranEdition';
 import i18n from '@/lib/i18n';
 import { colors, radius, sizes } from '@/theme/tokens';
@@ -49,6 +50,7 @@ export function ListeMemoire() {
           icon: <Brain color={colors.discret} size={sizes.icone * 2} />,
           titre: t('parametres.memoire.videTitre'),
           texte: t('parametres.memoire.videTexte'),
+          action: <Button label={t('parametres.memoire.parlerCoach')} onPress={() => ouvrirCoach()} />,
         }}>
         {groupes.map((groupe) => (
           <GroupeRubriques key={groupe.categorie} titre={nomCategorie(groupe.categorie)}>

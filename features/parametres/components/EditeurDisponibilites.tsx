@@ -21,14 +21,18 @@ import { JourDisponibilites } from './JourDisponibilites';
 
 type Props = {
   initiales: Disponibilite[];
-  lieux: Lieu[];
+  /** Lieux actifs ; `undefined` s'ils ne sont pas chargés (hors ligne, erreur) : l'écran reste utilisable. */
+  lieux: Lieu[] | undefined;
   rafraichir: { actif: boolean; onRafraichir: () => void };
 };
 
+const AUCUN_LIEU: Lieu[] = [];
+
 /** 7 jours × matin / midi / soir, durée et lieu de chaque créneau ; « Enregistrer » remplace tout (PUT). */
-export function EditeurDisponibilites({ initiales, lieux, rafraichir }: Props) {
+export function EditeurDisponibilites({ initiales, lieux: lieuxCharges, rafraichir }: Props) {
   const { t } = useTranslation();
-  const edition = useEditionDisponibilites(initiales);
+  const edition = useEditionDisponibilites(initiales, lieuxCharges);
+  const lieux = lieuxCharges ?? AUCUN_LIEU;
   const enregistrement = useEnregistrerDisponibilites();
   const [ouvert, setOuvert] = useState<{ jour: number; creneau: Creneau } | null>(null);
   const creneauOuvert = ouvert ? edition.lire(ouvert.jour, ouvert.creneau) : undefined;
@@ -39,7 +43,9 @@ export function EditeurDisponibilites({ initiales, lieux, rafraichir }: Props) {
       titre={t('parametres.disponibilites.titre')}
       rafraichir={rafraichir}
       enregistrementActif={edition.modifie && !enregistrement.isPending}
-      onEnregistrer={() => enregistrement.mutate(edition.corps, { onSuccess: edition.enregistre })}
+      onEnregistrer={() =>
+        enregistrement.mutate(edition.corps, { onSuccess: (_reponse, envoye) => edition.enregistre(envoye) })
+      }
       bandeau={
         enregistrement.isError ? (
           <ErreurEnregistrement erreur={enregistrement.error} />
@@ -61,6 +67,12 @@ export function EditeurDisponibilites({ initiales, lieux, rafraichir }: Props) {
           icon={<CalendarClock color={colors.alerte} size={sizes.iconePetite} />}
           ton="alerte"
           texte={t('parametres.disponibilites.aucune')}
+        />
+      ) : null}
+      {edition.lieuxRetires ? (
+        <Bandeau
+          icon={<MapPin color={colors.texte2} size={sizes.iconePetite} />}
+          texte={t('parametres.disponibilites.lieuxRetires')}
         />
       ) : null}
       <AppText variant="secondaire">{t('parametres.disponibilites.aide')}</AppText>

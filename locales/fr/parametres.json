@@ -69,7 +69,8 @@
   "disponibilites": {
     "titre": "Disponibilités et lieux",
     "aide": "Touche un moment pour l'ajouter ou le retirer, puis touche le créneau pour régler sa durée et son lieu.",
-    "aucune": "Aucun créneau enregistré : le coach prévoit par défaut lundi, mardi, jeudi et samedi soir.",
+    "aucune": "Aucun créneau : le coach choisira des jours par défaut.",
+    "lieuxRetires": "Un lieu supprimé a été retiré de tes créneaux (« Peu importe ») : enregistre pour confirmer.",
     "mesLieux": "Mes lieux",
     "lieux_one": "{{count}} lieu",
     "lieux_other": "{{count}} lieux",
@@ -105,6 +106,7 @@
     "salleComplete": "Salle complète",
     "salleCompleteAide": "Barres, haltères, machines et cardio.",
     "supprimer": "Supprimer ce lieu",
+    "a11ySupprimer": "Supprimer le lieu {{nom}}",
     "confirmerTitre": "Supprimer « {{nom}} » ?",
     "confirmerTexte": "Ce lieu ne sera plus proposé. Tes séances passées ne changent pas.",
     "confirmer": "Supprimer",
@@ -241,6 +243,7 @@
     "santeMasquee": "Les éléments liés à ta santé sont masqués tant que tu n'as pas donné ton accord pour les données de santé.",
     "videTitre": "Rien pour l'instant",
     "videTexte": "Au fil de tes échanges et de tes séances, le coach retiendra tes préférences, contraintes et objectifs.",
+    "parlerCoach": "Parler au coach",
     "confirme": "Confirmé",
     "desactive": "Désactivé",
     "a11ySouvenir": "{{contenu}}. {{etat}}",
@@ -293,7 +296,10 @@
     "etape2Texte": "Ton compte sera supprimé définitivement et tu seras déconnecté.",
     "supprimerDefinitivement": "Supprimer définitivement",
     "fictif": "Mode démonstration : ton compte ne sera pas vraiment supprimé, tu seras seulement déconnecté.",
-    "erreurSuppression": "La suppression n'a pas abouti. Ton compte est intact : réessaie."
+    "erreurSuppression": "La suppression n'a pas abouti. Ton compte est intact : réessaie.",
+    "erreurSuppressionIncertaine": "Pas de réponse du serveur : la suppression n'a pas pu être confirmée. Réessaie ; si ton compte est déjà supprimé, tu seras simplement déconnecté.",
+    "supprimeSansDeconnexion": "Ton compte est supprimé, mais la déconnexion n'a pas abouti sur ce téléphone. Touche « Me déconnecter ».",
+    "seDeconnecter": "Me déconnecter"
   },
   "aide": {
     "titre": "Aide"
