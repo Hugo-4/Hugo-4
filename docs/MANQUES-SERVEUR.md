@@ -21,6 +21,7 @@ passer à `false` est indiquée pour chaque route.
 | 4 | `categorie_poids_kg`, `distance`, `poste` dans `POST/PATCH /evenements` ; une A par sport ; couleurs et langue de `/calendrier/legende` ; raison de séance manquée ; détail hors programme | Programme | — (routes existantes, champs en plus) |
 | 5 | `GET /progres/records`, `/progres/niveaux`, `/progres/charge`, `/progres/regularite`, `/progres/ligues` (+ rejoindre / quitter) | Progrès | `PROGRES_FICTIF` (features/progres/source.ts) |
 | 6 | `GET /credits` (Coach et Profil), `POST/GET /compte/export`, `POST /compte/suppression`, `GET/PATCH /preferences/nutrition`, `GET /notifications/centre` (+ lu, tout lu), `GET /sante` (facultatif) | Profil, Notifications, Coach | `PARAMETRES_FICTIF` (features/parametres/source.ts), `NOTIFICATIONS_FICTIF` (features/notifications/source.ts) |
+| 7 | Aucune route : lire les réponses du questionnaire complet (`tests_athlete`, `profil_specifique`, préférences, `signaux_effort`) et ne plus inventer de charge ; `POST /tests` avec charge × répétitions (souhaité) | Questionnaire, toutes les séances | — |
 
 ## 0. Sécurité à corriger avant tout
 
@@ -976,3 +977,31 @@ plus sûre (le serveur vérifie lui-même le consentement) et pourrait aussi reg
   (`NOTIFICATIONS_DEFAUT`, `features/parametres/constantes.ts`), sans les enregistrer.
 - `GET /disponibilites` : renvoyer `heure_debut` au format « HH:MM » (la colonne `time` sort en « HH:MM:SS », que
   `PUT /disponibilites` refuse ; l'app coupe les secondes avant de renvoyer).
+
+## 7. Questionnaire complet (étape 10) — aucune route nouvelle, des usages à ajouter
+
+L'app enregistre maintenant les réponses du questionnaire complet directement dans la base (RLS) et les valeurs
+connues par `POST /tests` (route existante). Tables et colonnes : migration `questionnaire_complet_etape_10`
+(`docs/migrations/2026-10-26-questionnaire.sql`). Le serveur doit les **lire** pour construire les séances :
+
+- **Ne plus inventer de charge ni d'allure.** Le générateur utilise `tests_athlete` (1RM par exercice, VMA, allure
+  au seuil, FTP, CSS, temps de course et de nage, FC max et repos). Sans valeur connue : prescrire au ressenti (RPE)
+  et placer une séance de test dans la première semaine si `user_sport_profiles.profil_specifique.test_souhaite`
+  vaut `premiere_semaine`.
+- **1RM estimé.** Pour une charge de travail (ex. 100 kg × 5), l'app envoie un 1RM estimé (Epley) avec
+  `methode: "declare"` et la saisie d'origine dans `notes` (`"100 kg × 5 · questionnaire : estimation"`).
+  Mieux : que `POST /tests` accepte `{ type: "1rm", exercice, charge_kg, repetitions }` et fasse lui-même
+  l'estimation (même réponse `{ id }`).
+- **Réponses à lire** (toutes sur les lignes de l'athlète) :
+  - `user_sport_profiles.profil_specifique` du sport principal : clés des blocs de sport (`split_actuel`,
+    `km_semaine_actuel`, `garde`, `sparring`, `club_jours` en `j1`…`j7`, `points_forts`, `jour_match`, etc.).
+  - `user_profiles` : `taille_cm`, `poids_kg`, `lateralite`, `activite_quotidienne`, `sommeil_heures_habituel`,
+    `niveau_stress_habituel`, `annees_pratique`, `duree_seance_minutes`, `acces_piscine`, `acces_velo`,
+    `acces_piste`, `contre_indications` ; `contexte_vie` (`seances_semaine_recentes`, `arret_recent`,
+    `arret_raison`, `experience_coaching`, `contraintes`) ; `style_coaching` (`ton`, `longueur`, `relance`).
+  - `preferences_athlete`, `preferences_nutrition` (colonnes existantes, ex. `jours_repos_preferes` en 1 à 7).
+  - `sante_athlete` (avec consentement) : `signaux_effort` = `{ avis_medical_coeur: { reponse, le },
+    malaise_effort: { reponse, le } }` → bloquer l'intensité élevée si une réponse vaut `true` ;
+    `medicaments` (`["traitement_declare"]`), `pathologies_chroniques`, `allergies`.
+- **Recalcul.** Après un bloc terminé (lignes `questions_posees` avec `repondue_le` récent), réajuster les
+  séances à venir et le dire à l'athlète (adaptation visible, comme pour le check-in).

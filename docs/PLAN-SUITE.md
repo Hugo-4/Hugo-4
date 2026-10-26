@@ -4,7 +4,7 @@ Retours de Hugo après le premier essai des étapes 6 à 9, rangés en étapes. 
 suivante (CLAUDE.md). Pour chaque étape : ce que fait l'app, et ce qu'il faut côté serveur ou base (à écrire dans
 `docs/MANQUES-SERVEUR.md`, aucune table ni colonne ajoutée sans montrer la migration d'abord).
 
-## Étape 10 — Finir l'inscription (questionnaires par blocs, sauvegarde à tout moment)
+## Étape 10 — Finir l'inscription (questionnaires par blocs, sauvegarde à tout moment) — FAITE (voir docs/ETAPE-10-QUESTIONNAIRE.md)
 
 Problème : après l'inscription rapide, le coach génère des séances sans connaître les charges (1RM), les records ni
 les allures. Une séance « à RPE 9 » ou « à 80 % » ne veut rien dire sans ces données.
@@ -59,8 +59,7 @@ les allures. Une séance « à RPE 9 » ou « à 80 % » ne veut rien dire sans 
 
 ## Design
 
-- Forme du jour peu visible sur Aujourd'hui : rendre la carte plus lisible (anneau plus grand, recommandation en
-  titre, couleur + mot), sans changer la structure de la page.
+- Abandonné (décision du 26/10/2026).
 
 ## Questions à trancher avant de commencer
 

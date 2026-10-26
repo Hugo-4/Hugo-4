@@ -1,4 +1,4 @@
--- Migration additive pour le questionnaire complet (étape 10). NON APPLIQUÉE : à relire et valider avant.
+-- Migration additive pour le questionnaire complet (étape 10). Appliquée le 26/10/2026 (questionnaire_complet_etape_10).
 -- Aucune suppression, aucune modification de colonne existante.
 
 -- 1. Questions déjà posées : reprise du questionnaire, avancement, « plus tard », ne jamais reposer.

@@ -7,6 +7,7 @@ import { useStatutCompte } from '@/features/auth/useStatutCompte';
 import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
 import { useNombreNonLues } from '@/features/notifications/useNombreNonLues';
 import { CarteDernierRecord } from '@/features/progres/components/CarteDernierRecord';
+import { BandeauFinirInscription } from '@/features/questionnaire/components/BandeauFinirInscription';
 import { useSeanceEnCours } from '@/features/seance/useSeanceEnCours';
 import { spacing } from '@/theme/tokens';
 
@@ -62,6 +63,7 @@ export function AccueilContent({ accueil, checkin }: Props) {
         onProfil={() => router.navigate('/profil')}
       />
       <BandeauHorsLigne />
+      <BandeauFinirInscription />
       {checkin ? <FormeCard checkin={checkin} onRefaire={ouvrirCheckin} /> : <CheckinCard onCheckin={ouvrirCheckin} />}
       {accueil.adaptation_proposee ? <FatigueCard adaptation={accueil.adaptation_proposee} /> : null}
       {aujourdhui.repos ? (

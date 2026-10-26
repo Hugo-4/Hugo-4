@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { CalendarClock, Dumbbell, Target, User } from 'lucide-react-native';
+import { CalendarClock, Dumbbell, Gauge, Ruler, Target, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
@@ -45,6 +45,18 @@ export function RubriquesMoi({ identite, sports, manquants }: Props) {
         titre={t('parametres.profil.rubriques.identite')}
         sousTitre={identite?.prenom ?? t('profil.nonRenseigne')}
         onPress={() => router.push('/compte/identite')}
+      />
+      <LigneListe
+        icon={<Ruler {...icone} />}
+        titre={t('questionnaire.sections.corps')}
+        sousTitre={t('questionnaire.sectionsAide.corps')}
+        onPress={() => router.push({ pathname: '/questionnaire/[bloc]', params: { bloc: 'corps' } })}
+      />
+      <LigneListe
+        icon={<Gauge {...icone} />}
+        titre={t('questionnaire.sections.valeurs')}
+        sousTitre={t('questionnaire.sectionsAide.valeurs')}
+        onPress={() => router.push({ pathname: '/questionnaire/[bloc]', params: { bloc: 'valeurs' } })}
       />
       <AppText variant="libelle" accessibilityRole="header">
         {t('parametres.profil.rubriques.sports')}

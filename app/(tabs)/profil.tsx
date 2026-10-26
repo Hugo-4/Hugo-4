@@ -10,6 +10,7 @@ import { Skeleton } from '@/components/Skeleton';
 import { DeconnexionBouton } from '@/features/auth/components/DeconnexionBouton';
 import { ListeRubriques } from '@/features/parametres/components/ListeRubriques';
 import { useEcranProfil } from '@/features/profil/useEcranProfil';
+import { BandeauFinirInscription } from '@/features/questionnaire/components/BandeauFinirInscription';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
 /** Profil : « Mes réglages et mes données » (FRONTEND.md §4.7). */
@@ -36,6 +37,7 @@ export default function ProfilScreen() {
         <AppText variant="titre" accessibilityRole="header">
           {t('onglets.profil')}
         </AppText>
+        <BandeauFinirInscription />
         <EtatsEcran
           chargement={p.chargement}
           erreur={p.erreur}
