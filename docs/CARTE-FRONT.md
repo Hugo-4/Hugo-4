@@ -42,10 +42,12 @@ Ajoutées par les fondations (squelettes à remplir) et déclarées dans `compon
 | `progres/[vue]` | détail Progrès (`tests`, `charge`, `records`, `niveaux`, `regularite`) | 8 |
 | `compte/objectifs`, `compte/disponibilites`, `compte/lieux`, `compte/abonnement`, `compte/appareils`, `compte/preferences`, `compte/sante`, `compte/memoire`, `compte/donnees` | sous-pages du Profil (FRONTEND §4.7 ; dossier `compte/` existant plutôt que `profil/` pour ne pas entrer en conflit avec l'onglet `/profil`) | 9 |
 | `notifications` | liste des notifications | finitions |
+| `coach-seance` | le Coach en modale par-dessus une séance en cours (« Remplacer avec le coach ») : le retour ramène à la séance | corrections |
 
 Ouvrir le Coach avec un contexte : `ouvrirCoach(contexte?)` (`features/coach/ouvrirCoach.ts`) ; contexte =
 `{ type: 'seance', programmeSeanceId, titre }` ou `{ type: 'exercice', programmeSeanceId, exerciceSlug, nom }`,
-passé en paramètres de route (`/coach?contexte=…`).
+passé en paramètres de route (`/coach?contexte=…`). Depuis une séance en cours : `ouvrirCoachEnSeance(contexte?)`
+(route `coach-seance`). Le contexte de l'onglet est oublié quand on le quitte.
 
 ## 3. Composants communs (`components/`)
 
