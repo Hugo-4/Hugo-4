@@ -65,6 +65,9 @@ export function useActionsSeance() {
     await effacerSeanceEnCours();
     queryClient.invalidateQueries({ queryKey: ['seanceEnCours'] });
     queryClient.invalidateQueries({ queryKey: ['accueil'] });
+    queryClient.invalidateQueries({ queryKey: ['calendrier'] });
+    queryClient.invalidateQueries({ queryKey: ['programme'] });
+    queryClient.invalidateQueries({ queryKey: ['progres'] });
   };
 
   /** Fin de séance : le retour part par la file (hors ligne compris), puis la séance est close. */

@@ -16,14 +16,17 @@ export const cles = {
   exercice: (slug: string) => ['exercice', slug] as const,
 };
 
-/** Après un déplacement ou une séance manquée : tout ce qui montre des séances se rafraîchit. */
+/**
+ * Après un déplacement, une séance manquée ou une proposition acceptée / refusée : tout ce qui montre des séances
+ * se rafraîchit, dont l'historique des adaptations (sous `['programme']`) et Progrès (assiduité, régularité…).
+ */
 export function invaliderSeances(queryClient: QueryClient) {
   return Promise.all([
     queryClient.invalidateQueries({ queryKey: ['calendrier'] }),
     queryClient.invalidateQueries({ queryKey: ['programme'] }),
     queryClient.invalidateQueries({ queryKey: CLE_ACCUEIL }),
     queryClient.invalidateQueries({ queryKey: ['nutrition'] }),
-    queryClient.invalidateQueries({ queryKey: ['assiduite'] }),
+    queryClient.invalidateQueries({ queryKey: ['progres'] }),
   ]);
 }
 

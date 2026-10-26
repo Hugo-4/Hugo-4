@@ -1,11 +1,14 @@
+import { router } from 'expo-router';
 import { CalendarCheck } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
+import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { formatNombre } from '@/lib/format';
 import { colors, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { PROGRES_FICTIF } from '../source';
 import { useRegularite } from '../useDonneesProgres';
@@ -33,13 +36,14 @@ export function VueRegularite() {
         icon: <CalendarCheck color={colors.discret} size={sizes.icone * 2} />,
         titre: t('progres.regularite.videTitre'),
         texte: t('progres.regularite.videTexte'),
+        action: <Button label={t('progres.voirProgramme')} variant="secondaire" onPress={() => router.navigate('/programme')} />,
       }}>
       {donnees ? (
         <>
           {PROGRES_FICTIF ? <BadgeExemple style={styles.exemple} /> : null}
           <Card>
             <View style={styles.chiffre}>
-              <AppText variant="chiffreXL" maxFontSizeMultiplier={1.3}>
+              <AppText variant="chiffreXL" maxFontSizeMultiplier={multiplicateurMax}>
                 {t('progres.regularite.reussies', {
                   reussies: formatNombre(donnees.semaines_reussies),
                   total: formatNombre(donnees.semaines_comptees),

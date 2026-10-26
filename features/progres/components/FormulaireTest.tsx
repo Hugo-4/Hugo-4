@@ -7,6 +7,7 @@ import { DateField } from '@/components/DateField';
 import { Segmente } from '@/components/Segmente';
 import { TextField } from '@/components/TextField';
 import { messageServeur } from '@/lib/api';
+import { useEnLigne } from '@/lib/useEnLigne';
 import { colors, spacing } from '@/theme/tokens';
 
 import { useFormulaireTest } from '../useFormulaireTest';
@@ -20,6 +21,7 @@ type Props = {
 /** Contenu de la feuille « Ajouter un résultat » (type, valeur, date, méthode, exercice si besoin, notes). */
 export function FormulaireTest({ typeInitial, onEnregistre }: Props) {
   const { t } = useTranslation();
+  const enLigne = useEnLigne();
   const { types, typeChoisi, champs, modifier, erreurs, enregistrer, envoi } = useFormulaireTest(typeInitial, onEnregistre);
   const unite = typeChoisi?.unite;
 
@@ -69,7 +71,12 @@ export function FormulaireTest({ typeInitial, onEnregistre }: Props) {
           {messageServeur(envoi.error) ?? t('progres.ajout.erreurs.envoi')}
         </AppText>
       ) : null}
-      <Button label={t('progres.ajout.enregistrer')} onPress={enregistrer} disabled={envoi.isPending} />
+      {enLigne ? null : (
+        <AppText variant="secondaire" color={colors.alerte} accessibilityRole="alert">
+          {t('progres.ajout.horsLigne')}
+        </AppText>
+      )}
+      <Button label={t('progres.ajout.enregistrer')} onPress={enregistrer} disabled={envoi.isPending || !enLigne} />
     </View>
   );
 }

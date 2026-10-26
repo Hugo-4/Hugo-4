@@ -546,6 +546,9 @@ Règles communes, à appliquer **côté serveur aussi** :
 ]
 ```
 - `nature` : `record` | `jalon`. `origine.type` : `seance` | `test` | `competition` | `programme`.
+- `origine.id` : pour `seance`, l'identifiant de la séance prévue (`programme_seances.id`, celui de
+  `GET /programme/seances/:id`) ; pour `test`, `tests_athlete.id`. L'app ouvre le détail correspondant en touchant
+  le record ; un identifiant inconnu affiche « Séance introuvable ».
 - Écrans : Progrès (carte « Dernier record ou jalon », vue `/progres/records`) ; Aujourd'hui (carte « Dernier record »,
   `features/progres/components/CarteDernierRecord.tsx`).
 
@@ -645,6 +648,10 @@ Règles communes, à appliquer **côté serveur aussi** :
 - Une semaine sans séance renvoie `"charge": 0, "seances": 0` (elle reste dans la liste).
 - Écrans : Progrès (carte « Charge d'entraînement », vue `/progres/charge`). La zone affichée en mots (« Dans ta zone
   optimale », « En hausse rapide »…) vient déjà de `GET /profil` → `charge.zone`.
+- À confirmer : le code exact de la zone optimale dans `charge.zone` (fonction SQL `profil_avance`, absente du dépôt
+  serveur). L'app n'affiche que les codes connus : `sous_charge`, `vigilance`, `danger` (vus dans
+  `tools/profilAthlete.js`) et `optimale` (supposé). Si le code réel diffère, le changer dans
+  `features/progres/constantes.ts` (`ZONE_OPTIMALE`) ou renvoyer `optimale`.
 
 ### 4. Régularité
 

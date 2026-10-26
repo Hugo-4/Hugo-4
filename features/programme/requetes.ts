@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 
 import { cles } from './cles';
 import { DELAI_PREPARATION_MS } from './constantes';
+import { estSeanceIntrouvable } from './etatRequete';
 import type { Adaptation, Calendrier, DetailSeanceProgramme, Evenement, FicheExercice, Legende, Programme } from './types';
 
 /** `GET /programme` : programme actif et ses blocs (frise). */
@@ -44,12 +45,14 @@ export function useAdaptations() {
 /**
  * `GET /programme/seances/:id`. Le serveur répond 202 avec `en_preparation` pendant la génération
  * de l'aperçu : on redemande toutes les quelques secondes jusqu'à ce qu'il soit prêt.
+ * Séance inconnue : pas de nouvel essai, l'écran affiche « Séance introuvable ».
  */
 export function useSeanceProgramme(id: string | undefined) {
   return useQuery({
     queryKey: cles.seance(id ?? ''),
     queryFn: () => api.get<DetailSeanceProgramme>(`/programme/seances/${id}`, { delaiMs: 90_000 }),
     enabled: Boolean(id),
+    retry: (essais, erreur) => !estSeanceIntrouvable(erreur) && essais < 1,
     refetchInterval: (requete) => (requete.state.data?.en_preparation ? DELAI_PREPARATION_MS : false),
   });
 }

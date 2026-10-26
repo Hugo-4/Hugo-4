@@ -8,11 +8,13 @@ import { Feuille } from '@/components/Feuille';
 import { Interrupteur } from '@/components/Interrupteur';
 import { TextField } from '@/components/TextField';
 import { useTexteErreur } from '@/lib/texteErreur';
+import { useEnLigne } from '@/lib/useEnLigne';
 import { colors, spacing } from '@/theme/tokens';
 
 import { RAISON_MAX } from '../constantes';
 import type { ReponseManquee } from '../types';
 import { useDeclarationManquee } from '../useDeclarationManquee';
+import { AvisHorsLigne } from './AvisHorsLigne';
 
 type Props = {
   visible: boolean;
@@ -25,6 +27,7 @@ type Props = {
 export function FeuilleManquee({ visible, programmeSeanceId, onFermer, onFait }: Props) {
   const { t } = useTranslation();
   const texteErreur = useTexteErreur();
+  const enLigne = useEnLigne();
   const m = useDeclarationManquee(programmeSeanceId, onFait);
   const fermer = () => {
     m.reinitialiser();
@@ -53,7 +56,8 @@ export function FeuilleManquee({ visible, programmeSeanceId, onFermer, onFait }:
           {texteErreur(m.erreur) ?? t('programme.erreurEnregistrement')}
         </AppText>
       ) : null}
-      <Button label={t('programme.manquee.envoyer')} onPress={m.envoyer} disabled={!m.categorie || m.enCours} />
+      {enLigne ? null : <AvisHorsLigne />}
+      <Button label={t('programme.manquee.envoyer')} onPress={m.envoyer} disabled={!m.categorie || m.enCours || !enLigne} />
     </Feuille>
   );
 }

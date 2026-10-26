@@ -8,7 +8,8 @@ import { colors, sizes, spacing } from '@/theme/tokens';
 type Props = {
   onDeplacer: () => void;
   onCoach: () => void;
-  onManquee: () => void;
+  /** Absent avant le jour prévu : on ne déclare pas manquée une séance qui n'a pas encore eu lieu. */
+  onManquee?: () => void;
 };
 
 /** [S] Déplacer, [S] Modifier avec le coach, [L] Séance manquée (séance encore à venir). */
@@ -28,7 +29,7 @@ export function ActionsSeance({ onDeplacer, onCoach, onManquee }: Props) {
         icon={<MessageCircle color={colors.texte} size={sizes.icone} />}
         onPress={onCoach}
       />
-      <Button label={t('programme.seance.manquee')} variant="discret" onPress={onManquee} />
+      {onManquee ? <Button label={t('programme.seance.manquee')} variant="discret" onPress={onManquee} /> : null}
     </View>
   );
 }

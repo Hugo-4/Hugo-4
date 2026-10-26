@@ -4,9 +4,17 @@ import { Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { TYPE_PAR_PRECISION } from './constantes';
+import { dateDuJour } from './dates';
 import { useEnregistrerEvenement, useSupprimerEvenement } from './mutationsEvenement';
 import { conflitA, doublon, precisionDuSport } from './presentation';
-import { corpsDepuisSaisie, erreursSaisie, type SaisieEvenement, saisieInitiale, type SportOption } from './saisieEvenement';
+import {
+  corpsDepuisSaisie,
+  erreursSaisie,
+  prioriteParDefaut,
+  type SaisieEvenement,
+  saisieInitiale,
+  type SportOption,
+} from './saisieEvenement';
 import type { Evenement } from './types';
 
 type Params = { evenement: Evenement | null; evenements: Evenement[]; sports: SportOption[] };
@@ -19,24 +27,31 @@ export function useFormulaireEvenement({ evenement, evenements, sports }: Params
   const { t } = useTranslation();
   const enregistrement = useEnregistrerEvenement();
   const suppression = useSupprimerEvenement();
-  const [saisie, setSaisie] = useState<SaisieEvenement>(() => saisieInitiale(evenement, sports));
+  const [saisie, setSaisie] = useState<SaisieEvenement>(() => saisieInitiale(evenement, sports, evenements));
   const [tentative, setTentative] = useState(false);
+  /** À la création, tant que l'athlète n'a pas choisi la priorité, elle suit le sport (B si une A y est déjà prévue). */
+  const [prioriteChoisie, setPrioriteChoisie] = useState(false);
   const creation = evenement === null;
   const sport = sports.find((s) => s.id === saisie.sportId) ?? null;
   const precision = precisionDuSport(sport?.slug ?? evenement?.sports?.slug);
   const erreurs = erreursSaisie(saisie, precision, creation);
   const valide = Object.keys(erreurs).length === 0;
 
-  const modifier = (changement: Partial<SaisieEvenement>) => setSaisie((s) => ({ ...s, ...changement }));
+  const modifier = (changement: Partial<SaisieEvenement>) => {
+    if (changement.priorite) setPrioriteChoisie(true);
+    setSaisie((s) => ({ ...s, ...changement }));
+  };
 
-  /** Changer de sport change la précision demandée (et, à la création, le type proposé). */
+  /** Changer de sport change la précision demandée (et, à la création, le type et la priorité proposés). */
   const changerSport = (option: SportOption) => {
     const nouvelle = precisionDuSport(option.slug);
-    modifier({
+    setSaisie((s) => ({
+      ...s,
       sportId: option.id,
       ...(nouvelle !== precision ? { precision: '' } : {}),
       ...(creation ? { type: nouvelle ? TYPE_PAR_PRECISION[nouvelle] : 'competition' } : {}),
-    });
+      ...(creation && !prioriteChoisie ? { priorite: prioriteParDefaut(evenements, option.id) } : {}),
+    }));
   };
 
   const enregistrer = () => {
@@ -46,7 +61,7 @@ export function useFormulaireEvenement({ evenement, evenements, sports }: Params
     const id = evenement?.id ?? doublon(evenements, corps.nom, corps.date_evenement)?.id;
     const envoyer = (retrograderId?: string) =>
       enregistrement.mutate({ id, corps, poidsKg, retrograderId }, { onSuccess: () => router.back() });
-    const autreA = corps.priorite === 'A' ? conflitA(evenements, saisie.sportId, id) : null;
+    const autreA = corps.priorite === 'A' ? conflitA(evenements, saisie.sportId, dateDuJour(), id) : null;
     if (!autreA) return envoyer();
     Alert.alert(t('programme.evenement.conflitTitre'), t('programme.evenement.conflitTexte', { nom: autreA.nom }), [
       { text: t('commun.annuler'), style: 'cancel' },

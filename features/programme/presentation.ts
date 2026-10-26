@@ -13,10 +13,24 @@ export const libelleCategorie = (categorie: string) => traduire(`programme.categ
 export const libellePortee = (portee: string) => traduire(`programme.adaptations.portees.${portee}`, portee);
 export const libelleStatutAdaptation = (statut: string) => traduire(`programme.adaptations.statuts.${statut}`, statut);
 
+/** Causes d'adaptation qui relèvent de la santé : affichées seulement avec le consentement « données de santé ». */
+const CAUSES_SANTE = ['douleur', 'blessure', 'maladie'];
+export const causeSante = (categorie: string) => CAUSES_SANTE.includes(categorie);
+
 /** Intensité 1-5 : libellé de l'app, sinon celui de la légende du serveur. */
 export function libelleIntensite(niveau: number, legende?: Legende): string {
   const serveur = legende?.intensites.find((i) => i.niveau === niveau)?.libelle ?? String(niveau);
   return traduire(`programme.intensite.niveaux.${niveau}`, serveur);
+}
+
+/** Type de séance (code `type.code`) : libellé de l'app, sinon celui de la légende du serveur, sinon le code. */
+export function libelleTypeSeance(code: string, legende?: Legende): string {
+  return traduire(`seance.types.${code}`, legende?.types.find((t) => t.code === code)?.libelle ?? code);
+}
+
+/** Badge d'une séance (`cle`, `allegee`, `modifiee`, `deplacee`…) : libellé de l'app, sinon celui de la légende. */
+export function libelleBadge(code: string, legende?: Legende): string {
+  return traduire(`programme.badges.${code}`, legende?.badges.find((b) => b.code === code)?.libelle ?? code);
 }
 
 /** Statut d'une séance (code du serveur) : libellé de l'app, sinon celui du serveur. */
@@ -42,9 +56,21 @@ export function etatJour(jour: JourCalendrier) {
   else if (codes.some((c) => A_FAIRE.includes(c))) statut = 'prevu';
   else if (codes.some((c) => c === 'manquee')) statut = 'manque';
   else if (codes.length) statut = 'prevu';
-  const intensite = jour.seances.reduce<number | null>((max, s) => Math.max(max ?? 0, s.intensite.niveau), null);
-  return { statut, intensite, competition: jour.evenements.length > 0, nbSeances: jour.seances.length };
+  // Séance la plus intense du jour : son intensité et son type sont dessinés sous le numéro.
+  const principale = jour.seances.reduce<(typeof jour.seances)[number] | null>(
+    (max, s) => (!max || s.intensite.niveau > max.intensite.niveau ? s : max),
+    null,
+  );
+  return {
+    statut,
+    intensite: principale?.intensite.niveau ?? null,
+    type: principale?.type.code ?? null,
+    competition: jour.evenements.length > 0,
+    nbSeances: jour.seances.length,
+  };
 }
+
+export type EtatJour = ReturnType<typeof etatJour>;
 
 /** Prochaine compétition A prévue (toutes disciplines confondues). */
 export function objectifA(evenements: Evenement[] | undefined, aujourdhui: string): Evenement | null {
@@ -58,11 +84,21 @@ export function competitionsAVenir(evenements: Evenement[] | undefined, aujourdh
     .sort((a, b) => a.date_evenement.localeCompare(b.date_evenement));
 }
 
-/** Une seule compétition A prévue par sport : l'autre A du même sport, s'il y en a une. */
-export function conflitA(evenements: Evenement[] | undefined, sportId: string | null, saufId?: string): Evenement | null {
+/** Une seule compétition A à venir par sport : l'autre A prévue du même sport (aujourd'hui ou après), s'il y en a une. */
+export function conflitA(
+  evenements: Evenement[] | undefined,
+  sportId: string | null,
+  aujourdhui: string,
+  saufId?: string,
+): Evenement | null {
   return (
     (evenements ?? []).find(
-      (e) => e.priorite === 'A' && e.statut === 'prevu' && (e.sport_id ?? null) === sportId && e.id !== saufId,
+      (e) =>
+        e.priorite === 'A' &&
+        e.statut === 'prevu' &&
+        e.date_evenement >= aujourdhui &&
+        (e.sport_id ?? null) === sportId &&
+        e.id !== saufId,
     ) ?? null
   );
 }
@@ -81,12 +117,17 @@ export function doublon(evenements: Evenement[] | undefined, nom: string, date: 
 export const precisionDuSport = (slug: string | null | undefined): Precision | null =>
   (slug && PRECISION_PAR_SPORT[slug]) || null;
 
-/** Ce que l'athlète peut faire sur une séance prévue, d'après le statut renvoyé par le serveur. */
-export function actionsSeance(detail: DetailSeanceProgramme) {
-  const { code, aujourdhui } = detail.seance.statut;
+/**
+ * Ce que l'athlète peut faire sur une séance prévue, d'après le statut renvoyé par le serveur.
+ * Une séance ne peut être déclarée manquée que le jour même ou après (`aujourdhui` : date du jour AAAA-MM-JJ).
+ */
+export function actionsSeance(detail: DetailSeanceProgramme, aujourdhui: string) {
+  const { code, aujourdhui: duJour } = detail.seance.statut;
+  const modifiable = code === 'a_venir' || code === 'prete';
   return {
-    modifiable: code === 'a_venir' || code === 'prete',
-    demarrable: aujourdhui === true && ['a_venir', 'prete', 'en_cours'].includes(code),
+    modifiable,
+    manquable: modifiable && detail.seance.date <= aujourdhui,
+    demarrable: duJour === true && ['a_venir', 'prete', 'en_cours'].includes(code),
     enCours: code === 'en_cours',
     faite: code === 'faite',
     manquee: code === 'manquee',

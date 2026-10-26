@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AppText } from '@/components/AppText';
 import { formatNombre } from '@/lib/format';
 import { spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import type { EtatSection } from '../etats';
 import { PROGRES_FICTIF } from '../source';
@@ -33,7 +34,7 @@ export function CarteRegularite({ regularite, etat, onReessayer, onPress }: Prop
       {regularite && !vide ? (
         <>
           <View style={styles.chiffre}>
-            <AppText variant="chiffreXL" maxFontSizeMultiplier={1.3}>
+            <AppText variant="chiffreXL" maxFontSizeMultiplier={multiplicateurMax}>
               {t('progres.regularite.reussies', {
                 reussies: formatNombre(regularite.semaines_reussies),
                 total: formatNombre(regularite.semaines_comptees),

@@ -13,7 +13,7 @@ export type EnregistrementEvenement = {
   corps: CorpsEvenement;
   /** Catégorie de poids (sports de combat) ; `undefined` : on n'y touche pas. */
   poidsKg?: number | null;
-  /** L'autre compétition A du même sport, à passer en B d'abord (l'athlète a confirmé). */
+  /** L'autre compétition A du même sport, à passer en B une fois celle-ci écrite (l'athlète a confirmé). */
   retrograderId?: string;
 };
 
@@ -21,6 +21,7 @@ export type EnregistrementEvenement = {
  * Création / modification par le serveur (`POST /evenements`, `PATCH /evenements/:id`). La catégorie de poids
  * n'est pas acceptée par le serveur (CHAMPS_EVT) : elle est écrite ensuite en direct dans `evenements_athlete`
  * (RLS « evenements_proprietaire »), filtrée sur l'id ET l'athlète connecté. Manque signalé (docs/MANQUES-SERVEUR.md §4).
+ * L'ancienne A n'est passée en B qu'une fois la nouvelle écrite : si l'écriture échoue, rien n'a changé.
  */
 export function useEnregistrerEvenement() {
   const queryClient = useQueryClient();
@@ -28,9 +29,9 @@ export function useEnregistrerEvenement() {
   const userId = session?.user.id;
   return useMutation({
     mutationFn: async ({ id, corps, poidsKg, retrograderId }: EnregistrementEvenement) => {
-      if (retrograderId) await api.patch(`/evenements/${retrograderId}`, { priorite: 'B' });
       const ligne = id ? await api.patch<Evenement | null>(`/evenements/${id}`, corps) : await api.post<Evenement>('/evenements', corps);
       if (!ligne) throw new Error('compétition introuvable');
+      if (retrograderId) await api.patch(`/evenements/${retrograderId}`, { priorite: 'B' });
       if (poidsKg !== undefined && userId) {
         const { error } = await supabase
           .from('evenements_athlete')
@@ -41,7 +42,7 @@ export function useEnregistrerEvenement() {
       }
       return ligne;
     },
-    // Même en cas d'échec partiel (ex. ancienne A déjà passée en B), l'affichage suit la base.
+    // Même en cas d'échec partiel (ex. nouvelle A écrite, ancienne pas encore passée en B), l'affichage suit la base.
     onSettled: () => invaliderEvenements(queryClient),
   });
 }

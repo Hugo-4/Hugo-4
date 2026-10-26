@@ -1,6 +1,7 @@
 {
   "titre": "Programme",
   "erreurEnregistrement": "L'enregistrement n'a pas abouti. Vérifie ta connexion puis réessaie.",
+  "horsLigneEnvoi": "Pas de réseau : rien ne peut être enregistré pour l'instant. Reconnecte-toi pour valider.",
   "vide": {
     "titre": "Pas encore de programme",
     "texte": "Ton calendrier, tes blocs et tes compétitions apparaîtront ici dès que ton programme sera prêt.",
@@ -66,6 +67,13 @@
     "reportee": "reportée",
     "annulee": "annulée"
   },
+  "badges": {
+    "cle": "Séance clé",
+    "allegee": "Semaine allégée",
+    "modifiee": "Adaptée",
+    "deplacee": "Déplacée",
+    "lourde_jambes": "Bas du corps chargé"
+  },
   "stats": {
     "titre": "Ce mois-ci",
     "prevues": "Séances prévues",
@@ -79,7 +87,9 @@
   "competitions": {
     "titre": "Compétitions à venir",
     "ajouter": "+ Compétition",
-    "priorite": "Priorité {{priorite}}"
+    "priorite": "Priorité {{priorite}}",
+    "erreur": "Impossible de charger tes compétitions.",
+    "horsLigne": "Hors ligne : tes compétitions s'afficheront au retour du réseau."
   },
   "legende": {
     "titre": "Légende",
@@ -88,6 +98,7 @@
     "manque": "Contour orange et croix : séance manquée",
     "competition": "Trophée : compétition",
     "aujourdhui": "Contour épais et numéro souligné : aujourd'hui",
+    "types": "Type de séance (icône sous le numéro)",
     "intensite": "Intensité (points pleins)",
     "niveau": "{{niveau}} sur 5 : {{libelle}}",
     "niveauRpe": "{{niveau}} sur 5 : {{libelle}} (RPE {{rpe}})"
@@ -98,6 +109,11 @@
     "periode": "Les changements de ton programme sur les 30 derniers jours.",
     "videTitre": "Aucune adaptation",
     "videTexte": "Ton programme n'a pas été modifié ces 30 derniers jours.",
+    "voirProgramme": "Voir mon programme",
+    "accepter": "Accepter",
+    "refuser": "Garder mon programme",
+    "santeMasquee": "Motif masqué",
+    "santeMasqueeAide": "Ce motif concerne ta santé : autorise les données de santé dans Profil › Consentements pour le voir.",
     "seances_one": "{{count}} séance modifiée",
     "seances_other": "{{count}} séances modifiées",
     "portees": {
@@ -150,6 +166,9 @@
     "a11yFiche": "Ouvre la fiche technique",
     "enPreparation": "Le détail de la séance est en préparation. Il s'affichera dans quelques secondes.",
     "indisponible": "Le détail de cette séance n'est pas disponible pour le moment.",
+    "a11yBadges": "Étiquettes : {{liste}}",
+    "introuvableTitre": "Séance introuvable",
+    "introuvableTexte": "Cette séance n'existe plus dans ton programme : elle a peut-être été déplacée ou remplacée.",
     "sansExercices": "Aucun exercice détaillé pour cette séance.",
     "deplacer": "Déplacer",
     "coach": "Modifier avec le coach",
@@ -159,10 +178,11 @@
   },
   "deplacer": {
     "titre": "Déplacer la séance",
-    "aide": "Prévue le {{date}}. Choisis un autre jour de la même semaine : le coach vérifie que la récupération reste bonne.",
-    "jours": "Prochains jours",
+    "aide": "Prévue le {{date}}. Choisis un jour du {{debut}} au {{fin}} (6 jours au plus avant ou après, jamais dans le passé) : le coach vérifie que la récupération reste bonne.",
+    "aucuneDate": "Prévue le {{date}} : elle ne peut plus être déplacée (6 jours au plus après la date prévue). Tu peux la déclarer manquée ou en parler au coach.",
+    "jours": "Jours possibles",
     "autreDate": "Ou une autre date",
-    "dateInvalide": "Choisis une date à venir, différente du jour prévu.",
+    "dateInvalide": "Choisis une date du {{debut}} au {{fin}}, autre que le jour prévu.",
     "choisir": "Choisis un jour",
     "confirmer": "Déplacer au {{date}}",
     "refus": "Déplacement impossible : {{raison}}",
@@ -252,6 +272,7 @@
     "supprimerTitre": "Supprimer « {{nom}} » ?",
     "supprimerTexte": "Elle sera marquée comme annulée et le programme ne se construira plus autour d'elle.",
     "introuvableTitre": "Compétition introuvable",
-    "introuvableTexte": "Elle a peut-être été supprimée."
+    "introuvableTexte": "Elle a peut-être été supprimée.",
+    "retourProgramme": "Retour au programme"
   }
 }

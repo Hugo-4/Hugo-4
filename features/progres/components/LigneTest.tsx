@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
 import { colors, opacity, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { formatDateJour, formatValeur } from '../format';
 import { libelleMethode, libelleTest } from '../presentation';
@@ -33,7 +34,7 @@ export function LigneTest({ groupe, onPress }: Props) {
         <AppText variant="libelle">{details}</AppText>
       </View>
       <MiniCourbe valeurs={groupe.resultats.map((r) => r.valeur)} />
-      <AppText variant="chiffre" style={styles.valeur} maxFontSizeMultiplier={1.3}>
+      <AppText variant="chiffre" style={styles.valeur} maxFontSizeMultiplier={multiplicateurMax}>
         {valeur}
       </AppText>
       {onPress ? <ChevronRight color={colors.discret} size={sizes.icone} /> : null}

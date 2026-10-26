@@ -47,6 +47,8 @@ export function useEcranProgramme() {
     changerMois: (decalage: number) => setMois((m) => moisVoisin(m, decalage)),
     calendrier,
     legende: legende.data,
+    /** `GET /evenements` : le bloc Compétitions affiche ses propres états (erreur, hors ligne). */
+    evenements,
     objectif: objectifA(evenements.data, aujourdhui),
     competitions: competitionsAVenir(evenements.data, aujourdhui),
     ouvrirJour,

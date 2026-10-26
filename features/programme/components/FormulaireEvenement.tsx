@@ -8,12 +8,14 @@ import { DateField } from '@/components/DateField';
 import { Segmente } from '@/components/Segmente';
 import { TextField } from '@/components/TextField';
 import { useTexteErreur } from '@/lib/texteErreur';
+import { useEnLigne } from '@/lib/useEnLigne';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
 import { PRIORITES, TYPES_EVENEMENT } from '../constantes';
 import type { SportOption } from '../saisieEvenement';
 import type { Evenement } from '../types';
 import { useFormulaireEvenement } from '../useFormulaireEvenement';
+import { AvisHorsLigne } from './AvisHorsLigne';
 import { ChampPrecision } from './ChampPrecision';
 import { GroupePuces } from './GroupePuces';
 
@@ -23,6 +25,7 @@ type Props = { evenement: Evenement | null; evenements: Evenement[]; sports: Spo
 export function FormulaireEvenement(props: Props) {
   const { t } = useTranslation();
   const texteErreur = useTexteErreur();
+  const enLigne = useEnLigne();
   const f = useFormulaireEvenement(props);
   const { saisie, erreurs } = f;
 
@@ -79,7 +82,9 @@ export function FormulaireEvenement(props: Props) {
         </View>
         <TextField label={t('programme.evenement.lieu')} value={saisie.lieu} onChangeText={(lieu) => f.modifier({ lieu })} />
         <TextField label={t('programme.evenement.notes')} value={saisie.notes} onChangeText={(notes) => f.modifier({ notes })} multiline />
-        {!f.creation ? <Button label={t('programme.evenement.supprimer')} variant="danger" onPress={f.supprimer} disabled={f.enCours} /> : null}
+        {!f.creation ? (
+          <Button label={t('programme.evenement.supprimer')} variant="danger" onPress={f.supprimer} disabled={f.enCours || !enLigne} />
+        ) : null}
       </ScrollView>
       <View style={styles.pied}>
         {f.erreurEnvoi ? (
@@ -87,7 +92,12 @@ export function FormulaireEvenement(props: Props) {
             {texteErreur(f.erreurEnvoi) ?? t('programme.erreurEnregistrement')}
           </AppText>
         ) : null}
-        <Button label={t(f.creation ? 'programme.evenement.ajouter' : 'programme.evenement.enregistrer')} onPress={f.enregistrer} disabled={f.enCours} />
+        {enLigne ? null : <AvisHorsLigne />}
+        <Button
+          label={t(f.creation ? 'programme.evenement.ajouter' : 'programme.evenement.enregistrer')}
+          onPress={f.enregistrer}
+          disabled={f.enCours || !enLigne}
+        />
       </View>
     </KeyboardAvoidingView>
   );

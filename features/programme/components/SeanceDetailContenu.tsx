@@ -18,12 +18,12 @@ import { SectionTexte } from './SectionTexte';
 type Props = { e: EcranSeance; detail: DetailSeanceProgramme };
 
 /**
- * Détail d'une séance : résumé, actions (si elle est encore à venir), objectif, consignes, réalisé, exercices.
- * [P] « Démarrer » en bas, seulement le jour même.
+ * Détail d'une séance : résumé, actions (si elle est encore à venir ; « Séance manquée » à partir du jour prévu),
+ * objectif, consignes, réalisé, exercices. [P] « Démarrer » en bas, seulement le jour même.
  */
 export function SeanceDetailContenu({ e, detail }: Props) {
   const { t } = useTranslation();
-  const actions = actionsSeance(detail);
+  const actions = actionsSeance(detail, e.aujourdhui);
   const id = detail.seance.id;
 
   return (
@@ -36,7 +36,7 @@ export function SeanceDetailContenu({ e, detail }: Props) {
           <ActionsSeance
             onDeplacer={() => e.ouvrirFeuille('deplacer')}
             onCoach={e.modifierAvecCoach}
-            onManquee={() => e.ouvrirFeuille('manquee')}
+            onManquee={actions.manquable ? () => e.ouvrirFeuille('manquee') : undefined}
           />
         ) : null}
         {detail.realisation && actions.faite ? <RealisationCarte realisation={detail.realisation} /> : null}

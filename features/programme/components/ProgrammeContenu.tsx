@@ -39,7 +39,7 @@ export function ProgrammeContenu({ e }: { e: EcranProgramme }) {
         onLegende={e.ouvrirLegende}
       />
       {stats ? <StatsMois stats={stats} /> : null}
-      <CompetitionsAVenir competitions={e.competitions} sansObjectifA={!e.objectif} />
+      <CompetitionsAVenir requete={e.evenements} competitions={e.competitions} sansObjectifA={!e.objectif} />
       <Button
         label={t('programme.adaptations.lien')}
         variant="discret"

@@ -9,11 +9,12 @@ import { colors, spacing } from '@/theme/tokens';
 
 import { libelleIntensite, libellePhase, libelleStatutSeance, majuscule, nomLieu } from '../presentation';
 import type { DetailSeanceProgramme, Legende } from '../types';
+import { BadgesSeance } from './BadgesSeance';
 import { IntensiteTraits } from './IntensiteTraits';
 
 type Props = { detail: DetailSeanceProgramme; legende?: Legende };
 
-/** En-tête de la séance : bloc, titre, durée · RPE cible · heure · lieu, intensité, statut et adaptation éventuelle. */
+/** En-tête de la séance : bloc, titre, durée · RPE cible · heure · lieu, intensité, badges, statut et adaptation éventuelle. */
 export function SeanceResume({ detail, legende }: Props) {
   const { t } = useTranslation();
   const { seance } = detail;
@@ -49,6 +50,7 @@ export function SeanceResume({ detail, legende }: Props) {
           {intensite}
         </AppText>
       </View>
+      <BadgesSeance badges={seance.badges ?? []} legende={legende} />
       {statutVisible ? (
         <AppText variant="corpsGras" color={seance.statut.code === 'manquee' ? colors.alerte : colors.accent}>
           {majuscule(libelleStatutSeance(seance.statut))}

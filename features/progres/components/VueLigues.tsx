@@ -64,6 +64,7 @@ export function VueLigues() {
                   key={ligue.id}
                   ligue={ligue}
                   enCours={inscription.isPending}
+                  erreur={inscription.isError && inscription.variables?.id === ligue.id ? inscription.error : null}
                   onInscription={(rejoindre) => inscription.mutate({ id: ligue.id, rejoindre })}
                 />
               ))}

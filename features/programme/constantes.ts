@@ -68,5 +68,8 @@ export const RAISON_MAX = 300;
 /** Délai avant un nouvel essai quand le détail d'une séance est en préparation (202). */
 export const DELAI_PREPARATION_MS = 4_000;
 
-/** Puces de date proposées pour déplacer une séance (aujourd'hui + 6 jours, limite du serveur). */
-export const JOURS_DEPLACEMENT = 7;
+/**
+ * Écart maximal (en jours, avant ou après) entre la date prévue d'une séance et sa nouvelle date : règle de
+ * `verifierDeplacement` (agents/programme/adaptation.js), qui refuse aussi toute date passée.
+ */
+export const ECART_DEPLACEMENT_JOURS = 6;

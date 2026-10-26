@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { Trophy } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +10,7 @@ import { Skeleton } from '@/components/Skeleton';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
 import { useDonneesEvenement } from '../useDonneesEvenement';
+import { ActionEtatVide } from './ActionEtatVide';
 import { FormulaireEvenement } from './FormulaireEvenement';
 
 /** Écran Compétition (création si `id` est absent, sinon modification), avec ses états de chargement. */
@@ -36,6 +38,7 @@ export function EcranEvenement({ id }: { id?: string }) {
           icon: <Trophy color={colors.discret} size={sizes.icone * 2} />,
           titre: t('programme.evenement.introuvableTitre'),
           texte: t('programme.evenement.introuvableTexte'),
+          action: <ActionEtatVide label={t('programme.evenement.retourProgramme')} onPress={() => router.navigate('/programme')} />,
         }}>
         <FormulaireEvenement evenement={d.evenement} evenements={d.evenements} sports={d.sports} />
       </EtatsEcran>

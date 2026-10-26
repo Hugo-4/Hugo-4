@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
 import { formatJourDate } from '@/lib/format';
 
-import { etatsRequete } from './etatRequete';
+import { dateDuJour } from './dates';
+import { estSeanceIntrouvable, etatsRequete } from './etatRequete';
 import { useLegende, useSeanceProgramme } from './requetes';
 import type { ReponseManquee } from './types';
 
@@ -30,8 +31,14 @@ export function useEcranSeance(id: string | undefined) {
   }, [toast]);
 
   const detail = requete.data;
+  const etats = etatsRequete(requete);
+  /** Séance inconnue chez cet athlète (supprimée, lien périmé) : état « introuvable » au lieu d'une erreur. */
+  const introuvable = !detail && estSeanceIntrouvable(requete.error);
   return {
-    ...etatsRequete(requete),
+    ...etats,
+    erreur: introuvable ? null : etats.erreur,
+    introuvable,
+    aujourdhui: dateDuJour(),
     detail,
     legende: legende.data,
     reessayer: () => requete.refetch(),
@@ -57,6 +64,7 @@ export function useEcranSeance(id: string | undefined) {
       setToast(t(reponse.statut === 'a_reporter' ? 'programme.manquee.okReporter' : 'programme.manquee.ok'));
     },
     demarrer: () => id && router.push({ pathname: '/seance/[id]', params: { id } }),
+    retour: () => (router.canGoBack() ? router.back() : router.navigate('/programme')),
     modifierAvecCoach: () =>
       detail && id && ouvrirCoach({ type: 'seance', programmeSeanceId: id, titre: detail.nom ?? detail.seance.titre }),
     ouvrirExercice: (slug: string) => router.push({ pathname: '/exercice/[slug]', params: { slug } }),

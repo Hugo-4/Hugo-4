@@ -1,4 +1,3 @@
-import { Check, Trophy, X } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -6,10 +5,11 @@ import { AppText } from '@/components/AppText';
 import { libelleType } from '@/features/accueil/presentation';
 import { dateLocale, formatDateLongue } from '@/lib/format';
 import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { etatJour, libelleIntensite, libelleStatutSeance, type StatutCase } from '../presentation';
 import type { JourCalendrier, Legende } from '../types';
-import { IntensiteTraits } from './IntensiteTraits';
+import { IndiceJour } from './IndiceJour';
 
 type Props = {
   date: string;
@@ -17,9 +17,6 @@ type Props = {
   legende?: Legende;
   onPress: (jour: JourCalendrier) => void;
 };
-
-/** Le numéro grossit avec la taille de texte du téléphone, sans sortir de la pastille (FRONTEND.md §5.2). */
-const MULTIPLICATEUR_MAX = 1.3;
 
 const APPARENCES: Record<StatutCase, { fond: string; bordure: string; texte: string }> = {
   fait: { fond: colors.accent, bordure: colors.accent, texte: colors.surAccent },
@@ -30,8 +27,9 @@ const APPARENCES: Record<StatutCase, { fond: string; bordure: string; texte: str
 
 /**
  * Une case du calendrier : numéro du jour dans une pastille (pleine = faite, contour = prévue,
- * contour orange = manquée), et dessous une icône (coche, croix, trophée) ou l'intensité en traits.
- * Aujourd'hui : contour épais et numéro souligné. Le lecteur d'écran lit tout le contenu du jour.
+ * contour orange = manquée), et dessous l'icône du type de séance puis une icône (coche, croix, trophée)
+ * ou l'intensité en traits. Aujourd'hui : contour épais et numéro souligné. Le lecteur d'écran lit tout le
+ * contenu du jour. Le numéro grossit avec la taille de texte du téléphone sans sortir de la pastille.
  */
 export function CaseJour({ date, jour, legende, onPress }: Props) {
   const { t } = useTranslation();
@@ -76,28 +74,18 @@ export function CaseJour({ date, jour, legende, onPress }: Props) {
         <AppText
           variant="corpsGras"
           color={apparence.texte}
-          maxFontSizeMultiplier={MULTIPLICATEUR_MAX}
+          maxFontSizeMultiplier={multiplicateurMax}
           style={aujourdhui ? styles.souligne : undefined}>
           {Number(date.slice(8, 10))}
         </AppText>
       </View>
-      <View style={styles.indice}>
-        {etat?.competition ? (
-          <Trophy color={colors.accent} size={sizes.iconePetite} />
-        ) : statut === 'fait' ? (
-          <Check color={colors.accent} size={sizes.iconePetite} />
-        ) : statut === 'manque' ? (
-          <X color={colors.alerte} size={sizes.iconePetite} />
-        ) : etat?.intensite ? (
-          <IntensiteTraits niveau={etat.intensite} />
-        ) : null}
-      </View>
+      <IndiceJour etat={etat} />
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  case: { flex: 1, alignItems: 'center', gap: spacing.xs, paddingVertical: spacing.xs, minHeight: sizes.pasAPas },
+  case: { flex: 1, alignItems: 'center', gap: spacing.xs, paddingVertical: spacing.xs, minHeight: sizes.cibleTactile },
   presse: { opacity: opacity.presse },
   pastille: {
     width: sizes.pastilleJour,
@@ -107,5 +95,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   souligne: { textDecorationLine: 'underline' },
-  indice: { height: sizes.iconePetite, justifyContent: 'center' },
 });

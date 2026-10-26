@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
 import { colors, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { formatDateJour, formatValeur } from '../format';
 import type { RecordJalon } from '../types';
@@ -28,7 +29,7 @@ export function ContenuRecord({ record, grand }: Props) {
       </View>
       <AppText variant="corpsGras">{record.titre}</AppText>
       {record.valeur !== null ? (
-        <AppText variant={grand ? 'chiffreXL' : 'chiffre'} maxFontSizeMultiplier={1.3}>
+        <AppText variant={grand ? 'chiffreXL' : 'chiffre'} maxFontSizeMultiplier={multiplicateurMax}>
           {formatValeur(record.valeur, record.unite)}
         </AppText>
       ) : null}

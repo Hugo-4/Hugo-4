@@ -34,7 +34,7 @@ export function CalendrierCarte({ mois, calendrier, legende, onMois, onJour, onL
     <Card>
       <EnteteMois mois={mois} onPrecedent={() => onMois(-1)} onSuivant={() => onMois(1)} />
       {duMois || calendrier.isFetching ? (
-        <View style={duMois ? undefined : styles.attente}>
+        <View style={[styles.grille, duMois ? undefined : styles.attente]}>
           <GrilleMois mois={mois} jours={duMois?.jours ?? []} legende={legende} onJour={onJour} />
         </View>
       ) : calendrier.isError ? (
@@ -53,6 +53,12 @@ export function CalendrierCarte({ mois, calendrier, legende, onMois, onJour, onL
 }
 
 const styles = StyleSheet.create({
+  /**
+   * La grille déborde dans le padding de la carte pour que chaque case fasse au moins 48 px de large
+   * (écran de 390 px : (390 − 2 × 16 − 2 × 1) / 7 ≈ 50,9 px). La marge négative est sur ce conteneur,
+   * enfant direct de la carte : les cases restent dans les limites tactiles de la carte (Android).
+   */
+  grille: { marginHorizontal: -spacing.carte },
   attente: { opacity: opacity.desactive },
   erreur: { gap: spacing.m },
 });

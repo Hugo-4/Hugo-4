@@ -7,6 +7,7 @@ import { EnTete } from '@/components/EnTete';
 import { EtatsEcran } from '@/components/EtatsEcran';
 import { Screen } from '@/components/Screen';
 import { Skeleton } from '@/components/Skeleton';
+import { ActionEtatVide } from '@/features/programme/components/ActionEtatVide';
 import { AdaptationLigne } from '@/features/programme/components/AdaptationLigne';
 import { useEcranAdaptations } from '@/features/programme/useEcranAdaptations';
 import { colors, radius, sizes, spacing } from '@/theme/tokens';
@@ -36,11 +37,12 @@ export default function AdaptationsScreen() {
           icon: <History color={colors.discret} size={sizes.icone * 2} />,
           titre: t('programme.adaptations.videTitre'),
           texte: t('programme.adaptations.videTexte'),
+          action: <ActionEtatVide label={t('programme.adaptations.voirProgramme')} onPress={e.voirProgramme} />,
         }}>
         <FlatList
           data={e.adaptations}
           keyExtractor={(a) => a.id}
-          renderItem={({ item }) => <AdaptationLigne adaptation={item} />}
+          renderItem={({ item }) => <AdaptationLigne adaptation={item} santeAutorisee={e.santeAutorisee} />}
           ListHeaderComponent={<AppText variant="secondaire">{t('programme.adaptations.periode')}</AppText>}
           contentContainerStyle={styles.liste}
           refreshControl={<RefreshControl refreshing={e.rafraichissement} onRefresh={e.rafraichir} tintColor={colors.accent} />}

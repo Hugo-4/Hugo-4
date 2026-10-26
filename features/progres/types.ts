@@ -68,7 +68,7 @@ export type Progression = {
 /** `GET /profil` → `charge` (fonction SQL profil_avance) : charge interne sRPE, ACWR, monotonie. */
 export type ChargeActuelle = {
   acwr: number | null;
-  /** sous_charge | vigilance | danger, sinon zone habituelle (décision du serveur). */
+  /** sous_charge | optimale | vigilance | danger (décision du serveur) ; un autre code n'est pas affiché. */
   zone: string | null;
   aigue_7j: number | null;
   monotonie: number | null;

@@ -3,6 +3,7 @@
   "exemple": "Exemple",
   "exempleA11y": "Données d'exemple, en attendant le serveur",
   "ouvrir": "Ouvre le détail",
+  "voirProgramme": "Voir mon programme",
   "valeurUnite": "{{valeur}} {{unite}}",
   "vide": {
     "titre": "Tes progrès apparaîtront ici",
@@ -35,7 +36,9 @@
     "jalons": "Jalons",
     "filtre": "Afficher",
     "videTitre": "Pas encore de record",
-    "videTexte": "Tes records et jalons apparaîtront ici, datés, dès qu'ils seront réalisés en séance ou en test."
+    "videTexte": "Tes records et jalons apparaîtront ici, datés, dès qu'ils seront réalisés en séance ou en test.",
+    "ouvrirTest": "Ouvre le détail du test",
+    "ouvrirSeance": "Ouvre le détail de la séance"
   },
   "tests": {
     "titre": "Tests",
@@ -98,6 +101,7 @@
     "methodeAide": "Testé : tu as fait le test. Déclaré : une valeur que tu connais déjà.",
     "notes": "Notes (facultatif)",
     "enregistrer": "Enregistrer",
+    "horsLigne": "Pas de réseau : le résultat ne peut pas être enregistré pour l'instant. Reconnecte-toi pour valider.",
     "erreurs": {
       "type": "Choisis un test.",
       "valeur": "Entre une valeur supérieure à 0.",
@@ -137,6 +141,7 @@
     "detailSemaines": "Semaine par semaine",
     "semaineDu": "Semaine du {{date}}",
     "semaineEnCours": "Semaine du {{date}} (en cours)",
+    "semaineEnCoursCourt": "Cette semaine",
     "ligneSemaine": "{{valeur}} · {{seances}}",
     "videTitre": "Pas encore de charge à afficher",
     "videTexte": "Ta charge apparaîtra après tes premières séances enregistrées avec leur effort ressenti."
@@ -210,6 +215,7 @@
     "jusquau": "Jusqu'au {{date}}",
     "rejoindre": "Rejoindre",
     "quitter": "Quitter",
+    "erreurInscription": "Le changement n'a pas pu être enregistré. Réessaie.",
     "defisTitre": "Défis",
     "avancement": "{{actuelle}} / {{cible}}",
     "a11yDefi": "{{nom}} : {{avancement}}",

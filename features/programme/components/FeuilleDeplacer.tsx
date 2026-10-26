@@ -8,9 +8,11 @@ import { DateField } from '@/components/DateField';
 import { Feuille } from '@/components/Feuille';
 import { formatJourDate } from '@/lib/format';
 import { useTexteErreur } from '@/lib/texteErreur';
+import { useEnLigne } from '@/lib/useEnLigne';
 import { colors, spacing } from '@/theme/tokens';
 
 import { useDeplacement } from '../useDeplacement';
+import { AvisHorsLigne } from './AvisHorsLigne';
 
 type Props = {
   visible: boolean;
@@ -20,11 +22,13 @@ type Props = {
   onDeplacee: (date: string) => void;
 };
 
-/** Déplacer une séance : puces des 7 prochains jours ou date saisie, puis confirmation avec la date choisie. */
+/** Déplacer une séance : puces des jours permis (± 6 jours, pas dans le passé) ou date saisie, puis confirmation. */
 export function FeuilleDeplacer({ visible, programmeSeanceId, dateActuelle, onFermer, onDeplacee }: Props) {
   const { t } = useTranslation();
   const texteErreur = useTexteErreur();
+  const enLigne = useEnLigne();
   const d = useDeplacement(programmeSeanceId, dateActuelle, onDeplacee);
+  const fenetre = { debut: formatJourDate(d.debut), fin: formatJourDate(d.fin) };
   const fermer = () => {
     d.reinitialiser();
     onFermer();
@@ -32,18 +36,26 @@ export function FeuilleDeplacer({ visible, programmeSeanceId, dateActuelle, onFe
 
   return (
     <Feuille visible={visible} titre={t('programme.deplacer.titre')} onFermer={fermer}>
-      <AppText variant="secondaire">{t('programme.deplacer.aide', { date: formatJourDate(dateActuelle) })}</AppText>
-      <View style={styles.puces} accessibilityRole="radiogroup" accessibilityLabel={t('programme.deplacer.jours')}>
-        {d.puces.map((date) => (
-          <Chip key={date} role="radio" label={formatJourDate(date)} selectionne={d.puce === date} onPress={() => d.choisirPuce(date)} />
-        ))}
-      </View>
-      <DateField
-        label={t('programme.deplacer.autreDate')}
-        valeur={d.saisie}
-        onChange={d.changerSaisie}
-        erreur={d.saisieInvalide ? t('programme.deplacer.dateInvalide') : undefined}
-      />
+      {d.puces.length ? (
+        <AppText variant="secondaire">{t('programme.deplacer.aide', { date: formatJourDate(dateActuelle), ...fenetre })}</AppText>
+      ) : (
+        <AppText variant="secondaire">{t('programme.deplacer.aucuneDate', { date: formatJourDate(dateActuelle) })}</AppText>
+      )}
+      {d.puces.length ? (
+        <>
+          <View style={styles.puces} accessibilityRole="radiogroup" accessibilityLabel={t('programme.deplacer.jours')}>
+            {d.puces.map((date) => (
+              <Chip key={date} role="radio" label={formatJourDate(date)} selectionne={d.puce === date} onPress={() => d.choisirPuce(date)} />
+            ))}
+          </View>
+          <DateField
+            label={t('programme.deplacer.autreDate')}
+            valeur={d.saisie}
+            onChange={d.changerSaisie}
+            erreur={d.saisieInvalide ? t('programme.deplacer.dateInvalide', fenetre) : undefined}
+          />
+        </>
+      ) : null}
       {d.refus ? (
         <AppText variant="corps" color={colors.alerte} accessibilityRole="alert">
           {t('programme.deplacer.refus', { raison: d.refus })}
@@ -54,10 +66,11 @@ export function FeuilleDeplacer({ visible, programmeSeanceId, dateActuelle, onFe
           {texteErreur(d.erreur) ?? t('programme.erreurEnregistrement')}
         </AppText>
       ) : null}
+      {enLigne ? null : <AvisHorsLigne />}
       <Button
         label={d.date ? t('programme.deplacer.confirmer', { date: formatJourDate(d.date) }) : t('programme.deplacer.choisir')}
         onPress={d.confirmer}
-        disabled={!d.date || d.enCours}
+        disabled={!d.date || d.enCours || !enLigne}
       />
     </Feuille>
   );

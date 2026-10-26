@@ -5,7 +5,7 @@ export const cleConversation = (userId: string | undefined) => ['coach', 'conver
 export const cleCredits = (userId: string | undefined) => ['coach', 'credits', userId] as const;
 
 /** Données que les propositions du coach peuvent modifier (FRONTEND.md §6 : invalider après une action). */
-export const CLES_MODIFIEES_PAR_PROPOSITION = [['accueil'], ['programme']] as const;
+export const CLES_MODIFIEES_PAR_PROPOSITION = [['accueil'], ['programme'], ['calendrier']] as const;
 
 /** Ajoute l'échange confirmé par le serveur à la conversation en cache (sans doublon). */
 export function ajouterEchange(

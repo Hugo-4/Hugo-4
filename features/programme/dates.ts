@@ -49,10 +49,17 @@ export function semaineType(): string[] {
   return Array.from({ length: 7 }, (_, i) => ajouterJours(lundi, i));
 }
 
-/** Les `n` prochains jours à partir d'aujourd'hui (inclus). */
-export function prochainsJours(n: number): string[] {
-  const aujourdhui = dateDuJour();
-  return Array.from({ length: n }, (_, i) => ajouterJours(aujourdhui, i));
+/**
+ * Jours où une séance prévue le `date` peut être déplacée : de max(aujourd'hui, date − écart) à date + écart,
+ * sans le jour prévu lui-même. `dates` est vide si toute la fenêtre est déjà passée.
+ */
+export function fenetreDeplacement(date: string, ecart: number, aujourdhui = dateDuJour()) {
+  const avant = ajouterJours(date, -ecart);
+  const debut = avant > aujourdhui ? avant : aujourdhui;
+  const fin = ajouterJours(date, ecart);
+  const dates: string[] = [];
+  for (let jour = debut; jour <= fin; jour = ajouterJours(jour, 1)) if (jour !== date) dates.push(jour);
+  return { debut, fin, dates };
 }
 
 export const DATE_VIDE: ValeurDate = { jour: '', mois: '', annee: '' };

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
 import { spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import type { EtatSection } from '../etats';
 import { formatValeur } from '../format';
@@ -39,7 +40,7 @@ export function CarteCharge({ charge, actuelle, etat, onReessayer, onPress }: Pr
       {actuelle && !actuelle.donnees_suffisantes ? <AppText variant="secondaire">{t('progres.charge.insuffisant')}</AppText> : null}
       {semaine && !vide ? (
         <View style={styles.bloc}>
-          <AppText variant="chiffreXL" maxFontSizeMultiplier={1.3}>
+          <AppText variant="chiffreXL" maxFontSizeMultiplier={multiplicateurMax}>
             {formatValeur(semaine.charge, charge?.unite)}
           </AppText>
           <AppText variant="libelle">

@@ -6,6 +6,7 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Toast } from '@/components/Toast';
 import { colors, sizes } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { formatDateJour, formatValeur } from '../format';
 import { libelleMethode, libelleTest } from '../presentation';
@@ -57,7 +58,7 @@ export function DetailTest({ filtre }: { filtre: FiltreTest }) {
         <>
           <Card>
             <AppText variant="surTitre">{t('progres.tests.dernier')}</AppText>
-            <AppText variant="chiffreXL" maxFontSizeMultiplier={1.3}>
+            <AppText variant="chiffreXL" maxFontSizeMultiplier={multiplicateurMax}>
               {formatValeur(groupe.dernier.valeur, groupe.type.unite)}
             </AppText>
             <AppText variant="secondaire">{details.join(' · ')}</AppText>

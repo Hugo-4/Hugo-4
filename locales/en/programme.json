@@ -1,6 +1,7 @@
 {
   "titre": "Plan",
   "erreurEnregistrement": "Saving didn't go through. Check your connection and try again.",
+  "horsLigneEnvoi": "No network: nothing can be saved right now. Reconnect to confirm.",
   "vide": {
     "titre": "No plan yet",
     "texte": "Your calendar, blocks and competitions will show up here as soon as your plan is ready.",
@@ -66,6 +67,13 @@
     "reportee": "postponed",
     "annulee": "cancelled"
   },
+  "badges": {
+    "cle": "Key session",
+    "allegee": "Deload week",
+    "modifiee": "Adapted",
+    "deplacee": "Moved",
+    "lourde_jambes": "Heavy lower body"
+  },
   "stats": {
     "titre": "This month",
     "prevues": "Planned sessions",
@@ -79,7 +87,9 @@
   "competitions": {
     "titre": "Upcoming competitions",
     "ajouter": "+ Competition",
-    "priorite": "Priority {{priorite}}"
+    "priorite": "Priority {{priorite}}",
+    "erreur": "Couldn't load your competitions.",
+    "horsLigne": "Offline: your competitions will show up once you're back online."
   },
   "legende": {
     "titre": "Legend",
@@ -88,6 +98,7 @@
     "manque": "Orange outline and cross: session missed",
     "competition": "Trophy: competition",
     "aujourdhui": "Thick outline and underlined number: today",
+    "types": "Session type (icon under the number)",
     "intensite": "Intensity (filled dots)",
     "niveau": "{{niveau}} out of 5: {{libelle}}",
     "niveauRpe": "{{niveau}} out of 5: {{libelle}} (RPE {{rpe}})"
@@ -98,6 +109,11 @@
     "periode": "Changes to your plan over the last 30 days.",
     "videTitre": "No adaptations",
     "videTexte": "Your plan hasn't changed over the last 30 days.",
+    "voirProgramme": "See my plan",
+    "accepter": "Accept",
+    "refuser": "Keep my plan",
+    "santeMasquee": "Reason hidden",
+    "santeMasqueeAide": "This reason is about your health: allow health data in Profile › Consents to see it.",
     "seances_one": "{{count}} session changed",
     "seances_other": "{{count}} sessions changed",
     "portees": {
@@ -150,6 +166,9 @@
     "a11yFiche": "Opens the exercise guide",
     "enPreparation": "The session details are being prepared. They will show up in a few seconds.",
     "indisponible": "The details of this session aren't available right now.",
+    "a11yBadges": "Tags: {{liste}}",
+    "introuvableTitre": "Session not found",
+    "introuvableTexte": "This session is no longer in your plan: it may have been moved or replaced.",
     "sansExercices": "No detailed exercises for this session.",
     "deplacer": "Move",
     "coach": "Change with the coach",
@@ -159,10 +178,11 @@
   },
   "deplacer": {
     "titre": "Move the session",
-    "aide": "Planned on {{date}}. Pick another day in the same week: the coach checks that recovery stays right.",
-    "jours": "Next days",
+    "aide": "Planned on {{date}}. Pick a day from {{debut}} to {{fin}} (up to 6 days before or after, never in the past): the coach checks that recovery stays right.",
+    "aucuneDate": "Planned on {{date}}: it can no longer be moved (up to 6 days after the planned date). You can mark it as missed or talk to the coach.",
+    "jours": "Available days",
     "autreDate": "Or another date",
-    "dateInvalide": "Pick an upcoming date, different from the planned day.",
+    "dateInvalide": "Pick a date from {{debut}} to {{fin}}, other than the planned day.",
     "choisir": "Pick a day",
     "confirmer": "Move to {{date}}",
     "refus": "Can't move it: {{raison}}",
@@ -252,6 +272,7 @@
     "supprimerTitre": "Delete \"{{nom}}\"?",
     "supprimerTexte": "It will be marked as cancelled and your plan will no longer be built around it.",
     "introuvableTitre": "Competition not found",
-    "introuvableTexte": "It may have been deleted."
+    "introuvableTexte": "It may have been deleted.",
+    "retourProgramme": "Back to my plan"
   }
 }

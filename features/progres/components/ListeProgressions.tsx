@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AppText } from '@/components/AppText';
 import { Card } from '@/components/Card';
 import { sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { formatDateJour, formatValeur } from '../format';
 import { libelleProgression } from '../presentation';
@@ -28,7 +29,7 @@ export function ListeProgressions({ progressions }: { progressions: Progression[
               <AppText variant="corpsGras">{p.exercices?.nom}</AppText>
               {details.length ? <AppText variant="libelle">{details.join(' · ')}</AppText> : null}
             </View>
-            <AppText variant="chiffre" maxFontSizeMultiplier={1.3}>
+            <AppText variant="chiffre" maxFontSizeMultiplier={multiplicateurMax}>
               {formatValeur(Number(p.e1rm_recent ?? p.one_rep_max_kg), 'kg')}
             </AppText>
           </View>

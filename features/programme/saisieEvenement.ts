@@ -2,7 +2,7 @@ import type { ValeurDate } from '@/components/DateField';
 
 import { POIDS_MAX_KG, POIDS_MIN_KG, type Precision, TYPE_PAR_PRECISION } from './constantes';
 import { DATE_VIDE, dateDuJour, dateIso, saisieDepuisIso } from './dates';
-import { precisionDuSport } from './presentation';
+import { conflitA, precisionDuSport } from './presentation';
 import type { CorpsEvenement, Evenement, Priorite, TypeEvenement } from './types';
 
 export type SportOption = { id: string; slug: string; nom: string };
@@ -26,16 +26,22 @@ const typeParDefaut = (slug: string | undefined): TypeEvenement => {
   return precision ? TYPE_PAR_PRECISION[precision] : 'competition';
 };
 
-/** Saisie de départ : la compétition à modifier, sinon une compétition A dans le sport principal. */
-export function saisieInitiale(evenement: Evenement | null, sports: SportOption[]): SaisieEvenement {
+/** Priorité proposée à la création : A, sauf si une A est déjà prévue dans ce sport (alors B). */
+export function prioriteParDefaut(evenements: Evenement[], sportId: string | null): Priorite {
+  return conflitA(evenements, sportId, dateDuJour()) ? 'B' : 'A';
+}
+
+/** Saisie de départ : la compétition à modifier, sinon une compétition dans le sport principal (A, ou B si une A existe). */
+export function saisieInitiale(evenement: Evenement | null, sports: SportOption[], evenements: Evenement[]): SaisieEvenement {
   if (!evenement) {
+    const sportId = sports[0]?.id ?? null;
     return {
       nom: '',
       date: DATE_VIDE,
-      sportId: sports[0]?.id ?? null,
+      sportId,
       type: typeParDefaut(sports[0]?.slug),
       precision: '',
-      priorite: 'A',
+      priorite: prioriteParDefaut(evenements, sportId),
       lieu: '',
       notes: '',
     };

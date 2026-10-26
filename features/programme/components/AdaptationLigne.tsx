@@ -6,12 +6,23 @@ import { Card } from '@/components/Card';
 import { formatHorodatage } from '@/lib/format';
 import { colors, spacing } from '@/theme/tokens';
 
-import { libelleCategorie, libellePortee, libelleStatutAdaptation } from '../presentation';
+import { causeSante, libelleCategorie, libellePortee, libelleStatutAdaptation } from '../presentation';
 import type { Adaptation } from '../types';
+import { ReponseProposition } from './ReponseProposition';
 
-/** Une adaptation : date, cause (traduite), raison (texte du serveur), portée, statut, qui l'a demandée. */
-export function AdaptationLigne({ adaptation }: { adaptation: Adaptation }) {
+type Props = {
+  adaptation: Adaptation;
+  /** Consentement « données de santé » donné : sinon douleur, blessure et maladie (et leur raison) sont masquées. */
+  santeAutorisee: boolean;
+};
+
+/**
+ * Une adaptation : date, cause (traduite), raison (texte du serveur), portée, statut, qui l'a demandée.
+ * Proposée par le coach : on peut y répondre ici (accepter ou garder son programme).
+ */
+export function AdaptationLigne({ adaptation, santeAutorisee }: Props) {
   const { t } = useTranslation();
+  const masquee = !santeAutorisee && causeSante(adaptation.categorie);
   const declencheur = ['athlete', 'agent', 'checkin'].includes(adaptation.declencheur)
     ? t(`programme.adaptations.declencheurs.${adaptation.declencheur as 'athlete' | 'agent' | 'checkin'}`)
     : null;
@@ -33,9 +44,11 @@ export function AdaptationLigne({ adaptation }: { adaptation: Adaptation }) {
           {statut}
         </AppText>
       </View>
-      <AppText variant="corpsGras">{libelleCategorie(adaptation.categorie)}</AppText>
-      {adaptation.raison ? <AppText variant="corps">{adaptation.raison}</AppText> : null}
+      <AppText variant="corpsGras">{masquee ? t('programme.adaptations.santeMasquee') : libelleCategorie(adaptation.categorie)}</AppText>
+      {masquee ? <AppText variant="secondaire">{t('programme.adaptations.santeMasqueeAide')}</AppText> : null}
+      {adaptation.raison && !masquee ? <AppText variant="corps">{adaptation.raison}</AppText> : null}
       <AppText variant="secondaire">{details.join(' · ')}</AppText>
+      {adaptation.statut === 'proposee' ? <ReponseProposition adaptationId={adaptation.id} /> : null}
     </Card>
   );
 }
