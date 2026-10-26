@@ -33,7 +33,7 @@ export function useObjectifPrincipal() {
     queryFn: async (): Promise<ObjectifPrincipal | null> => {
       const { data, error } = await supabase
         .from('user_sport_profiles')
-        .select('id, echeance, sports(id, slug, nom), objectifs_sport(libelle_fr, libelle_en, echeance_requise, precision_demandee)')
+        .select('id, echeance, sports!user_sport_profiles_sport_id_fkey(id, slug, nom), objectifs_sport(libelle_fr, libelle_en, echeance_requise, precision_demandee)')
         .eq('user_id', userId as string)
         .eq('role', 'principal')
         .eq('actif', true)
