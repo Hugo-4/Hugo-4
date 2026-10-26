@@ -45,6 +45,8 @@
       "dansAns": "in {{ans}}"
     },
     "horsLigne": "Offline · latest data received",
+    "horsLigneTitre": "No connection",
+    "horsLigneTexte": "This information hasn't been loaded on this phone yet. It will appear as soon as you're back online.",
     "bientotDisponible": "Coming soon",
     "modification": {
       "avant": "Before",
@@ -56,7 +58,8 @@
       "gardee": "Original kept",
       "annuler": "Undo ({{secondes}} s)",
       "a11yAvant": "Before: {{liste}}"
-    }
+    },
+    "appelerNumero": "Call {{numero}}"
   },
   "accueil": {
     "bonjour": "Hi {{prenom}}",
@@ -680,10 +683,14 @@
     },
     "douleurs": "Pain",
     "douleursAide": "Tap the areas that hurt today.",
-    "douleursSansConsentement": "Pain: you haven't allowed the use of your health data. You can turn it on in your profile.",
+    "douleursSansConsentement": "Pain: you haven't allowed the use of your health data, so this question isn't asked.",
     "duree": "Time available today",
     "lieu": "Place",
-    "facultatif": "Optional"
+    "facultatif": "Optional",
+    "douleursConsentementInconnu": "Pain: we can't check your health-data consent right now, so this question isn't asked.",
+    "activerConsentement": "Allow in my profile",
+    "aucuneDouleur": "No pain",
+    "horsLigne": "No connection: your check-in is kept on this phone. You can send it as soon as you're back online."
   },
   "seance": {
     "types": {
@@ -833,7 +840,8 @@
     "fiche": {
       "muscles": "Muscles",
       "consignes": "Key points",
-      "vide": "The guide for this exercise is coming soon."
+      "vide": "The guide for this exercise is coming soon.",
+      "complete": "See the full exercise sheet"
     },
     "douleur": {
       "titre": "Report pain",
@@ -875,6 +883,12 @@
       "titre": "Rest is over",
       "suivante": "Your turn: {{nom}}, set {{numero}} / {{total}}",
       "reprendre": "Back to your session"
+    },
+    "choisirRpe": "Pick your RPE to log the set.",
+    "vide": {
+      "titre": "No exercises in this session",
+      "texte": "The server sent no exercises for this session. Go back to Today and try again, or ask the coach.",
+      "fermer": "Back to Today"
     }
   }
 }

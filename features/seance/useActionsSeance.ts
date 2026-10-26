@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useRef } from 'react';
 
 import { cleExercice, exercicesDe, seriesPrevues } from './etat';
 import { ajouter } from './fileEnvoi';
@@ -16,6 +17,8 @@ import type { RetourSeance, SerieRealisee } from './types';
 export function useActionsSeance() {
   const { etat, dispatch } = useSeance();
   const queryClient = useQueryClient();
+  // Double toucher sur « Valider » : la même série (exercice + numéro) n'est enregistrée qu'une fois.
+  const derniereValidee = useRef<string | null>(null);
 
   /** Série validée : écrite dans la file AVANT l'envoi, puis envoi et charge conseillée. */
   const validerSerie = async (saisie: Saisie) => {
@@ -23,6 +26,9 @@ export function useActionsSeance() {
     if (!exercice) return;
     const cle = cleExercice(exercice);
     const precedentes = etat.series[cle] ?? [];
+    const marque = `${cle}:${precedentes.length + 1}`;
+    if (derniereValidee.current === marque) return;
+    derniereValidee.current = marque;
     const serie: SerieRealisee = {
       serie: precedentes.length + 1,
       reps: mesureDe(exercice) === 'reps' ? saisie.reps : null,
@@ -32,7 +38,7 @@ export function useActionsSeance() {
       complete: true,
     };
     vibrerValidation();
-    dispatch({ type: 'valider', cle, serie, reposS: exercice.repos_s ?? 90, maintenant: Date.now() });
+    dispatch({ type: 'valider', cle, serie, reposS: exercice.repos_s ?? null, maintenant: Date.now() });
     await ajouter({
       methode: 'PUT',
       chemin: `/exercices-seance/${cle}/series`,
@@ -42,7 +48,7 @@ export function useActionsSeance() {
     viderFile().catch(() => undefined);
 
     const restantes = seriesPrevues(etat, exercice) - serie.serie;
-    if (restantes > 0 && serie.charge_kg && serie.reps) {
+    if (restantes > 0 && serie.charge_kg && serie.reps && saisie.rpe !== null) {
       const suggestion = await serieSuivante({
         charge_kg: serie.charge_kg,
         reps: serie.reps,

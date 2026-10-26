@@ -1,4 +1,4 @@
-import { Check, CircleDot, Circle, Ban } from 'lucide-react-native';
+import { Ban, Check, Circle, CircleDot, SkipForward } from 'lucide-react-native';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -8,12 +8,13 @@ import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
 
 import { cleExercice, exercicesDe, type StatutExercice, statutExercice } from '../etat';
 import { useSeance } from '../SeanceProvider';
+import { MinuteurRepos } from './MinuteurRepos';
 
 const icones: Record<StatutExercice, { Icone: typeof Check; couleur: string }> = {
   fait: { Icone: Check, couleur: colors.accent },
   en_cours: { Icone: CircleDot, couleur: colors.accent },
   a_faire: { Icone: Circle, couleur: colors.discret },
-  passe: { Icone: Ban, couleur: colors.discret },
+  passe: { Icone: SkipForward, couleur: colors.discret },
   arrete: { Icone: Ban, couleur: colors.alerte },
 };
 
@@ -24,6 +25,7 @@ export function VueListe({ onOuvrir }: { onOuvrir: (index: number) => void }) {
 
   return (
     <ScrollView contentContainerStyle={styles.contenu}>
+      <MinuteurRepos />
       {exercicesDe(etat.seance).map((exercice, index) => {
         const statut = statutExercice(etat, exercice, index);
         const { Icone, couleur } = icones[statut];
@@ -32,6 +34,7 @@ export function VueListe({ onOuvrir }: { onOuvrir: (index: number) => void }) {
           <Pressable
             key={cleExercice(exercice)}
             accessibilityRole="button"
+            accessibilityState={{ selected: index === etat.index }}
             accessibilityLabel={t('enSeance.a11yLigne', {
               nom: exercice.exercice.nom,
               statut: t(`enSeance.statutCourt.${statut}`),

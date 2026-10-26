@@ -80,7 +80,9 @@ export function reducteur(etat: EtatSeance, action: Action): EtatSeance {
       const suivant = { ...etat, series };
       const exercice = exercicesDe(etat.seance)[etat.index];
       const fini = exercice && termine(statutExercice(suivant, exercice, etat.index));
-      const repos = action.reposS ? { fin: action.maintenant + action.reposS * 1000, duree: action.reposS } : null;
+      // Pas de repos sans durée prescrite, ni après la dernière série de la séance.
+      const repos =
+        action.reposS && !seanceTerminee(suivant) ? { fin: action.maintenant + action.reposS * 1000, duree: action.reposS } : null;
       return { ...suivant, repos, index: fini ? prochainIndex(suivant, etat.index) : etat.index };
     }
     case 'suggestion':

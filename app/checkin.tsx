@@ -1,9 +1,10 @@
 import { router } from 'expo-router';
-import { X } from 'lucide-react-native';
+import { CloudOff, X } from 'lucide-react-native';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
+import { Bandeau } from '@/components/Bandeau';
 import { Button } from '@/components/Button';
 import { IconButton } from '@/components/IconButton';
 import { Screen } from '@/components/Screen';
@@ -51,9 +52,14 @@ export default function CheckinScreen() {
               </View>
             ))}
             <SectionDouleurs
-              consentementSante={c.consentementSante}
+              etatConsentement={c.etatConsentement}
               douleurs={c.saisie.douleurs}
               onChange={(douleurs) => c.modifier({ douleurs })}
+              onActiverConsentement={() => {
+                // La saisie reste en brouillon : on ferme la feuille puis on ouvre les consentements.
+                router.back();
+                router.push('/compte/consentements');
+              }}
             />
             <SectionSeance
               dureeMin={c.saisie.dureeMin}
@@ -69,11 +75,14 @@ export default function CheckinScreen() {
           </View>
         )}
         <View style={styles.pied}>
+          {c.enLigne ? null : (
+            <Bandeau icon={<CloudOff color={colors.texte2} size={sizes.iconePetite} />} texte={t('checkin.horsLigne')} />
+          )}
           {c.enregistrement.isError ? <ErreurEnregistrement erreur={c.enregistrement.error} /> : null}
           <Button
             label={t('checkin.envoyer')}
             onPress={c.envoyer}
-            disabled={!c.complet || c.enregistrement.isPending}
+            disabled={!c.complet || !c.enLigne || c.enregistrement.isPending}
           />
         </View>
       </View>

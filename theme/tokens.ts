@@ -20,6 +20,8 @@ export const colors = {
   danger: '#FF6B6B',
   /** Information neutre, liens dans le chat. */
   info: '#5EC8FF',
+  /** Contour d'un bouton secondaire ou d'un champ (contraste ≥ 3:1 sur le fond). */
+  bordureChamp: '#6A736E',
 } as const;
 
 export const radius = {
@@ -70,9 +72,11 @@ export const fontSizes = {
 export const sizes = {
   /** Cible tactile minimale (FRONTEND.md §5.3 : 48 × 48). */
   cibleTactile: 48,
+  /** Hauteur du bouton principal (FRONTEND.md §5.3). */
+  boutonPrincipal: 56,
   icone: 20,
   iconePetite: 16,
-  avatar: 44,
+  avatar: 48,
   anneauForme: 112,
   epaisseurAnneau: 10,
   pastilleJour: 36,

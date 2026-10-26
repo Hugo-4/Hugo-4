@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { createContext, type ReactNode, useContext, useEffect, useReducer, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { createContext, type ReactNode, useContext, useEffect, useReducer, useRef, useState } from 'react';
 
 import { type Action, type EtatSeance, etatInitial, reducteur } from './etat';
 import { demarrerSeance } from './source';
@@ -24,8 +24,10 @@ function racine(etat: EtatSeance | null, action: ActionRacine): EtatSeance | nul
  * sinon démarrage par le serveur. Chaque changement est sauvegardé aussitôt.
  */
 export function useChargementSeance(programmeSeanceId: string) {
+  const queryClient = useQueryClient();
   const [etat, dispatch] = useReducer(racine, null);
   const [stockageLu, setStockageLu] = useState(false);
+  const signalee = useRef(false);
 
   useEffect(() => {
     lireSeanceEnCours().then((sauvee) => {
@@ -41,6 +43,8 @@ export function useChargementSeance(programmeSeanceId: string) {
     staleTime: Infinity,
     gcTime: 0,
     retry: 1,
+    // Hors ligne, la requête échoue tout de suite (message + Réessayer) au lieu de rester en pause sous un squelette.
+    networkMode: 'always',
   });
 
   useEffect(() => {
@@ -50,8 +54,16 @@ export function useChargementSeance(programmeSeanceId: string) {
   }, [demarrage.data, etat, programmeSeanceId]);
 
   useEffect(() => {
-    if (etat) sauverSeanceEnCours(etat).catch(() => undefined);
-  }, [etat]);
+    if (!etat) return;
+    sauverSeanceEnCours(etat)
+      .then(() => {
+        // Première sauvegarde : Aujourd'hui affiche « Reprendre » si l'athlète revient sans finir.
+        if (signalee.current) return;
+        signalee.current = true;
+        queryClient.invalidateQueries({ queryKey: ['seanceEnCours'] });
+      })
+      .catch(() => undefined);
+  }, [etat, queryClient]);
 
   return {
     etat,

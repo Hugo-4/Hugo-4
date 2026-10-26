@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { formatNombre } from '@/lib/format';
 import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { AppText } from './AppText';
 
@@ -44,7 +45,7 @@ export function PasAPas({ libelle, unite, valeur, pas, min = 0, max = 1000, onCh
           accessibilityValue={{ text: `${formatNombre(valeur, decimales)} ${unite}` }}
           accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
           onAccessibilityAction={(e) => changer(e.nativeEvent.actionName === 'increment' ? pas : -pas)}>
-          <AppText variant="display" maxFontSizeMultiplier={1.3}>
+          <AppText variant="display" maxFontSizeMultiplier={multiplicateurMax}>
             {formatNombre(valeur, decimales)}
           </AppText>
           <AppText variant="libelle">{unite}</AppText>

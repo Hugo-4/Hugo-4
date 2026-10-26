@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
+import { BoutonsUrgence } from '@/components/BoutonsUrgence';
 import { Button } from '@/components/Button';
 import { ChoixNote } from '@/components/ChoixNote';
 import { Chip } from '@/components/Chip';
@@ -40,6 +41,7 @@ export function FeuilleDouleur({ visible, onFermer, onSignaler, onArreterSansDet
       <AppText variant="secondaire" color={colors.alerte}>
         {t('enSeance.douleur.urgence')}
       </AppText>
+      <BoutonsUrgence />
       {consentement.data ? (
         <>
           <View style={styles.puces}>

@@ -4,6 +4,7 @@ import { CLE_ACCUEIL } from '@/features/accueil/useAccueil';
 import { useSession } from '@/features/auth/AuthProvider';
 import { supabase } from '@/lib/supabase';
 
+import { effacerBrouillon } from './brouillonCheckin';
 import { SEUIL_ENERGIE_BASSE } from './constantes';
 import { dateDuJour } from './dateDuJour';
 import type { SaisieCheckin } from './types';
@@ -44,6 +45,7 @@ export function useEnregistrerCheckin() {
     },
     onSuccess: () =>
       Promise.all([
+        effacerBrouillon(),
         queryClient.invalidateQueries({ queryKey: ['checkin'] }),
         queryClient.invalidateQueries({ queryKey: CLE_ACCUEIL }),
         queryClient.invalidateQueries({ queryKey: ['nutrition'] }),

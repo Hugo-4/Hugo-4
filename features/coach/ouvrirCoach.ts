@@ -13,6 +13,11 @@ export function ouvrirCoach(contexte?: ContexteCoach) {
   router.navigate({ pathname: '/coach', params: contexte ? { contexte: JSON.stringify(contexte) } : {} });
 }
 
+/** Depuis une séance en cours : le Coach s'ouvre en modale par-dessus la séance, le retour y ramène. */
+export function ouvrirCoachEnSeance(contexte?: ContexteCoach) {
+  router.push({ pathname: '/coach-seance', params: contexte ? { contexte: JSON.stringify(contexte) } : {} });
+}
+
 export function lireContexte(brut: string | string[] | undefined): ContexteCoach | null {
   if (typeof brut !== 'string') return null;
   try {

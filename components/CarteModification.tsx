@@ -27,8 +27,8 @@ type Props = {
 /** Proposition du coach : avant (barré) / après / ce qui ne change pas, Appliquer ou Garder l'original. */
 export function CarteModification(p: Props) {
   const { t } = useTranslation();
-  const ligne = (texte: string, barre = false) => (
-    <AppText key={texte} variant="corps" style={barre ? styles.barre : undefined} color={barre ? colors.discret : colors.texte}>
+  const ligne = (texte: string, i: number, barre = false) => (
+    <AppText key={`${i}-${texte}`} variant="corps" style={barre ? styles.barre : undefined} color={barre ? colors.discret : colors.texte}>
       {texte}
     </AppText>
   );
@@ -37,19 +37,19 @@ export function CarteModification(p: Props) {
       {p.titre ? <AppText variant="sousTitre">{p.titre}</AppText> : null}
       <View style={styles.groupe} accessibilityLabel={t('commun.modification.a11yAvant', { liste: p.avant.join(', ') })}>
         <AppText variant="surTitre">{t('commun.modification.avant')}</AppText>
-        {p.avant.map((x) => ligne(x, true))}
+        {p.avant.map((x, i) => ligne(x, i, true))}
       </View>
       <View style={styles.groupe}>
         <AppText variant="surTitre" color={colors.accent}>
           {t('commun.modification.apres')}
         </AppText>
-        {p.apres.map((x) => ligne(x))}
+        {p.apres.map((x, i) => ligne(x, i))}
       </View>
       {p.inchange.length ? (
         <View style={styles.groupe}>
           <AppText variant="surTitre">{t('commun.modification.inchange')}</AppText>
-          {p.inchange.map((x) => (
-            <AppText key={x} variant="secondaire">
+          {p.inchange.map((x, i) => (
+            <AppText key={`${i}-${x}`} variant="secondaire">
               {x}
             </AppText>
           ))}

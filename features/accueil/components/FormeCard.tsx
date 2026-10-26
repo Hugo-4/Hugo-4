@@ -35,7 +35,8 @@ export function FormeCard({ checkin, onRefaire }: Props) {
         </View>
         <View style={styles.mesures}>
           {checkin.recommandation ? (
-            <AppText variant="sousTitre" color={couleur}>
+            // Texte neutre : la recommandation vient de la base, la couleur de l'anneau suit le score (pas de contradiction).
+            <AppText variant="sousTitre">
               {t(`accueil.forme.recommandations.${checkin.recommandation}`)}
             </AppText>
           ) : null}

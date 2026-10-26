@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
+import { ouvrirCoachEnSeance } from '@/features/coach/ouvrirCoach';
 
 import { cleExercice } from '../etat';
 import { useSeance } from '../SeanceProvider';
@@ -25,9 +25,9 @@ export function FeuillesExercice({ exercice, feuille, onFermer }: Props) {
   const remplacer = () => {
     onFermer();
     if (exercice) {
-      ouvrirCoach({ type: 'exercice', programmeSeanceId: etat.programmeSeanceId, exerciceSlug: exercice.exercice.slug, nom: exercice.exercice.nom });
+      ouvrirCoachEnSeance({ type: 'exercice', programmeSeanceId: etat.programmeSeanceId, exerciceSlug: exercice.exercice.slug, nom: exercice.exercice.nom });
     } else {
-      ouvrirCoach();
+      ouvrirCoachEnSeance();
     }
   };
 

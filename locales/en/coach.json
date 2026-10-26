@@ -53,8 +53,7 @@
     "erreur": "Your feedback was not saved."
   },
   "urgence": {
-    "texte": "Call 15 or 112 (emergency services).",
-    "appeler": "Call {{numero}}"
+    "texte": "Call 15 or 112 (emergency services)."
   },
   "proposition": {
     "erreur": "The change could not be saved. Try again."

@@ -26,12 +26,17 @@ export function useAujourdhui() {
     ]);
   };
 
+  // Hors ligne, une requête sans cache reste en pause (`isPending`) : on ne montre le squelette que pendant un vrai chargement.
+  const horsLigneSansDonnees = !donnees && accueil.fetchStatus === 'paused';
+
   return {
     accueil: donnees,
     checkin: checkin.data ?? null,
-    chargement: accueil.isPending || checkin.isPending,
-    erreur: accueil.isError || checkin.isError,
-    detailErreur: accueil.error ?? checkin.error,
+    chargement: (accueil.isPending && !horsLigneSansDonnees) || (checkin.isPending && checkin.fetchStatus === 'fetching'),
+    horsLigneSansDonnees,
+    // L'écran d'erreur ne remplace l'écran que si l'accueil n'a jamais été reçu (sinon on garde les dernières données).
+    erreur: !donnees && accueil.isError,
+    detailErreur: accueil.error,
     vide,
     rafraichir,
     rafraichissement: accueil.isRefetching,

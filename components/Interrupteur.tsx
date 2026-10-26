@@ -1,6 +1,6 @@
-import { StyleSheet, Switch, View } from 'react-native';
+import { Pressable, StyleSheet, Switch, View } from 'react-native';
 
-import { colors, sizes, spacing } from '@/theme/tokens';
+import { colors, opacity, sizes, spacing } from '@/theme/tokens';
 
 import { AppText } from './AppText';
 
@@ -12,27 +12,36 @@ type Props = {
   desactive?: boolean;
 };
 
-/** Réglage oui / non avec son libellé ; toute la ligne fait au moins 48 px. */
+/** Réglage oui / non avec son libellé : toute la ligne (au moins 48 px) bascule le réglage. */
 export function Interrupteur({ libelle, aide, valeur, onChange, desactive }: Props) {
   return (
-    <View style={styles.ligne}>
+    <Pressable
+      accessibilityRole="switch"
+      accessibilityLabel={libelle}
+      accessibilityHint={aide}
+      accessibilityState={{ checked: valeur, disabled: desactive }}
+      disabled={desactive}
+      onPress={() => onChange(!valeur)}
+      style={({ pressed }) => [styles.ligne, pressed && styles.presse]}>
       <View style={styles.texte}>
         <AppText variant="corpsGras">{libelle}</AppText>
         {aide ? <AppText variant="secondaire">{aide}</AppText> : null}
       </View>
       <Switch
-        accessibilityLabel={libelle}
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
         value={valeur}
         onValueChange={onChange}
         disabled={desactive}
         trackColor={{ false: colors.ligne, true: colors.accent }}
         thumbColor={colors.texte}
       />
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  ligne: { flexDirection: 'row', alignItems: 'center', gap: spacing.m, minHeight: sizes.pasAPas },
+  ligne: { flexDirection: 'row', alignItems: 'center', gap: spacing.m, minHeight: sizes.cibleTactile },
   texte: { flex: 1, gap: spacing.xxs },
+  presse: { opacity: opacity.presse },
 });

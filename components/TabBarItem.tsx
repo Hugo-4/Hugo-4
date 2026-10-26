@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { colors, opacity, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { AppText } from './AppText';
 import { PointBadge } from './PointBadge';
@@ -28,7 +29,7 @@ export function TabBarItem({ label, actif, onPress, renderIcon, badge }: Props) 
         {renderIcon(couleur)}
         {badge ? <PointBadge /> : null}
       </View>
-      <AppText variant="libelle" color={couleur} numberOfLines={1}>
+      <AppText variant="libelle" color={couleur} numberOfLines={1} maxFontSizeMultiplier={multiplicateurMax}>
         {label}
       </AppText>
     </Pressable>

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { type DimensionValue, StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
   withRepeat,
   withTiming,
@@ -18,10 +19,13 @@ type Props = {
 /** Bloc gris qui pulse pendant le chargement. */
 export function Skeleton({ hauteur, largeur = '100%', arrondi = radius.petit }: Props) {
   const opacite = useSharedValue(0.5);
+  // « Réduire les animations » activé : le bloc reste fixe.
+  const mouvementReduit = useReducedMotion();
 
   useEffect(() => {
+    if (mouvementReduit) return;
     opacite.value = withRepeat(withTiming(1, { duration: 700 }), -1, true);
-  }, [opacite]);
+  }, [opacite, mouvementReduit]);
 
   const style = useAnimatedStyle(() => ({ opacity: opacite.value }));
 

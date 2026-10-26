@@ -53,8 +53,7 @@
     "erreur": "Ton avis n'a pas été enregistré."
   },
   "urgence": {
-    "texte": "Appelle le 15 ou le 112.",
-    "appeler": "Appeler le {{numero}}"
+    "texte": "Appelle le 15 ou le 112."
   },
   "proposition": {
     "erreur": "La modification n'a pas pu être enregistrée. Réessaie."

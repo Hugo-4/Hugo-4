@@ -2,6 +2,7 @@ import { MessageCircle } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { AppText } from './AppText';
 import { PointBadge } from './PointBadge';
@@ -27,7 +28,7 @@ export function CoachTabButton({ label, actif, onPress, badge }: Props) {
         <MessageCircle color={colors.surAccent} size={sizes.icone + spacing.xs} />
         {badge ? <PointBadge /> : null}
       </View>
-      <AppText variant="libelle" color={actif ? colors.accent : colors.texte2} numberOfLines={1}>
+      <AppText variant="libelle" color={actif ? colors.accent : colors.texte2} numberOfLines={1} maxFontSizeMultiplier={multiplicateurMax}>
         {label}
       </AppText>
     </Pressable>

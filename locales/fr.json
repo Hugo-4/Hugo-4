@@ -45,6 +45,8 @@
       "dansAns": "dans {{ans}}"
     },
     "horsLigne": "Hors ligne · dernières données reçues",
+    "horsLigneTitre": "Pas de réseau",
+    "horsLigneTexte": "Ces informations n'ont pas encore été chargées sur ce téléphone. Elles s'afficheront dès le retour du réseau.",
     "bientotDisponible": "Bientôt disponible",
     "modification": {
       "avant": "Avant",
@@ -56,7 +58,8 @@
       "gardee": "Original gardé",
       "annuler": "Annuler ({{secondes}} s)",
       "a11yAvant": "Avant : {{liste}}"
-    }
+    },
+    "appelerNumero": "Appeler le {{numero}}"
   },
   "accueil": {
     "bonjour": "Bonjour {{prenom}}",
@@ -680,10 +683,14 @@
     },
     "douleurs": "Douleurs",
     "douleursAide": "Touche les zones qui te font mal aujourd'hui.",
-    "douleursSansConsentement": "Douleurs : tu n'as pas autorisé l'utilisation de tes données de santé. Tu peux l'activer dans ton profil.",
+    "douleursSansConsentement": "Douleurs : tu n'as pas autorisé l'utilisation de tes données de santé, la question n'est donc pas posée.",
     "duree": "Temps disponible aujourd'hui",
     "lieu": "Lieu",
-    "facultatif": "Facultatif"
+    "facultatif": "Facultatif",
+    "douleursConsentementInconnu": "Douleurs : impossible de vérifier ton consentement santé pour le moment, la question n'est pas posée.",
+    "activerConsentement": "Autoriser dans mon profil",
+    "aucuneDouleur": "Aucune douleur",
+    "horsLigne": "Pas de réseau : ton check-in est gardé sur ce téléphone. Tu pourras l'envoyer dès le retour du réseau."
   },
   "seance": {
     "types": {
@@ -833,7 +840,8 @@
     "fiche": {
       "muscles": "Muscles",
       "consignes": "Points clés",
-      "vide": "La fiche de cet exercice arrive bientôt."
+      "vide": "La fiche de cet exercice arrive bientôt.",
+      "complete": "Voir la fiche complète"
     },
     "douleur": {
       "titre": "Signaler une douleur",
@@ -875,6 +883,12 @@
       "titre": "Repos terminé",
       "suivante": "À toi : {{nom}}, série {{numero}} / {{total}}",
       "reprendre": "Reprends ta séance"
+    },
+    "choisirRpe": "Choisis ton RPE pour valider la série.",
+    "vide": {
+      "titre": "Aucun exercice dans cette séance",
+      "texte": "Le serveur n'a envoyé aucun exercice pour cette séance. Reviens à l'accueil puis réessaie, ou demande au coach.",
+      "fermer": "Revenir à l'accueil"
     }
   }
 }

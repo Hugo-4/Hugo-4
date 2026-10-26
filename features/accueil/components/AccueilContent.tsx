@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
+import { BandeauHorsLigne } from '@/components/BandeauHorsLigne';
 import { useSession } from '@/features/auth/AuthProvider';
 import { useStatutCompte } from '@/features/auth/useStatutCompte';
 import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
@@ -40,9 +41,13 @@ export function AccueilContent({ accueil, checkin }: Props) {
   const programme = useProgrammeActif(besoinProgramme);
   const suivante = prochaineSeance(programme.data, accueil.date);
   const prochaine = demain.seances[0]
-    ? { titre: demain.seances[0].titre, date: demain.seances[0].date }
+    ? { id: demain.seances[0].id, titre: demain.seances[0].titre, date: demain.seances[0].date }
     : suivante
-      ? { titre: suivante.focus ?? libelleType({ code: suivante.type_seance, libelle: suivante.type_seance }), date: suivante.date_prevue }
+      ? {
+          id: suivante.id,
+          titre: suivante.focus ?? libelleType({ code: suivante.type_seance, libelle: suivante.type_seance }),
+          date: suivante.date_prevue,
+        }
       : null;
   const ouvrirCheckin = () => router.push('/checkin');
   const ouvrirEvenement = useOuvrirEvenement();
@@ -56,10 +61,16 @@ export function AccueilContent({ accueil, checkin }: Props) {
         onNotifications={() => router.push('/notifications')}
         onProfil={() => router.navigate('/profil')}
       />
+      <BandeauHorsLigne />
       {checkin ? <FormeCard checkin={checkin} onRefaire={ouvrirCheckin} /> : <CheckinCard onCheckin={ouvrirCheckin} />}
       {accueil.adaptation_proposee ? <FatigueCard adaptation={accueil.adaptation_proposee} /> : null}
       {aujourdhui.repos ? (
-        <ReposCard prochaine={prochaine} onVoirProchaine={() => router.navigate('/programme')} />
+        <ReposCard
+          prochaine={prochaine}
+          onVoirProchaine={() =>
+            prochaine && router.push({ pathname: '/programme/seance/[id]', params: { id: prochaine.id } })
+          }
+        />
       ) : (
         aujourdhui.seances.map((seance) => (
           <SeanceCard

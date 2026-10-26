@@ -1,11 +1,13 @@
 import type { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { useEnLigne } from '@/lib/useEnLigne';
 import { spacing } from '@/theme/tokens';
 
 import { BandeauHorsLigne } from './BandeauHorsLigne';
 import { EmptyState } from './EmptyState';
 import { ErrorState } from './ErrorState';
+import { EtatHorsLigne } from './EtatHorsLigne';
 
 type Props = {
   /** Aucune donnée encore reçue (premier chargement). */
@@ -25,7 +27,10 @@ type Props = {
  * vide (explication + action), hors ligne (bandeau + données en cache), normal.
  */
 export function EtatsEcran({ chargement, erreur, aDesDonnees, vide, onReessayer, squelette, etatVide, children }: Props) {
+  const enLigne = useEnLigne();
   if (!aDesDonnees) {
+    // Hors ligne, la requête reste en pause : sans cache, on le dit au lieu d'un squelette sans fin.
+    if (chargement && !enLigne) return <EtatHorsLigne onRetry={onReessayer} />;
     if (chargement) return <>{squelette}</>;
     if (erreur) return <ErrorState onRetry={onReessayer} erreur={erreur} />;
   }

@@ -24,3 +24,6 @@ export const typography = {
 } satisfies Record<string, TextStyle>;
 
 export type TypographyVariant = keyof typeof typography;
+
+/** Agrandissement maximal du texte (réglage d'accessibilité du téléphone) pour les chiffres et libellés serrés. */
+export const multiplicateurMax = 1.3;

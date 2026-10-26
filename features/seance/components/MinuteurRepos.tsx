@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { colors, radius, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { useSeance } from '../SeanceProvider';
 import { formatChrono, useRepos } from '../useMinuterie';
@@ -25,7 +26,7 @@ export function MinuteurRepos() {
       <AppText
         variant="display"
         color={colors.accent}
-        maxFontSizeMultiplier={1.3}
+        maxFontSizeMultiplier={multiplicateurMax}
         accessibilityLabel={t('enSeance.repos.a11yRestant', { secondes: restant })}>
         {formatChrono(restant)}
       </AppText>

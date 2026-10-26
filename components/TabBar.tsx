@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useBadges } from '@/features/notifications/useBadges';
-
 import { colors, sizes, spacing } from '@/theme/tokens';
 
 import { CoachTabButton } from './CoachTabButton';
@@ -20,7 +19,7 @@ export function TabBar({ state, descriptors, emitter, navigateToTab, insets }: B
   const badges = useBadges();
   if (state.routes[state.index]?.name === ROUTE_COACH) return null;
   return (
-    <View style={[styles.barre, { paddingBottom: Math.max(insets.bottom, spacing.s) }]}>
+    <View accessibilityRole="tablist" style={[styles.barre, { paddingBottom: Math.max(insets.bottom, spacing.s) }]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const actif = state.index === index;

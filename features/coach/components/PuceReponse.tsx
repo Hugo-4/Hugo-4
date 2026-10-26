@@ -2,6 +2,7 @@ import { Pressable, StyleSheet } from 'react-native';
 
 import { AppText } from '@/components/AppText';
 import { colors, opacity, radius, sizes, spacing } from '@/theme/tokens';
+import { multiplicateurMax } from '@/theme/typography';
 
 import { HAUTEUR_PUCE, MARGE_TACTILE } from './dimensions';
 
@@ -24,7 +25,7 @@ export function PuceReponse({ label, onPress, desactive }: Props) {
       onPress={onPress}
       hitSlop={MARGE_TACTILE}
       style={({ pressed }) => [styles.puce, pressed && styles.presse, desactive && styles.desactive]}>
-      <AppText variant="secondaire" color={colors.texte} numberOfLines={1}>
+      <AppText variant="secondaire" color={colors.texte} numberOfLines={1} maxFontSizeMultiplier={multiplicateurMax}>
         {label}
       </AppText>
     </Pressable>
@@ -33,7 +34,7 @@ export function PuceReponse({ label, onPress, desactive }: Props) {
 
 const styles = StyleSheet.create({
   puce: {
-    height: HAUTEUR_PUCE,
+    minHeight: HAUTEUR_PUCE,
     justifyContent: 'center',
     paddingHorizontal: spacing.l,
     borderRadius: radius.rond,

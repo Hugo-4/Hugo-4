@@ -17,7 +17,7 @@ export function EcranCoach() {
   const pret = Boolean(chat.conversation.data);
   return (
     <Screen>
-      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <EnTeteCoach
           contexte={chat.contexte}
           credits={chat.credits}

@@ -15,7 +15,7 @@ passer à `false` est indiquée pour chaque route.
 | § | Méthode et chemin (sous /api/athlete, jeton) | Écran | Constante côté app |
 | --- | --- | --- | --- |
 | 0 | Protéger `POST /api/agent/ask` et les routes `/api/*` (faille) | aucun (l'app ne les appelle pas) | — |
-| 1 | `POST /programme/seances/:id/demarrer` | En séance | `SEANCE_FICTIVE` (features/seance/source.ts) |
+| 1 | `POST /programme/seances/:id/demarrer` ; consentement santé vérifié par le serveur dans `POST /seances/:id/feedback` | En séance | `SEANCE_FICTIVE` (features/seance/source.ts) |
 | 2 | Champs `recuperation`, `prochain_evenement.id`, `realise` / `record` de `GET /accueil` | Aujourd'hui | — (affichés dès qu'ils existent) |
 | 3 | `POST /coach/messages`, `POST /coach/propositions/:id/appliquer` · `garder` · `annuler` ; conversation lue en direct (canal `coach`, colonne `actions`) | Coach | `COACH_FICTIF` (features/coach/source.ts) |
 | 4 | `categorie_poids_kg`, `distance`, `poste` dans `POST/PATCH /evenements` ; une A par sport ; couleurs et langue de `/calendrier/legende` ; raison de séance manquée ; détail hors programme | Programme | — (routes existantes, champs en plus) |
@@ -55,6 +55,19 @@ passer à `false` est indiquée pour chaque route.
 }
 ```
 - Écran : En séance (`features/seance/source.ts`, `SEANCE_FICTIVE`).
+
+### Consentement santé dans `POST /seances/:id/feedback` (route existante, ajustement)
+- Aujourd'hui, le serveur tire des souvenirs de santé du commentaire de fin de séance sauf si le corps contient
+  `consentement_sante: false` (`autoriserSante: b.consentement_sante !== false`) : un client qui n'envoie rien vaut accord.
+- L'app envoie désormais toujours `consentement_sante` (`true` ou `false`, lu par `a_consentement`), et n'envoie
+  `douleurs` qu'avec le consentement.
+- Souhaité côté serveur : ne pas se fier au corps, appeler `a_consentement(req.userId, 'donnees_sante')` avant
+  d'écrire `douleurs_signalees` et avant `extraireMemoireEnFond(..., autoriserSante)` (la base refuse déjà les autres
+  écritures de santé sans consentement).
+- Corps envoyé par l'app :
+```json
+{ "rpe": 8, "duree_reelle_min": 62, "niveau_fatigue_apres": 6, "douleurs": ["genou 4/10"], "commentaire": "…", "consentement_sante": true }
+```
 
 ## 2. Aujourd'hui
 
