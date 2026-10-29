@@ -14,10 +14,12 @@ import type { CheckinDuJour } from '../types';
 type Props = {
   checkin: CheckinDuJour;
   onRefaire: () => void;
+  /** Proposé quand la forme est basse un jour de séance : ouvre le coach sur la séance du jour. */
+  onAdapter?: () => void;
 };
 
 /** Forme du jour : score et recommandation calculés par la base à partir du check-in. */
-export function FormeCard({ checkin, onRefaire }: Props) {
+export function FormeCard({ checkin, onRefaire, onAdapter }: Props) {
   const { t } = useTranslation();
   const score = checkin.score_forme;
   const couleur = couleurForme(score);
@@ -53,6 +55,7 @@ export function FormeCard({ checkin, onRefaire }: Props) {
           <AppText variant="secondaire">{checkin.recommandation_raison}</AppText>
         </View>
       ) : null}
+      {onAdapter ? <Button label={t('accueil.forme.adapter')} variant="secondaire" onPress={onAdapter} /> : null}
       <Button label={t('accueil.forme.refaire')} variant="discret" onPress={onRefaire} />
     </Card>
   );

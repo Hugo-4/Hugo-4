@@ -49,9 +49,9 @@ export const PARTIES: Partie[] = [
             seances_par_semaine: r.jours.length,
             duree_seance_minutes: r.dureeMin,
             moment_prefere: r.creneau,
-            ...(parcours === 'complet'
-              ? { sexe: r.sexe, taille_cm: Math.round(nombreSaisi(r.tailleCm) ?? 0), poids_kg: nombreSaisi(r.poidsKg) }
-              : {}),
+            // Poids obligatoire dans les deux parcours ; sexe et taille au parcours Complet.
+            poids_kg: nombreSaisi(r.poidsKg),
+            ...(parcours === 'complet' ? { sexe: r.sexe, taille_cm: Math.round(nombreSaisi(r.tailleCm) ?? 0) } : {}),
             ...(parcours === 'complet' && r.ton && r.longueur
               ? { style_coaching: await styleCoaching(userId, { ton: r.ton, longueur: r.longueur }) }
               : {}),

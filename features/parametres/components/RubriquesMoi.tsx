@@ -1,10 +1,11 @@
 import { router } from 'expo-router';
-import { CalendarClock, Dumbbell, Target, User } from 'lucide-react-native';
+import { CalendarClock, Dumbbell, Gauge, Ruler, Target, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AppText } from '@/components/AppText';
 import { LigneListe } from '@/components/LigneListe';
 import { libelleReferentiel, texteLocal } from '@/features/inscription/libelles';
+import { useResumeCorps } from '@/features/corps/useResumeCorps';
 import type { Identite, SportAthlete } from '@/features/profil/types';
 import { colors, sizes } from '@/theme/tokens';
 
@@ -22,6 +23,7 @@ const icone = { color: colors.texte2, size: sizes.icone };
 /** Identité · Sports, ambitions et niveaux · Objectifs et compétitions · Disponibilités et lieux. */
 export function RubriquesMoi({ identite, sports, manquants }: Props) {
   const { t } = useTranslation();
+  const resumeCorps = useResumeCorps();
   const dispoManquante = manquants.includes('disponibilites');
   const titreDispos = t('parametres.profil.rubriques.disponibilites');
 
@@ -45,6 +47,18 @@ export function RubriquesMoi({ identite, sports, manquants }: Props) {
         titre={t('parametres.profil.rubriques.identite')}
         sousTitre={identite?.prenom ?? t('profil.nonRenseigne')}
         onPress={() => router.push('/compte/identite')}
+      />
+      <LigneListe
+        icon={<Ruler {...icone} />}
+        titre={t('corps.titre')}
+        sousTitre={resumeCorps ?? t('questionnaire.sectionsAide.corps')}
+        onPress={() => router.push('/compte/corps')}
+      />
+      <LigneListe
+        icon={<Gauge {...icone} />}
+        titre={t('questionnaire.sections.valeurs')}
+        sousTitre={t('questionnaire.sectionsAide.valeurs')}
+        onPress={() => router.push({ pathname: '/questionnaire/[bloc]', params: { bloc: 'valeurs' } })}
       />
       <AppText variant="libelle" accessibilityRole="header">
         {t('parametres.profil.rubriques.sports')}

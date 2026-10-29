@@ -61,6 +61,8 @@ export function useEnvoyerMessage(conversationId: string | null, contexte: Conte
     },
     onSettled: () => {
       setFragment(null);
+      // Sur l'objectif, le coach a pu proposer des étapes : Programme les affiche aussitôt.
+      if (contexte && 'sujet' in contexte) queryClient.invalidateQueries({ queryKey: ['objectifs'] });
       queryClient.invalidateQueries({ queryKey: cleConversation(userId) });
       queryClient.invalidateQueries({ queryKey: cleCredits(userId) });
     },

@@ -15,6 +15,8 @@ export default function TabsLayout() {
       <EnvoiEnFond />
       <Tabs
         tabBar={(props) => <TabBar {...props} />}
+        // « Retour » depuis le Coach ramène à l'onglet d'où on l'a ouvert (Programme, Aujourd'hui…).
+        backBehavior="history"
         screenOptions={{ headerShown: false, sceneStyle: { backgroundColor: colors.fond } }}>
         <Tabs.Screen
           name="index"

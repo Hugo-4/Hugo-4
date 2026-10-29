@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/Button';
 import { colors, sizes, spacing } from '@/theme/tokens';
 
+import { CarteEtapes } from '@/features/objectifs/components/CarteEtapes';
+
 import type { EcranProgramme } from '../useEcranProgramme';
 import { CalendrierCarte } from './CalendrierCarte';
 import { CompetitionsAVenir } from './CompetitionsAVenir';
@@ -15,7 +17,7 @@ import { LegendeFeuille } from './LegendeFeuille';
 import { ObjectifCard } from './ObjectifCard';
 import { StatsMois } from './StatsMois';
 
-/** Onglet Programme, de haut en bas : objectif A, frise des blocs, calendrier du mois, chiffres, compétitions, historique. */
+/** Onglet Programme, de haut en bas : objectif A, étapes vers l'objectif, frise des blocs, calendrier du mois, chiffres, compétitions, historique. */
 export function ProgrammeContenu({ e }: { e: EcranProgramme }) {
   const { t } = useTranslation();
   const stats = e.calendrier.data?.mois === e.mois ? e.calendrier.data.stats : null;
@@ -29,6 +31,7 @@ export function ProgrammeContenu({ e }: { e: EcranProgramme }) {
           onPress={() => router.push({ pathname: '/programme/evenement/[id]', params: { id: objectif.id } })}
         />
       ) : null}
+      <CarteEtapes />
       <FriseBlocs blocs={e.programme?.blocs ?? []} />
       <CalendrierCarte
         mois={e.mois}

@@ -21,6 +21,10 @@ passer à `false` est indiquée pour chaque route.
 | 4 | `categorie_poids_kg`, `distance`, `poste` dans `POST/PATCH /evenements` ; une A par sport ; couleurs et langue de `/calendrier/legende` ; raison de séance manquée ; détail hors programme | Programme | — (routes existantes, champs en plus) |
 | 5 | `GET /progres/records`, `/progres/niveaux`, `/progres/charge`, `/progres/regularite`, `/progres/ligues` (+ rejoindre / quitter) | Progrès | `PROGRES_FICTIF` (features/progres/source.ts) |
 | 6 | `GET /credits` (Coach et Profil), `POST/GET /compte/export`, `POST /compte/suppression`, `GET/PATCH /preferences/nutrition`, `GET /notifications/centre` (+ lu, tout lu), `GET /sante` (facultatif) | Profil, Notifications, Coach | `PARAMETRES_FICTIF` (features/parametres/source.ts), `NOTIFICATIONS_FICTIF` (features/notifications/source.ts) |
+| 7 | Aucune route : lire les réponses du questionnaire complet (`tests_athlete`, `profil_specifique`, préférences, `signaux_effort`) et ne plus inventer de charge ; `POST /tests` avec charge × répétitions (souhaité) | Questionnaire, toutes les séances | — |
+| 8 | `POST /coach/messages` avec `contexte: { sujet: "objectif" }` : le coach insère des étapes « proposées » dans `sous_objectifs` ; le programme lit les étapes actives | Programme (Mon objectif), Coach | `COACH_FICTIF` (le mode démonstration insère 3 étapes) |
+| 9 | `POST /coach/messages` : réponses rapides `forme_du_jour` et `fatigue` (proposition avant / après), actions sur l'app dans `actions` (`langue`, `ouvrir`) | Coach, Aujourd'hui | `COACH_FICTIF` (le mode démonstration reconnaît quelques mots-clés) |
+| 10 | Aucune route obligatoire : remplir `objectifs_nutritionnels` (calories, lipides, fibres, micronutriments surveillés), lire `journal_entrees` et `journal_nutrition` (coach, plan du lendemain) ; souhaité : `GET /nutrition/jour?date=`, textes du plan en anglais | Nutrition, Aujourd'hui | — (l'app lit et écrit directement avec la RLS) |
 
 ## 0. Sécurité à corriger avant tout
 
@@ -976,3 +980,123 @@ plus sûre (le serveur vérifie lui-même le consentement) et pourrait aussi reg
   (`NOTIFICATIONS_DEFAUT`, `features/parametres/constantes.ts`), sans les enregistrer.
 - `GET /disponibilites` : renvoyer `heure_debut` au format « HH:MM » (la colonne `time` sort en « HH:MM:SS », que
   `PUT /disponibilites` refuse ; l'app coupe les secondes avant de renvoyer).
+
+## 7. Questionnaire complet (étape 10) — aucune route nouvelle, des usages à ajouter
+
+L'app enregistre maintenant les réponses du questionnaire complet directement dans la base (RLS) et les valeurs
+connues par `POST /tests` (route existante). Tables et colonnes : migration `questionnaire_complet_etape_10`
+(`docs/migrations/2026-10-26-questionnaire.sql`). Le serveur doit les **lire** pour construire les séances :
+
+- **Ne plus inventer de charge ni d'allure.** Le générateur utilise `tests_athlete` (1RM par exercice, VMA, allure
+  au seuil, FTP, CSS, temps de course et de nage, FC max et repos). Sans valeur connue : prescrire au ressenti (RPE)
+  et placer une séance de test dans la première semaine si `user_sport_profiles.profil_specifique.test_souhaite`
+  vaut `premiere_semaine`.
+- **1RM estimé.** Pour une charge de travail (ex. 100 kg × 5), l'app envoie un 1RM estimé (Epley) avec
+  `methode: "declare"` et la saisie d'origine dans `notes` (`"100 kg × 5 · questionnaire : estimation"`).
+  Mieux : que `POST /tests` accepte `{ type: "1rm", exercice, charge_kg, repetitions }` et fasse lui-même
+  l'estimation (même réponse `{ id }`).
+- **Réponses à lire** (toutes sur les lignes de l'athlète) :
+  - `user_sport_profiles.profil_specifique` du sport principal : clés des blocs de sport (`split_actuel`,
+    `km_semaine_actuel`, `garde`, `sparring`, `club_jours` en `j1`…`j7`, `points_forts`, `jour_match`, etc.).
+  - `user_profiles` : `taille_cm`, `poids_kg`, `lateralite`, `activite_quotidienne`, `sommeil_heures_habituel`,
+    `niveau_stress_habituel`, `annees_pratique`, `duree_seance_minutes`, `acces_piscine`, `acces_velo`,
+    `acces_piste`, `contre_indications` ; `contexte_vie` (`seances_semaine_recentes`, `arret_recent`,
+    `arret_raison`, `experience_coaching`, `contraintes`) ; `style_coaching` (`ton`, `longueur`, `relance`).
+  - `preferences_athlete`, `preferences_nutrition` (colonnes existantes, ex. `jours_repos_preferes` en 1 à 7).
+  - `sante_athlete` (avec consentement) : `signaux_effort` = `{ avis_medical_coeur: { reponse, le },
+    malaise_effort: { reponse, le } }` → bloquer l'intensité élevée si une réponse vaut `true` ;
+    `medicaments` (`["traitement_declare"]`), `pathologies_chroniques`, `allergies`.
+- **Recalcul.** Après un bloc terminé (lignes `questions_posees` avec `repondue_le` récent), réajuster les
+  séances à venir et le dire à l'athlète (adaptation visible, comme pour le check-in).
+
+## 8. Objectif principal et étapes intermédiaires (étape 12)
+
+Table `sous_objectifs` (migration `sous_objectifs_etape_12`, `docs/migrations/2026-10-26-sous-objectifs.sql`) :
+l'app lit, crée, modifie et supprime les étapes de l'athlète en direct (RLS). Colonnes utiles : `titre`, `type`
+(`competition`, `performance`, `volume`, `technique`, `autre`), `indicateur` (slug de `types_tests`) +
+`exercice_slug`, `valeur_depart`, `valeur_cible`, `unite`, `progression_hebdo_pct`, `date_cible`, `statut`
+(`propose`, `actif`, `atteint`, `abandonne`), `origine` (`athlete`, `coach`), `raison`, `evenement_id` (compétition A).
+
+### `POST /coach/messages` avec le contexte « objectif »
+- L'app envoie `contexte: { "sujet": "objectif", "evenement_id": "uuid" }` (et `reponse_rapide: "etapes_objectif"`
+  quand l'athlète touche « Propose-moi des étapes vers mon objectif »).
+- Le coach construit 2 à 5 étapes datées et mesurables entre aujourd'hui et la date de l'objectif, à partir des
+  tests (`tests_athlete`), du niveau, des disponibilités et de la doctrine (progression réaliste par semaine), puis
+  les **insère** dans `sous_objectifs` avec `statut: "propose"`, `origine: "coach"` et une `raison` courte dans la
+  langue de l'athlète. Réponse : le message habituel (§3) qui les annonce.
+- L'athlète accepte (`statut` → `actif`), modifie ou refuse (ligne supprimée) dans Programme.
+- Demandé aussi : vérifier qu'une étape saisie par l'athlète est réaliste (ex. `progression_hebdo_pct` trop élevé)
+  et le dire dans le chat ou en adaptation, sans la modifier sans accord.
+
+### Génération et adaptation du programme
+- Lire les étapes `actif` : placer une séance de test ou une simulation à l'approche de chaque `date_cible`,
+  orienter les blocs vers l'indicateur suivi.
+- Quand une valeur de test atteint `valeur_cible`, proposer de marquer l'étape `atteint` (notification).
+
+## 9. Coach plus précis et plus général (étape 13)
+
+Toujours via `POST /coach/messages` (§3) ; rien de nouveau côté route, mais le superviseur doit savoir :
+
+### Adapter la séance du jour (forme, fatigue, blessure, temps)
+- Nouvelles réponses rapides envoyées en `reponse_rapide` : `forme_du_jour` (« Adapte ma séance à ma forme »,
+  proposée en premier quand `checkins_forme.recommandation` du jour vaut `alleger`, `recuperation_active` ou
+  `repos_complet`) et `fatigue` (« Je suis fatigué aujourd'hui »). Le coach lit le check-in du jour, les douleurs
+  (avec consentement), le temps disponible, et répond par une **proposition** avant / après (§3), jamais une
+  modification sans accord.
+- La carte Forme d'Aujourd'hui ouvre le coach sur la séance du jour (`contexte.programme_seance_id`).
+
+### Questions générales sur l'app → actions exécutées par l'app
+Le coach peut ajouter à sa réponse des actions que l'app affiche en boutons sous le message. À écrire dans
+`messages_coach.actions` (et dans `message` de la réponse de `POST /coach/messages`, champ `actions_app` ou dans
+`actions`, au même format) :
+```json
+[
+  { "type": "langue", "langue": "en" },
+  { "type": "ouvrir", "ecran": "abonnement" }
+]
+```
+- `langue` : `fr` ou `en`. L'app demande confirmation puis enregistre `users.langue` elle-même.
+- `ouvrir` : `abonnement`, `preferences`, `disponibilites`, `lieux`, `objectifs`, `mon_objectif`, `corps`,
+  `questionnaire`, `consentements`, `notifications`, `memoire`, `donnees`, `progres`, `programme`, `checkin`.
+- Une action inconnue est ignorée par l'app (pas d'erreur). Le coach ne modifie jamais lui-même un réglage.
+
+### Plus précis
+- Utiliser les réponses du questionnaire complet (§7), les étapes actives (§8), l'historique des séances et des
+  tests pour chaque réponse ; ne jamais redemander une information déjà connue.
+
+### Crédits (décision produit)
+- Aujourd'hui 50 crédits par mois (offre gratuite dans les données fictives). À revoir côté serveur et
+  abonnements ; l'app affiche simplement ce que renvoie `GET /credits` (§6.1).
+
+## 10. Nutrition complète (étape 14)
+
+### Ce que fait l'app (décisions du 26/10/2026)
+- Journal : **`journal_entrees`** (une ligne par aliment) et **`journal_nutrition`** (totaux du jour). L'app envoie
+  `user_id`, `date_entree`, `moment_journee` (`petit_dejeuner`, `dejeuner`, `diner`, `collation`,
+  `pre_entrainement`, `pendant_entrainement`, `post_entrainement`), `quantite_g`, `heure`, `source_saisie`
+  (`manuel`), et `aliment_id` **ou** `nom_libre`.
+- Aliment de la base : l'app n'envoie aucune valeur ; les triggers `auto_calculate_entree_nutrition`,
+  `ensure_journal_exists` et `recalculate_journal_totals` calculent calories, macronutriments, sodium et `micros`,
+  rattachent l'entrée au journal du jour et mettent à jour `journal_nutrition`. Saisie libre : l'app envoie les
+  valeurs saisies (calories, protéines, glucides, lipides).
+- Totaux du jour lus dans `journal_nutrition` (`user_id`, `date_journal`). Les micronutriments du jour (absents de
+  `journal_nutrition`) et la répartition par moment sont la somme des entrées.
+- `repas_journal` (migration `repas_journal_etape_14`) n'est plus lue ni écrite : à supprimer par Hugo.
+- Le plan avant / pendant / après la séance reprend `GET /nutrition/jour` tel quel (textes `quand`, `idee`, `note`).
+
+### À faire côté serveur
+1. **Remplir `objectifs_nutritionnels`** (une ligne `actif = true` par athlète) : `calories_cibles`, `proteines_g`,
+   `glucides_g`, `lipides_g`, `fibres_g`, `hydratation_ml_cible`, et `micronutriments_surveilles` avec les clés de
+   `journal_entrees.micros` (`fer_mg`, `vitamine_d_µg`… ; l'app accepte aussi « fer » ou « Vitamine D »).
+2. **Lire `journal_entrees` / `journal_nutrition`** dans le coach (fiche athlète, réponses sur la nutrition, plan du
+   lendemain).
+3. Souhaité : `GET /nutrition/jour?date=AAAA-MM-JJ` pour un autre jour (l'app n'affiche le plan et le timing que
+   pour aujourd'hui) ; textes du plan aussi en anglais selon `users.langue`.
+4. Compléter la base `aliments` : les saisies libres fréquentes (`journal_entrees.nom_libre`) indiquent quoi ajouter.
+5. Poids : désormais obligatoire dès l'inscription (parcours Rapide compris, 30 à 250 kg, écrit dans
+   `user_profiles.poids_kg`) et pour tous les âges (TC10 sans « Je ne sais pas »). Le coach ne doit **jamais
+   commenter le poids d'un mineur** (ni évolution, ni objectif, ni catégorie hors demande explicite) : il sert
+   seulement au calcul des besoins. L'app ne l'affiche jamais en grand et, avant 18 ans, sans courbe ni moyenne.
+6. Calories et mineurs : l'app masque les calories avant 18 ans sauf choix contraire de l'athlète
+   (`user_profiles.preferences_entrainement.afficher_calories`, `false` par défaut avant 18 ans, `true` après).
+   Le coach doit suivre la même règle dans ses réponses (macronutriments en grammes, repères d'assiette).

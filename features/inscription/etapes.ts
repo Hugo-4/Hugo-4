@@ -5,6 +5,8 @@ import type { Parcours, Reponses } from './types';
 export type EtapeId =
   | 'identite'
   | 'pays'
+  // Parcours Rapide : le poids seul (obligatoire) ; parcours Complet : sexe, taille et poids.
+  | 'poids'
   | 'profilPhysique'
   | 'pratique'
   // Parcours A : il a un sport
@@ -41,7 +43,8 @@ export function listeEtapes(parcours: Parcours, consentementSante: boolean, r: R
   return [
     'identite',
     'pays',
-    ...(complet ? (['profilPhysique'] as EtapeId[]) : []),
+    // Poids obligatoire dans les deux parcours (décision du 26/10/2026).
+    ...(complet ? (['profilPhysique'] as EtapeId[]) : (['poids'] as EtapeId[])),
     'pratique',
     ...sport,
     ...(complet ? (['sportsSecondaires'] as EtapeId[]) : []),
@@ -58,6 +61,10 @@ export function nombreSaisi(texte: string): number | null {
   const valeur = Number(texte.replace(',', '.').trim());
   return texte.trim() !== '' && Number.isFinite(valeur) ? valeur : null;
 }
+
+/** Poids en kg (questionnaire, TC10). */
+export const POIDS_MIN = 30;
+export const POIDS_MAX = 250;
 
 function entre(valeur: number | null, min: number, max: number): boolean {
   return valeur !== null && valeur >= min && valeur <= max;
@@ -85,7 +92,9 @@ export function etapeValide(etape: EtapeId, r: Reponses): boolean {
     case 'pays':
       return r.pays !== null;
     case 'profilPhysique':
-      return r.sexe !== null && entre(nombreSaisi(r.tailleCm), 100, 250) && entre(nombreSaisi(r.poidsKg), 25, 250);
+      return r.sexe !== null && entre(nombreSaisi(r.tailleCm), 100, 250) && entre(nombreSaisi(r.poidsKg), POIDS_MIN, POIDS_MAX);
+    case 'poids':
+      return entre(nombreSaisi(r.poidsKg), POIDS_MIN, POIDS_MAX);
     case 'pratique':
       return r.pratique !== null;
     case 'sport':

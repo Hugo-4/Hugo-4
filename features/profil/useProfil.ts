@@ -39,7 +39,7 @@ export function useSportsAthlete() {
       const { data, error } = await supabase
         .from('user_sport_profiles')
         .select(
-          'id, role, niveau, cadre_pratique, ambition, objectif_sport_id, objectifs_secondaires, sports(id, slug, nom), objectifs_sport(libelle_fr, libelle_en)',
+          'id, role, niveau, cadre_pratique, ambition, objectif_sport_id, objectifs_secondaires, sports!user_sport_profiles_sport_id_fkey(id, slug, nom), objectifs_sport(libelle_fr, libelle_en)',
         )
         .eq('user_id', userId as string)
         .eq('actif', true)

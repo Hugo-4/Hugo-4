@@ -1,0 +1,40 @@
+{
+  "titre": "Mon corps",
+  "mensurations": "Mensurations",
+  "quotidien": "Au quotidien",
+  "details": "Pour aller plus loin",
+  "detailsAide": "Des mesures qui affinent tes zones d'entraînement et ta récupération.",
+  "taille": {
+    "titre": "Taille",
+    "feuille": "Ta taille",
+    "champ": "Taille (cm)"
+  },
+  "poids": {
+    "titre": "Poids",
+    "feuille": "Nouvelle pesée",
+    "champ": "Poids (kg)",
+    "moment": "Moment de la pesée (facultatif)",
+    "moments": {
+      "matin_a_jeun": "Le matin à jeun",
+      "avant_seance": "Avant la séance",
+      "apres_seance": "Après la séance",
+      "autre": "Autre"
+    },
+    "derniere": "Dernière pesée le {{date}}",
+    "ajouter": "Ajouter une pesée",
+    "moyenne": "Moyenne sur 7 jours : {{valeur}}",
+    "resume": "Poids sur {{nombre}} pesées : de {{premiere}} à {{derniere}}.",
+    "aide": "Ton poids sert à calculer ton plan nutrition du jour (glucides, protéines, eau). Ce n'est pas un objectif."
+  },
+  "cm": "{{valeur}} cm",
+  "kg": "{{valeur}} kg",
+  "aRenseigner": "À renseigner",
+  "modifier": "Modifier ces réponses",
+  "mesureLe": "Mesurée le {{date}}",
+  "ajouterMesure": "Ajouter une mesure",
+  "enregistrer": "Enregistrer",
+  "horsBornes": "Entre {{min}} et {{max}}",
+  "horsLigne": "Pas de réseau : l'enregistrement reprendra au retour du réseau.",
+  "resumeProfil": "{{taille}} · {{poids}}",
+  "renseignerPoids": "Renseigner mon poids"
+}

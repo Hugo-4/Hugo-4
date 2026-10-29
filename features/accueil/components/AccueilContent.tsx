@@ -7,6 +7,7 @@ import { useStatutCompte } from '@/features/auth/useStatutCompte';
 import { ouvrirCoach } from '@/features/coach/ouvrirCoach';
 import { useNombreNonLues } from '@/features/notifications/useNombreNonLues';
 import { CarteDernierRecord } from '@/features/progres/components/CarteDernierRecord';
+import { BandeauFinirInscription } from '@/features/questionnaire/components/BandeauFinirInscription';
 import { useSeanceEnCours } from '@/features/seance/useSeanceEnCours';
 import { spacing } from '@/theme/tokens';
 
@@ -24,6 +25,9 @@ import { NutritionCard } from './NutritionCard';
 import { ReposCard } from './ReposCard';
 import { SeanceCard } from './SeanceCard';
 import { SemaineCard } from './SemaineCard';
+
+/** Recommandations du check-in (calculées par la base) qui invitent à alléger la séance. */
+const FORME_BASSE = ['alleger', 'recuperation_active', 'repos_complet'];
 
 type Props = {
   accueil: Accueil;
@@ -52,6 +56,7 @@ export function AccueilContent({ accueil, checkin }: Props) {
   const ouvrirCheckin = () => router.push('/checkin');
   const ouvrirEvenement = useOuvrirEvenement();
   const nonLues = useNombreNonLues();
+  const seanceDuJour = aujourdhui.repos ? null : (aujourdhui.seances[0] ?? null);
 
   return (
     <View style={styles.contenu}>
@@ -62,7 +67,21 @@ export function AccueilContent({ accueil, checkin }: Props) {
         onProfil={() => router.navigate('/profil')}
       />
       <BandeauHorsLigne />
-      {checkin ? <FormeCard checkin={checkin} onRefaire={ouvrirCheckin} /> : <CheckinCard onCheckin={ouvrirCheckin} />}
+      <BandeauFinirInscription />
+      {checkin ? (
+        <FormeCard
+          checkin={checkin}
+          onRefaire={ouvrirCheckin}
+          // Forme basse un jour de séance (et pas déjà une adaptation proposée) : le coach peut alléger la séance.
+          onAdapter={
+            seanceDuJour && !accueil.adaptation_proposee && FORME_BASSE.includes(checkin.recommandation ?? '')
+              ? () => ouvrirCoach({ type: 'seance', programmeSeanceId: seanceDuJour.id, titre: seanceDuJour.titre })
+              : undefined
+          }
+        />
+      ) : (
+        <CheckinCard onCheckin={ouvrirCheckin} />
+      )}
       {accueil.adaptation_proposee ? <FatigueCard adaptation={accueil.adaptation_proposee} /> : null}
       {aujourdhui.repos ? (
         <ReposCard

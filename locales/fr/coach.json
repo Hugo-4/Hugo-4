@@ -20,7 +20,7 @@
   },
   "vide": {
     "titre": "Qu'est-ce que tu veux changer ?",
-    "texte": "Durée, lieu, jour, douleur : écris-le simplement. Le coach te montre ce qui change avant que tu acceptes."
+    "texte": "Ta séance (durée, lieu, jour, fatigue, douleur), tes étapes vers ton objectif, ou l'app elle-même (langue, abonnement, rappels) : écris-le simplement. Le coach te montre ce qui change avant que tu acceptes."
   },
   "horsLigne": {
     "titre": "Tu es hors ligne",
@@ -28,10 +28,13 @@
   },
   "reponsesRapides": {
     "a11y": "Réponses rapides",
+    "forme_du_jour": "Adapte ma séance à ma forme",
     "duree_30": "Je n'ai que 30 min",
     "sans_salle": "Pas de salle aujourd'hui",
     "decaler_demain": "Décaler à demain",
-    "douleur": "J'ai mal quelque part"
+    "douleur": "J'ai mal quelque part",
+    "etapes_objectif": "Propose-moi des étapes vers mon objectif",
+    "fatigue": "Je suis fatigué aujourd'hui"
   },
   "saisie": {
     "placeholder": "Écris au coach…",
@@ -57,5 +60,32 @@
   },
   "proposition": {
     "erreur": "La modification n'a pas pu être enregistrée. Réessaie."
+  },
+  "actionsApp": {
+    "langue": "Passer l'app en {{langue}}",
+    "langues": {
+      "fr": "français",
+      "en": "anglais"
+    },
+    "langueTitre": "Passer l'app en {{langue}} ?",
+    "langueTexte": "Les écrans et les réponses du coach changent de langue. Tu peux revenir en arrière dans Profil → Préférences.",
+    "confirmer": "Confirmer",
+    "ecrans": {
+      "abonnement": "Ouvrir : abonnement et crédits",
+      "preferences": "Ouvrir : préférences",
+      "disponibilites": "Ouvrir : disponibilités",
+      "lieux": "Ouvrir : lieux",
+      "objectifs": "Ouvrir : objectifs et compétitions",
+      "mon_objectif": "Ouvrir : mon objectif",
+      "corps": "Ouvrir : mon corps",
+      "questionnaire": "Finir mon inscription",
+      "consentements": "Ouvrir : consentements",
+      "notifications": "Ouvrir : notifications",
+      "memoire": "Ouvrir : ce que le coach a retenu",
+      "donnees": "Ouvrir : mes données",
+      "progres": "Ouvrir : progrès",
+      "programme": "Ouvrir : programme",
+      "checkin": "Faire mon check-in"
+    }
   }
 }

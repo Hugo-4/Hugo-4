@@ -7,11 +7,14 @@ import { TextField } from '@/components/TextField';
 import { colors, spacing } from '@/theme/tokens';
 
 import { SEXES } from '../constantes';
+import { POIDS_MAX, POIDS_MIN, nombreSaisi } from '../etapes';
 import { useInscription } from '../InscriptionProvider';
 
 export function EtapeProfilPhysique() {
   const { t } = useTranslation();
   const { reponses, modifier } = useInscription();
+  const poids = nombreSaisi(reponses.poidsKg);
+  const poidsHorsBornes = reponses.poidsKg.trim() !== '' && (poids === null || poids < POIDS_MIN || poids > POIDS_MAX);
 
   return (
     <View style={styles.bloc}>
@@ -42,6 +45,7 @@ export function EtapeProfilPhysique() {
         value={reponses.poidsKg}
         onChangeText={(poidsKg) => modifier({ poidsKg })}
         keyboardType="decimal-pad"
+        erreur={poidsHorsBornes ? t('inscription.physique.poidsErreur', { min: POIDS_MIN, max: POIDS_MAX }) : undefined}
       />
     </View>
   );

@@ -1,18 +1,26 @@
 import en from './en.json';
 import enCoach from './en/coach.json';
+import enCorps from './en/corps.json';
 import enNotifications from './en/notifications.json';
+import enNutrition from './en/nutrition.json';
+import enObjectifs from './en/objectifs.json';
 import enParametres from './en/parametres.json';
 import enProgramme from './en/programme.json';
 import enProgres from './en/progres.json';
+import enQuestionnaire from './en/questionnaire.json';
 import fr from './fr.json';
 import frCoach from './fr/coach.json';
+import frCorps from './fr/corps.json';
 import frNotifications from './fr/notifications.json';
+import frNutrition from './fr/nutrition.json';
+import frObjectifs from './fr/objectifs.json';
 import frParametres from './fr/parametres.json';
 import frProgramme from './fr/programme.json';
 import frProgres from './fr/progres.json';
+import frQuestionnaire from './fr/questionnaire.json';
 
 /**
- * Traductions de l'app. Étapes 1 à 5 : `fr.json` / `en.json`. Étapes 6 à 9 : un fichier par domaine
+ * Traductions de l'app. Étapes 1 à 5 : `fr.json` / `en.json`. Depuis l'étape 6 : un fichier par domaine
  * (`fr/<domaine>.json`), rangé sous la clé du domaine (`coach.*`, `programme.*`…).
  */
 export const traductionsFr = {
@@ -22,6 +30,10 @@ export const traductionsFr = {
   progres: frProgres,
   parametres: frParametres,
   notifications: frNotifications,
+  questionnaire: frQuestionnaire,
+  corps: frCorps,
+  objectifs: frObjectifs,
+  nutrition: frNutrition,
 };
 
 export type Traductions = typeof traductionsFr;
@@ -34,4 +46,8 @@ export const traductionsEn: Traductions = {
   progres: enProgres,
   parametres: enParametres,
   notifications: enNotifications,
+  questionnaire: enQuestionnaire,
+  corps: enCorps,
+  objectifs: enObjectifs,
+  nutrition: enNutrition,
 };

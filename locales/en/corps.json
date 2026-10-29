@@ -1,0 +1,40 @@
+{
+  "titre": "My body",
+  "mensurations": "Measurements",
+  "quotidien": "Day to day",
+  "details": "Going further",
+  "detailsAide": "Measurements that refine your training zones and recovery.",
+  "taille": {
+    "titre": "Height",
+    "feuille": "Your height",
+    "champ": "Height (cm)"
+  },
+  "poids": {
+    "titre": "Weight",
+    "feuille": "New weigh-in",
+    "champ": "Weight (kg)",
+    "moment": "When you weighed yourself (optional)",
+    "moments": {
+      "matin_a_jeun": "Morning, before eating",
+      "avant_seance": "Before the session",
+      "apres_seance": "After the session",
+      "autre": "Other"
+    },
+    "derniere": "Last weigh-in on {{date}}",
+    "ajouter": "Add a weigh-in",
+    "moyenne": "7-day average: {{valeur}}",
+    "resume": "Weight over {{nombre}} weigh-ins: from {{premiere}} to {{derniere}}.",
+    "aide": "Your weight is used to calculate today's nutrition plan (carbs, protein, water). It isn't a goal."
+  },
+  "cm": "{{valeur}} cm",
+  "kg": "{{valeur}} kg",
+  "aRenseigner": "Not set",
+  "modifier": "Edit these answers",
+  "mesureLe": "Measured on {{date}}",
+  "ajouterMesure": "Add a measurement",
+  "enregistrer": "Save",
+  "horsBornes": "Between {{min}} and {{max}}",
+  "horsLigne": "No connection: saving will resume when you're back online.",
+  "resumeProfil": "{{taille}} · {{poids}}",
+  "renseignerPoids": "Enter my weight"
+}

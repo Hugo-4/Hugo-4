@@ -1,4 +1,3 @@
-import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
 import i18n from '@/lib/i18n';
@@ -10,13 +9,30 @@ import i18n from '@/lib/i18n';
 const IDENTIFIANT = 'athlenis-fin-repos';
 const CANAL = 'repos';
 
-// L'athlète a l'app sous les yeux : la vibration de l'écran suffit, on n'affiche pas la notification.
-Notifications.setNotificationHandler({
-  handleNotification: async (notification) => {
-    const nous = notification.request.identifier === IDENTIFIANT;
-    return { shouldShowBanner: !nous, shouldShowList: !nous, shouldPlaySound: !nous, shouldSetBadge: false };
-  },
-});
+type ModuleNotifications = typeof import('expo-notifications');
+let moduleNotif: ModuleNotifications | null | undefined;
+
+/**
+ * `expo-notifications` est chargé seulement au premier usage : dans Expo Go sur Android, l'importer plante
+ * (module natif absent) et ferait tomber tous les écrans qui l'importent. Indisponible : `null`, on s'en passe.
+ */
+function notifications(): ModuleNotifications | null {
+  if (moduleNotif !== undefined) return moduleNotif;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    moduleNotif = require('expo-notifications') as ModuleNotifications;
+    // L'athlète a l'app sous les yeux : la vibration de l'écran suffit, on n'affiche pas la notification.
+    moduleNotif.setNotificationHandler({
+      handleNotification: async (notification) => {
+        const nous = notification.request.identifier === IDENTIFIANT;
+        return { shouldShowBanner: !nous, shouldShowList: !nous, shouldPlaySound: !nous, shouldSetBadge: false };
+      },
+    });
+  } catch {
+    moduleNotif = null;
+  }
+  return moduleNotif;
+}
 
 let autorisation: Promise<boolean> | null = null;
 let file: Promise<void> = Promise.resolve();
@@ -29,6 +45,8 @@ function enSerie(operation: () => Promise<void>): Promise<void> {
 
 /** Canal Android et permission, demandée une seule fois, au premier repos. */
 async function preparer(): Promise<boolean> {
+  const Notifications = notifications();
+  if (!Notifications) return false;
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync(CANAL, {
       name: i18n.t('enSeance.notification.canal'),
@@ -49,7 +67,8 @@ function autorise(): Promise<boolean> {
 }
 
 async function annuler(): Promise<void> {
-  if (Platform.OS === 'web') return;
+  const Notifications = Platform.OS === 'web' ? null : notifications();
+  if (!Notifications) return;
   await Notifications.cancelScheduledNotificationAsync(IDENTIFIANT).catch(() => undefined);
 }
 
@@ -63,7 +82,8 @@ export function programmerFinRepos(fin: number, texte: string): Promise<void> {
     if (!(await autorise())) return;
     await annuler();
     const secondes = Math.round((fin - Date.now()) / 1000);
-    if (secondes < 1) return;
+    const Notifications = notifications();
+    if (secondes < 1 || !Notifications) return;
     await Notifications.scheduleNotificationAsync({
       identifier: IDENTIFIANT,
       content: { title: i18n.t('enSeance.notification.titre'), body: texte, sound: true },
